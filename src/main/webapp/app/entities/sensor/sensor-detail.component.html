@@ -1,0 +1,37 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="sensor">
+            <h2><span>Sensor</span> {{sensor.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Name</span></dt>
+                <dd>
+                    <span>{{sensor.name}}</span>
+                </dd>
+                <dt><span>Alerts Enabled</span></dt>
+                <dd>
+                    <span>{{sensor.alertsEnabled}}</span>
+                </dd>
+                <dt><span>Sensor Device</span></dt>
+                <dd>
+                    <div *ngIf="sensor.sensorDeviceId">
+                        <a [routerLink]="['/sensor-device', sensor.sensorDeviceId, 'view']">{{sensor.sensorDeviceId}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/sensor', sensor.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>
