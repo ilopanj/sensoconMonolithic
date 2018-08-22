@@ -1,0 +1,58 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-lora-packet-heading">Create or edit a Lora Packet</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!loraPacket.id">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="loraPacket.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_rssi">Rssi</label>
+                    <input type="number" class="form-control" name="rssi" id="field_rssi"
+                        [(ngModel)]="loraPacket.rssi" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_batteryLevel">Battery Level</label>
+                    <input type="number" class="form-control" name="batteryLevel" id="field_batteryLevel"
+                        [(ngModel)]="loraPacket.batteryLevel" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_timestamp">Timestamp</label>
+                    <div class="d-flex">
+                        <input id="field_timestamp" type="datetime-local" class="form-control" name="timestamp" [(ngModel)]="timestamp"
+                        />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_temperature">Temperature</label>
+                    <input type="number" class="form-control" name="temperature" id="field_temperature"
+                        [(ngModel)]="loraPacket.temperature" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_pressure">Pressure</label>
+                    <input type="number" class="form-control" name="pressure" id="field_pressure"
+                        [(ngModel)]="loraPacket.pressure" />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_sensorDevice">Sensor Device</label>
+                    <select class="form-control" id="field_sensorDevice" name="sensorDevice" [(ngModel)]="loraPacket.sensorDeviceId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="sensorDeviceOption.id" *ngFor="let sensorDeviceOption of sensordevices; trackBy: trackSensorDeviceById">{{sensorDeviceOption.id}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,43 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="sensorDevice">
+            <h2><span>Sensor Device</span> {{sensorDevice.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Device Id</span></dt>
+                <dd>
+                    <span>{{sensorDevice.deviceId}}</span>
+                </dd>
+                <dt><span>Name</span></dt>
+                <dd>
+                    <span>{{sensorDevice.name}}</span>
+                </dd>
+                <dt><span>Location</span></dt>
+                <dd>
+                    <div *ngIf="sensorDevice.locationId">
+                        <a [routerLink]="['/location', sensorDevice.locationId, 'view']">{{sensorDevice.locationId}}</a>
+                    </div>
+                </dd>
+                <dt><span>Notification Group</span></dt>
+                <dd>
+                    <div *ngIf="sensorDevice.notificationGroupId">
+                        <a [routerLink]="['/notification-group', sensorDevice.notificationGroupId, 'view']">{{sensorDevice.notificationGroupId}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/sensor-device', sensorDevice.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

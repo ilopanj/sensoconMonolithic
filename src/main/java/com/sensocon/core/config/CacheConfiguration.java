@@ -41,6 +41,24 @@ public class CacheConfiguration {
             cm.createCache(com.sensocon.core.domain.User.class.getName(), jcacheConfiguration);
             cm.createCache(com.sensocon.core.domain.Authority.class.getName(), jcacheConfiguration);
             cm.createCache(com.sensocon.core.domain.User.class.getName() + ".authorities", jcacheConfiguration);
+            cm.createCache(com.sensocon.core.domain.Company.class.getName(), jcacheConfiguration);
+            cm.createCache(com.sensocon.core.domain.Company.class.getName() + ".locations", jcacheConfiguration);
+            cm.createCache(com.sensocon.core.domain.CompanySettings.class.getName(), jcacheConfiguration);
+            cm.createCache(com.sensocon.core.domain.Contact.class.getName(), jcacheConfiguration);
+            cm.createCache(com.sensocon.core.domain.Contact.class.getName() + ".notificationGroups", jcacheConfiguration);
+            cm.createCache(com.sensocon.core.domain.SensorDevice.class.getName(), jcacheConfiguration);
+            cm.createCache(com.sensocon.core.domain.SensorDevice.class.getName() + ".sensors", jcacheConfiguration);
+            cm.createCache(com.sensocon.core.domain.SensorDevice.class.getName() + ".loraPackets", jcacheConfiguration);
+            cm.createCache(com.sensocon.core.domain.Sensor.class.getName(), jcacheConfiguration);
+            cm.createCache(com.sensocon.core.domain.SensorThreshold.class.getName(), jcacheConfiguration);
+            cm.createCache(com.sensocon.core.domain.SensorGroup.class.getName(), jcacheConfiguration);
+            cm.createCache(com.sensocon.core.domain.NotificationGroup.class.getName(), jcacheConfiguration);
+            cm.createCache(com.sensocon.core.domain.NotificationGroup.class.getName() + ".sensorDevices", jcacheConfiguration);
+            cm.createCache(com.sensocon.core.domain.NotificationGroup.class.getName() + ".contacts", jcacheConfiguration);
+            cm.createCache(com.sensocon.core.domain.LoraGateway.class.getName(), jcacheConfiguration);
+            cm.createCache(com.sensocon.core.domain.LoraPacket.class.getName(), jcacheConfiguration);
+            cm.createCache(com.sensocon.core.domain.Location.class.getName(), jcacheConfiguration);
+            cm.createCache(com.sensocon.core.domain.Location.class.getName() + ".sensorDevices", jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

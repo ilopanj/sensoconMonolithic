@@ -1,0 +1,51 @@
+{
+    "name": "SensorDevice",
+    "fields": [
+        {
+            "fieldName": "deviceId",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "name",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "sensor",
+            "otherEntityName": "sensor",
+            "otherEntityRelationshipName": "sensorDevice"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "loraPacket",
+            "otherEntityName": "loraPacket",
+            "otherEntityRelationshipName": "sensorDevice"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "location",
+            "otherEntityName": "location",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "notificationGroup",
+            "otherEntityName": "notificationGroup",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20180822202325",
+    "entityTableName": "sensor_device",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

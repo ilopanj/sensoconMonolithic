@@ -5,6 +5,22 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180822202322_added_entity_Company.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180822202323_added_entity_CompanySettings.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180822202324_added_entity_Contact.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180822202325_added_entity_SensorDevice.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180822202326_added_entity_Sensor.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180822202327_added_entity_SensorThreshold.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180822202328_added_entity_SensorGroup.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180822202329_added_entity_NotificationGroup.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180822202330_added_entity_LoraGateway.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180822202331_added_entity_LoraPacket.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180822202332_added_entity_Location.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
+    <include file="config/liquibase/changelog/20180822202325_added_entity_constraints_SensorDevice.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180822202326_added_entity_constraints_Sensor.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180822202329_added_entity_constraints_NotificationGroup.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180822202331_added_entity_constraints_LoraPacket.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180822202332_added_entity_constraints_Location.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

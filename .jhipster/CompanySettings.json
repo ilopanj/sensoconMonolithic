@@ -1,0 +1,23 @@
+{
+    "name": "CompanySettings",
+    "fields": [
+        {
+            "fieldName": "defaultTimeoutSeconds",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "defaultSuppressionSeconds",
+            "fieldType": "Long"
+        }
+    ],
+    "relationships": [],
+    "changelogDate": "20180822202323",
+    "entityTableName": "company_settings",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

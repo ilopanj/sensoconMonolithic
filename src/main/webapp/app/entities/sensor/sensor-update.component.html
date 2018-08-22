@@ -1,0 +1,41 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-sensor-heading">Create or edit a Sensor</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!sensor.id">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="sensor.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_name">Name</label>
+                    <input type="text" class="form-control" name="name" id="field_name"
+                        [(ngModel)]="sensor.name" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_alertsEnabled">Alerts Enabled</label>
+                    <input type="checkbox" class="form-control" name="alertsEnabled" id="field_alertsEnabled"
+                        [(ngModel)]="sensor.alertsEnabled" />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_sensorDevice">Sensor Device</label>
+                    <select class="form-control" id="field_sensorDevice" name="sensorDevice" [(ngModel)]="sensor.sensorDeviceId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="sensorDeviceOption.id" *ngFor="let sensorDeviceOption of sensordevices; trackBy: trackSensorDeviceById">{{sensorDeviceOption.id}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
