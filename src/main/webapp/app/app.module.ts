@@ -16,6 +16,10 @@ import { SensoconMonolithicAppRoutingModule } from './app-routing.module';
 import { SensoconMonolithicHomeModule } from './home/home.module';
 import { SensoconMonolithicAccountModule } from './account/account.module';
 import { SensoconMonolithicEntityModule } from './entities/entity.module';
+import { SensoconMonolithicDashboardModule } from './dashboard/dashboard.module';
+import { SensoconMonolithicAppHiThereModule } from './hi-there/hi-there.module';
+import { CommonModule } from '@angular/common';
+import { PlotlyModule } from 'angular-plotly.js';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent, ErrorComponent } from './layouts';
 
@@ -28,7 +32,11 @@ import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent
         SensoconMonolithicCoreModule,
         SensoconMonolithicHomeModule,
         SensoconMonolithicAccountModule,
-        SensoconMonolithicEntityModule
+        SensoconMonolithicEntityModule,
+        SensoconMonolithicDashboardModule,
+        SensoconMonolithicAppHiThereModule,
+        CommonModule,
+        PlotlyModule
         // jhipster-needle-angular-add-module JHipster will add new module here
     ],
     declarations: [JhiMainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, FooterComponent],
