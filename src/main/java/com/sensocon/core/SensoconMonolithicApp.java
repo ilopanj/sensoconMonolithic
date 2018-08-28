@@ -12,7 +12,7 @@ import org.springframework.boot.actuate.autoconfigure.metrics.jdbc.DataSourcePoo
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+//import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.core.env.Environment;
 
 import javax.annotation.PostConstruct;
@@ -22,7 +22,7 @@ import java.util.Collection;
 
 @SpringBootApplication(exclude = DataSourcePoolMetricsAutoConfiguration.class)
 @EnableConfigurationProperties({LiquibaseProperties.class, ApplicationProperties.class})
-@EnableDiscoveryClient
+//@EnableDiscoveryClient
 public class SensoconMonolithicApp {
 
     private static final Logger log = LoggerFactory.getLogger(SensoconMonolithicApp.class);
