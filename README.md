@@ -23,6 +23,13 @@ auto-refreshes when files change on your hard drive.
     ./mvnw
     yarn start
 
+NOTE: need to make sure kafka and mysql are running first. This is how you start them:
+
+    docker-compose -f src/main/docker/mysql.yml up -d
+
+    docker-compose -f src/main/docker/kafka.yml up -d
+
+
 [Yarn][] is also used to manage CSS and JavaScript dependencies used in this application. You can upgrade dependencies by
 specifying a newer version in [package.json](package.json). You can also run `yarn update` and `yarn install` to manage dependencies.
 Add the `help` flag on any command to see how you can use it. For example, `yarn help update`.
