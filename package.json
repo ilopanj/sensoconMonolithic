@@ -1,4 +1,3 @@
-
 {
   "name": "sensocon-monolithic",
   "version": "0.0.0",
@@ -9,10 +8,13 @@
     "node_modules"
   ],
   "dependencies": {
+    "@angular/animations": "^6.1.4",
+    "@angular/cdk": "^6.4.6",
     "@angular/common": "6.1.0",
     "@angular/compiler": "6.1.0",
     "@angular/core": "6.1.0",
     "@angular/forms": "6.1.0",
+    "@angular/material": "^6.4.6",
     "@angular/platform-browser": "6.1.0",
     "@angular/platform-browser-dynamic": "6.1.0",
     "@angular/router": "6.1.0",
@@ -31,10 +33,10 @@
     "reflect-metadata": "0.1.12",
     "rxjs": "6.1.0",
     "rxjs-compat": "6.1.0",
-    "swagger-ui": "2.2.10",
     "sockjs-client": "1.1.4",
-    "webstomp-client": "1.2.0",
+    "swagger-ui": "2.2.10",
     "tslib": "1.9.3",
+    "webstomp-client": "1.2.0",
     "zone.js": "0.8.26"
   },
   "devDependencies": {
@@ -96,7 +98,10 @@
     "yarn": ">=1.3.2"
   },
   "lint-staged": {
-    "src/**/*.{ts,css,scss}": ["prettier --write", "git add"]
+    "src/**/*.{ts,css,scss}": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "scripts": {
     "precommit": "lint-staged",
