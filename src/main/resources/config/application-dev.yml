@@ -59,10 +59,16 @@ spring:
     liquibase:
         contexts: dev
     mail:
-        host: localhost
-        port: 25
-        username:
-        password:
+        host: smtp.gmail.com
+        port: 465 
+        username: jnapoli@hagnerheit.com
+        password: Pegasus123$
+        protocol: smtps
+        tls: true
+        properties.mail.smtps:
+                auth: true
+                starttls.enable: true
+                ssl.trust: smtp.gmail.com
     messages:
         cache-duration: PT1S # 1 second, see the ISO 8601 standard
     thymeleaf:
@@ -123,8 +129,8 @@ jhipster:
                 token-validity-in-seconds: 86400
                 token-validity-in-seconds-for-remember-me: 2592000
     mail: # specific JHipster mail property, for standard properties see MailProperties
-        from: sensoconMonolithic@localhost
-        base-url: http://127.0.0.1:8080
+        from: jnapoli@hagnerheit.com
+        base-url: http://test.sensocon.com:8080
     metrics: # DropWizard Metrics configuration, used by MetricsConfiguration
         jmx:
             enabled: true
