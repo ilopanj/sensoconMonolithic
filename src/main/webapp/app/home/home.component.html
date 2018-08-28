@@ -1,43 +1,71 @@
 <div class="row">
-    <div class="col-md-3">
-        <span class="hipster img-fluid rounded"></span>
-    </div>
-    <div class="col-md-9">
-        <h1 class="display-4">Sensocon Portal</h1>
-
-        <!--
-        <p class="lead">Sensicon Portal</p>
-        -->
-
+    <div class="col-md-12">
         <div [ngSwitch]="isAuthenticated()">
-            <div class="alert alert-success" *ngSwitchCase="true">
-                <span id="home-logged-message" *ngIf="account"
-                   > You are logged in as user "{{account.login}}". </span>
-            </div>
-
             <div class="alert alert-warning" *ngSwitchCase="false">
                 <span>Warning, Unauthorized. Please </span>
                 <a class="alert-link" (click)="login()">sign in</a><span>, to access your account<br/></span>
             </div>
             <div class="alert alert-warning" *ngSwitchCase="false">
                 <span>If you don't have an account, please contact your administrator.</span>&nbsp;
-
-                <!--
-                <a class="alert-link" routerLink="register">Register a new account</a>
-                -->
-
             </div>
-
         </div>
+    </div>
+</div>
+<div>
+    <h2 id="page-heading">
+        <span>Sensor Locations</span>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="table-responsive" *ngIf="locations">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th><span>ID</span></th>
+                <th><span>Name</span></th>
+                <th><span>Street Address</span></th>
+                <th><span>Postal Code</span></th>
+                <th><span>City</span></th>
+                <th><span>State Province</span></th>
+                <th><span>Company</span></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let location of locations ;trackBy: trackId">
+                <td><a [routerLink]="['/location', location.id, 'view' ]">{{location.id}}</a></td>
+                <td>{{location.name}}</td>
+                <td>{{location.streetAddress}}</td>
+                <td>{{location.postalCode}}</td>
+                <td>{{location.city}}</td>
+                <td>{{location.stateProvince}}</td>
+                <td>
+                    <div *ngIf="location.companyId">
+                        <a [routerLink]="['../company', location.companyId , 'view' ]" >{{location.companyId}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['/detail', location.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 
-        <!--
-        <ul>
-            <li><a href="https://www.jhipster.tech/" target="_blank" rel="noopener">JHipster homepage</a></li>
-            <li><a href="http://stackoverflow.com/tags/jhipster/info" target="_blank" rel="noopener">JHipster on Stack Overflow</a></li>
-            <li><a href="https://github.com/jhipster/generator-jhipster/issues?state=open" target="_blank" rel="noopener">JHipster bug tracker</a></li>
-            <li><a href="https://gitter.im/jhipster/generator-jhipster" target="_blank" rel="noopener">JHipster public chat room</a></li>
-            <li><a href="https://twitter.com/java_hipster" target="_blank" rel="noopener">follow @java_hipster on Twitter</a></li>
-        </ul>
-        -->
+<div class="row">
+    <div class="col-md-12">
+            <div [ngSwitch]="isAuthenticated()">
+                <div class="alert alert-success" *ngSwitchCase="true">
+                    <span id="home-logged-message-2" *ngIf="account"> You are logged in as user "{{account.login}}". </span>
+                </div>
+            </div>
     </div>
 </div>

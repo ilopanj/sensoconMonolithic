@@ -1,12 +1,56 @@
 import { Route } from '@angular/router';
-
 import { HomeComponent } from './';
+import { Injectable } from '@angular/core';
+import { HttpResponse } from '@angular/common/http';
+import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@angular/router';
+import { UserRouteAccessService } from 'app/core';
+import { of } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Location } from 'app/shared/model/location.model';
+import { LocationService } from 'app/entities/location/location.service';
+import { ILocation } from 'app/shared/model/location.model';
 
-export const HOME_ROUTE: Route = {
-    path: '',
-    component: HomeComponent,
-    data: {
-        authorities: [],
-        pageTitle: 'Sensicon'
+@Injectable({ providedIn: 'root' })
+export class LocationResolve implements Resolve<ILocation> {
+    constructor(private service: LocationService) {}
+
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+        const id = route.params['id'] ? route.params['id'] : null;
+        if (id) {
+            return this.service.find(id).pipe(map((location: HttpResponse<Location>) => location.body));
+        }
+        return of(new Location());
     }
-};
+}
+
+/*
+export const HOME_ROUTE: Route = { path: '',
+        component: HomeComponent,
+        data: {
+            authorities: [],
+            pageTitle: 'Sensicon'
+        },
+        canActivate: [UserRouteAccessService]
+    };
+*/
+
+export const HOME_ROUTE: Routes = [
+    {
+        path: '',
+        component: HomeComponent,
+        data: {
+            authorities: [],
+            pageTitle: 'Sensicon'
+        },
+        canActivate: [UserRouteAccessService]
+    },
+    {
+        path: 'detail/:id/view',
+        component: HomeComponent,
+        data: {
+            authorities: [],
+            pageTitle: 'Sensicon Details'
+        },
+        canActivate: [UserRouteAccessService]
+    }
+];
