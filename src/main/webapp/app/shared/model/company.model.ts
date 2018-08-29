@@ -1,4 +1,4 @@
-import { ILocation } from 'app/shared/model//location.model';
+import { ILocation } from 'app/shared/model/location.model';
 
 export interface ICompany {
     id?: number;

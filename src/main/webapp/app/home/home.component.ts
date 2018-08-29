@@ -23,7 +23,9 @@ export class HomeComponent implements OnInit, OnDestroy {
         private jhiAlertService: JhiAlertService,
         private eventManager: JhiEventManager,
         private locationService: LocationService
-    ) {}
+    ) {
+        // var b = this.isAuthenticated();
+    }
 
     loadAll() {
         this.locationService.query().subscribe(
