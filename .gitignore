@@ -22,6 +22,9 @@ npm-debug.log.*
 ######################
 # Eclipse
 ######################
+.cache-main
+.cache-tests
+.worksheet
 *.pydevproject
 .project
 .metadata
