@@ -1,34 +1,39 @@
-<div class="row">
-    <div class="col-md-12">
-        <div [ngSwitch]="isAuthenticated()">
-            <div class="alert alert-warning" *ngSwitchCase="false">
-                <span>Warning, Unauthorized. Please </span>
-                <a class="alert-link" (click)="login()">sign in</a><span>, to access your account<br/></span>
-            </div>
-            <div class="alert alert-warning" *ngSwitchCase="false">
-                <span>If you don't have an account, please contact your administrator.</span>&nbsp;
-            </div>
-        </div>
-    </div>
-</div>
+
 <div>
+
     <h2 id="page-heading">
         <span>Sensor Locations</span>
     </h2>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div [ngSwitch]="isAuthenticated()">
+                <div class="alert alert-warning" *ngSwitchCase="false">
+                    <span>Warning, Unauthorized. Please </span>
+                    <a class="alert-link" (click)="login()">sign in</a><span>, to access your account<br/></span>
+                </div>
+                <div class="alert alert-warning" *ngSwitchCase="false">
+                    <span>If you don't have an account, please contact your administrator.</span>&nbsp;
+                </div>
+            </div>
+        </div>
+    </div>
+
     <jhi-alert></jhi-alert>
+
     <br/>
     <div class="table-responsive" *ngIf="locations">
         <table class="table table-striped">
             <thead>
             <tr>
                 <th><span>ID</span></th>
-                <th><span>Name</span></th>
+                <th><span>Company</span></th>
                 <th><span>Street Address</span></th>
                 <th><span>Postal Code</span></th>
                 <th><span>City</span></th>
                 <th><span>State Province</span></th>
-                <th><span>Company</span></th>
-                <th></th>
+                <th><span>Company Detail</span></th>
+                <th><span>Location Detail</span></th>
             </tr>
             </thead>
             <tbody>
@@ -39,21 +44,29 @@
                 <td>{{location.postalCode}}</td>
                 <td>{{location.city}}</td>
                 <td>{{location.stateProvince}}</td>
-                <td>
-                    <div *ngIf="location.companyId">
-                        <a [routerLink]="['../company', location.companyId , 'view' ]" >{{location.companyId}}</a>
+
+                <td class="text-center">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['/company', location.companyId, 'view']"
+                                class="btn btn-warning btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline">Go</span>
+                        </button>
                     </div>
                 </td>
-                <td class="text-right">
+
+                <td class="text-center">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"
                                 [routerLink]="['/detail', location.id, 'view' ]"
                                 class="btn btn-info btn-sm">
                             <fa-icon [icon]="'eye'"></fa-icon>
-                            <span class="d-none d-md-inline">View</span>
+                            <span class="d-none d-md-inline">Go</span>
                         </button>
                     </div>
                 </td>
+
             </tr>
             </tbody>
         </table>

@@ -1,12 +1,12 @@
 <div>
     <h2>
-        <span id="metrics-page-heading">Application Metrics</span>
+        <span id="metrics-page-heading">Sensocon Cloud Metrics</span>
         <button class="btn btn-primary float-right" (click)="refresh()">
             <fa-icon [icon]="'sync'"></fa-icon> <span>Refresh</span>
         </button>
     </h2>
 
-    <h3>JVM Metrics</h3>
+    <h3>Virtual Machine(s)</h3>
     <div class="row" *ngIf="!updatingMetrics">
         <div class="col-md-4">
             <b>Memory</b>
@@ -64,7 +64,7 @@
     </div>
     <div class="well well-lg" *ngIf="updatingMetrics">Updating...</div>
 
-    <h3>HTTP requests (events per second)</h3>
+    <h3>Sensor Traffic (events per second)</h3>
     <p *ngIf="metrics.counters">
         <span>Active requests</span> <b>{{metrics.counters['com.codahale.metrics.servlet.InstrumentedFilter.activeRequests'].count | number:'1.0-0'}}</b> - <span>Total requests</span> <b>{{metrics.timers['com.codahale.metrics.servlet.InstrumentedFilter.requests'].count | number:'1.0-0'}}</b>
     </p>
