@@ -6,6 +6,7 @@ import java.util.Objects;
 /**
  * A DTO for the CompanySettings entity.
  */
+@SuppressWarnings("serial")
 public class CompanySettingsDTO implements Serializable {
 
     private Long id;

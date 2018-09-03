@@ -6,6 +6,7 @@ import java.util.Objects;
 /**
  * A DTO for the Company entity.
  */
+@SuppressWarnings("serial")
 public class CompanyDTO implements Serializable {
 
     private Long id;

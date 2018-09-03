@@ -6,6 +6,7 @@ import java.util.Objects;
 /**
  * A DTO for the LoraGateway entity.
  */
+@SuppressWarnings("serial")
 public class LoraGatewayDTO implements Serializable {
 
     private Long id;

@@ -7,6 +7,7 @@ import java.util.Objects;
 /**
  * A DTO for the LoraPacket entity.
  */
+@SuppressWarnings("serial")
 public class LoraPacketDTO implements Serializable {
 
     private Long id;

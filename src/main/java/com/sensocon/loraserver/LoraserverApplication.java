@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.sensocon.core.repository.MongoLoraPacketRepository;
 
 
-//@SpringBootApplication
 public class LoraserverApplication {
 	
 @Autowired

@@ -73,17 +73,16 @@ public class CamelRouter extends RouteBuilder {
         			
 		
         from("direct:loraPacket")
-         .multicast().parallelProcessing()
-         	.to("direct:loraPacket_persistence")
-         	.to("direct:loraPacket_websocket");
+        		.unmarshal().json(JsonLibrary.Jackson, MongoLoraPacket.class)
+        		.multicast().parallelProcessing()
+        			.to("direct:loraPacket_persistence")
+        			.to("direct:loraPacket_websocket");
        
         from("direct:loraPacket_websocket")
+        		.marshal().json(JsonLibrary.Jackson)
         		.to("websocket://lora?sendToAll=true");
         
         from("direct:loraPacket_persistence")
-        		.unmarshal().json(JsonLibrary.Jackson, MongoLoraPacket.class)
-        		//to("log:")
-        		//.to("mongodb:myDb?database=sensocon_dev&collection=loraPackets&operation=insert");
         		.bean(loraRepo, "save");
        
         from("direct:loraPacket_find").bean(loraRepo, "findByDeviceId(${header.id})")

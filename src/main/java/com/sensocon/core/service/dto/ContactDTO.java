@@ -7,6 +7,7 @@ import java.util.Objects;
 /**
  * A DTO for the Contact entity.
  */
+@SuppressWarnings("serial")
 public class ContactDTO implements Serializable {
 
     private Long id;
