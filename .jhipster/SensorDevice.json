@@ -16,9 +16,21 @@
     "relationships": [
         {
             "relationshipType": "one-to-many",
-            "relationshipName": "sensor",
+            "relationshipName": "sensors",
             "otherEntityName": "sensor",
             "otherEntityRelationshipName": "sensorDevice"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "thresholds",
+            "otherEntityName": "sensorThreshold",
+            "otherEntityRelationshipName": "sensorDevice"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "notificationGroup",
+            "otherEntityName": "notificationGroup",
+            "otherEntityField": "id"
         },
         {
             "relationshipType": "one-to-many",
@@ -27,15 +39,9 @@
             "otherEntityRelationshipName": "sensorDevice"
         },
         {
-            "relationshipType": "many-to-one",
             "relationshipName": "location",
             "otherEntityName": "location",
-            "otherEntityField": "id"
-        },
-        {
             "relationshipType": "many-to-one",
-            "relationshipName": "notificationGroup",
-            "otherEntityName": "notificationGroup",
             "otherEntityField": "id"
         }
     ],

@@ -19,5 +19,11 @@
                                  referencedColumnNames="id"
                                  referencedTableName="contact"/>
         
+        <addForeignKeyConstraint baseColumnNames="company_id"
+                                 baseTableName="notification_group"
+                                 constraintName="fk_notification_group_company_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="company"/>
+
     </changeSet>
 </databaseChangeLog>

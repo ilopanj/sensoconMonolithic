@@ -9,9 +9,23 @@
                 <dd>
                     <span>{{sensor.name}}</span>
                 </dd>
-                <dt><span>Alerts Enabled</span></dt>
+                <dt><span>Status</span></dt>
                 <dd>
-                    <span>{{sensor.alertsEnabled}}</span>
+                    <span>{{sensor.status}}</span>
+                </dd>
+                <dt><span>Sensor Type</span></dt>
+                <dd>
+                    <span>{{sensor.sensorType}}</span>
+                </dd>
+                <dt><span>Last Alert</span></dt>
+                <dd>
+                    <span>{{sensor.lastAlert}}</span>
+                </dd>
+                <dt><span>Sensor Group</span></dt>
+                <dd>
+                    <div *ngIf="sensor.sensorGroupId">
+                        <a [routerLink]="['/sensor-group', sensor.sensorGroupId, 'view']">{{sensor.sensorGroupId}}</a>
+                    </div>
                 </dd>
                 <dt><span>Sensor Device</span></dt>
                 <dd>

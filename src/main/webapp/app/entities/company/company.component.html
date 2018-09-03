@@ -20,6 +20,7 @@
             <th><span>Postal Code</span></th>
             <th><span>City</span></th>
             <th><span>State Province</span></th>
+            <th><span>Company Settings</span></th>
             <th></th>
             </tr>
             </thead>
@@ -31,6 +32,11 @@
                 <td>{{company.postalCode}}</td>
                 <td>{{company.city}}</td>
                 <td>{{company.stateProvince}}</td>
+                <td>
+                    <div *ngIf="company.companySettingsId">
+                        <a [routerLink]="['../company-settings', company.companySettingsId , 'view' ]" >{{company.companySettingsId}}</a>
+                    </div>
+                </td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"

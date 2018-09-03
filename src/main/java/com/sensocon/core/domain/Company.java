@@ -40,9 +40,25 @@ public class Company implements Serializable {
     @Column(name = "state_province")
     private String stateProvince;
 
+    @OneToOne
+    @JoinColumn(unique = true)
+    private CompanySettings companySettings;
+
     @OneToMany(mappedBy = "company")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Location> locations = new HashSet<>();
+
+    @OneToMany(mappedBy = "company")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<SensorGroup> sensorGroups = new HashSet<>();
+
+    @OneToMany(mappedBy = "company")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Contact> contacts = new HashSet<>();
+
+    @OneToMany(mappedBy = "company")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<NotificationGroup> notificationGroups = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -118,6 +134,19 @@ public class Company implements Serializable {
         this.stateProvince = stateProvince;
     }
 
+    public CompanySettings getCompanySettings() {
+        return companySettings;
+    }
+
+    public Company companySettings(CompanySettings companySettings) {
+        this.companySettings = companySettings;
+        return this;
+    }
+
+    public void setCompanySettings(CompanySettings companySettings) {
+        this.companySettings = companySettings;
+    }
+
     public Set<Location> getLocations() {
         return locations;
     }
@@ -141,6 +170,81 @@ public class Company implements Serializable {
 
     public void setLocations(Set<Location> locations) {
         this.locations = locations;
+    }
+
+    public Set<SensorGroup> getSensorGroups() {
+        return sensorGroups;
+    }
+
+    public Company sensorGroups(Set<SensorGroup> sensorGroups) {
+        this.sensorGroups = sensorGroups;
+        return this;
+    }
+
+    public Company addSensorGroup(SensorGroup sensorGroup) {
+        this.sensorGroups.add(sensorGroup);
+        sensorGroup.setCompany(this);
+        return this;
+    }
+
+    public Company removeSensorGroup(SensorGroup sensorGroup) {
+        this.sensorGroups.remove(sensorGroup);
+        sensorGroup.setCompany(null);
+        return this;
+    }
+
+    public void setSensorGroups(Set<SensorGroup> sensorGroups) {
+        this.sensorGroups = sensorGroups;
+    }
+
+    public Set<Contact> getContacts() {
+        return contacts;
+    }
+
+    public Company contacts(Set<Contact> contacts) {
+        this.contacts = contacts;
+        return this;
+    }
+
+    public Company addContact(Contact contact) {
+        this.contacts.add(contact);
+        contact.setCompany(this);
+        return this;
+    }
+
+    public Company removeContact(Contact contact) {
+        this.contacts.remove(contact);
+        contact.setCompany(null);
+        return this;
+    }
+
+    public void setContacts(Set<Contact> contacts) {
+        this.contacts = contacts;
+    }
+
+    public Set<NotificationGroup> getNotificationGroups() {
+        return notificationGroups;
+    }
+
+    public Company notificationGroups(Set<NotificationGroup> notificationGroups) {
+        this.notificationGroups = notificationGroups;
+        return this;
+    }
+
+    public Company addNotificationGroup(NotificationGroup notificationGroup) {
+        this.notificationGroups.add(notificationGroup);
+        notificationGroup.setCompany(this);
+        return this;
+    }
+
+    public Company removeNotificationGroup(NotificationGroup notificationGroup) {
+        this.notificationGroups.remove(notificationGroup);
+        notificationGroup.setCompany(null);
+        return this;
+    }
+
+    public void setNotificationGroups(Set<NotificationGroup> notificationGroups) {
+        this.notificationGroups = notificationGroups;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

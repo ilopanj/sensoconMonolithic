@@ -6,7 +6,6 @@ import java.util.Objects;
 /**
  * A DTO for the Company entity.
  */
-@SuppressWarnings("serial")
 public class CompanyDTO implements Serializable {
 
     private Long id;
@@ -20,6 +19,8 @@ public class CompanyDTO implements Serializable {
     private String city;
 
     private String stateProvince;
+
+    private Long companySettingsId;
 
     public Long getId() {
         return id;
@@ -69,6 +70,14 @@ public class CompanyDTO implements Serializable {
         this.stateProvince = stateProvince;
     }
 
+    public Long getCompanySettingsId() {
+        return companySettingsId;
+    }
+
+    public void setCompanySettingsId(Long companySettingsId) {
+        this.companySettingsId = companySettingsId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -99,6 +108,7 @@ public class CompanyDTO implements Serializable {
             ", postalCode='" + getPostalCode() + "'" +
             ", city='" + getCity() + "'" +
             ", stateProvince='" + getStateProvince() + "'" +
+            ", companySettings=" + getCompanySettingsId() +
             "}";
     }
 }

@@ -33,6 +33,7 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import com.sensocon.core.domain.enumeration.SensorType;
 /**
  * Test class for the SensorGroupResource REST controller.
  *
@@ -44,6 +45,9 @@ public class SensorGroupResourceIntTest {
 
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
+
+    private static final SensorType DEFAULT_SENSOR_TYPE = SensorType.PRESSURE;
+    private static final SensorType UPDATED_SENSOR_TYPE = SensorType.TEMPERATURE;
 
     @Autowired
     private SensorGroupRepository sensorGroupRepository;
@@ -91,7 +95,8 @@ public class SensorGroupResourceIntTest {
      */
     public static SensorGroup createEntity(EntityManager em) {
         SensorGroup sensorGroup = new SensorGroup()
-            .name(DEFAULT_NAME);
+            .name(DEFAULT_NAME)
+            .sensorType(DEFAULT_SENSOR_TYPE);
         return sensorGroup;
     }
 
@@ -117,6 +122,7 @@ public class SensorGroupResourceIntTest {
         assertThat(sensorGroupList).hasSize(databaseSizeBeforeCreate + 1);
         SensorGroup testSensorGroup = sensorGroupList.get(sensorGroupList.size() - 1);
         assertThat(testSensorGroup.getName()).isEqualTo(DEFAULT_NAME);
+        assertThat(testSensorGroup.getSensorType()).isEqualTo(DEFAULT_SENSOR_TYPE);
     }
 
     @Test
@@ -150,7 +156,8 @@ public class SensorGroupResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(sensorGroup.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())));
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
+            .andExpect(jsonPath("$.[*].sensorType").value(hasItem(DEFAULT_SENSOR_TYPE.toString())));
     }
     
 
@@ -165,7 +172,8 @@ public class SensorGroupResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(sensorGroup.getId().intValue()))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()));
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
+            .andExpect(jsonPath("$.sensorType").value(DEFAULT_SENSOR_TYPE.toString()));
     }
     @Test
     @Transactional
@@ -188,7 +196,8 @@ public class SensorGroupResourceIntTest {
         // Disconnect from session so that the updates on updatedSensorGroup are not directly saved in db
         em.detach(updatedSensorGroup);
         updatedSensorGroup
-            .name(UPDATED_NAME);
+            .name(UPDATED_NAME)
+            .sensorType(UPDATED_SENSOR_TYPE);
         SensorGroupDTO sensorGroupDTO = sensorGroupMapper.toDto(updatedSensorGroup);
 
         restSensorGroupMockMvc.perform(put("/api/sensor-groups")
@@ -201,6 +210,7 @@ public class SensorGroupResourceIntTest {
         assertThat(sensorGroupList).hasSize(databaseSizeBeforeUpdate);
         SensorGroup testSensorGroup = sensorGroupList.get(sensorGroupList.size() - 1);
         assertThat(testSensorGroup.getName()).isEqualTo(UPDATED_NAME);
+        assertThat(testSensorGroup.getSensorType()).isEqualTo(UPDATED_SENSOR_TYPE);
     }
 
     @Test

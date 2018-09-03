@@ -4,9 +4,34 @@
         {
             "fieldName": "name",
             "fieldType": "String"
+        },
+        {
+            "fieldName": "sensorType",
+            "fieldType": "SensorType",
+            "fieldValues": "PRESSURE,TEMPERATURE,HUMIDITY,ON_OFF"
         }
     ],
-    "relationships": [],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "defaultThresholds",
+            "otherEntityName": "sensorThreshold",
+            "otherEntityRelationshipName": "sensorGroup"
+        },
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "sensor",
+            "otherEntityName": "sensor",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "sensorGroup"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "company",
+            "otherEntityName": "company",
+            "otherEntityField": "id"
+        }
+    ],
     "changelogDate": "20180822202328",
     "entityTableName": "sensor_group",
     "dto": "mapstruct",

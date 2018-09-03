@@ -6,11 +6,35 @@
             "fieldType": "String"
         },
         {
-            "fieldName": "alertsEnabled",
-            "fieldType": "Boolean"
+            "fieldName": "status",
+            "fieldType": "SensorStatus",
+            "fieldValues": "STATE_NORMAL,STATE_ALERT,STATE_INACTIVE"
+        },
+        {
+            "fieldName": "sensorType",
+            "fieldType": "SensorType",
+            "fieldValues": "PRESSURE,TEMPERATURE,HUMIDITY,ON_OFF"
+        },
+        {
+            "fieldName": "lastAlert",
+            "fieldType": "Instant"
         }
     ],
     "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "sensorGroup",
+            "otherEntityName": "sensorGroup",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "sensor"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "thresholds",
+            "otherEntityName": "sensorThreshold",
+            "otherEntityRelationshipName": "sensor"
+        },
         {
             "relationshipType": "many-to-one",
             "relationshipName": "sensorDevice",

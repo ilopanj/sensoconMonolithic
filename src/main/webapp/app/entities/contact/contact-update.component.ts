@@ -6,6 +6,8 @@ import { JhiAlertService } from 'ng-jhipster';
 
 import { IContact } from 'app/shared/model/contact.model';
 import { ContactService } from './contact.service';
+import { ICompany } from 'app/shared/model/company.model';
+import { CompanyService } from 'app/entities/company';
 import { INotificationGroup } from 'app/shared/model/notification-group.model';
 import { NotificationGroupService } from 'app/entities/notification-group';
 
@@ -17,11 +19,14 @@ export class ContactUpdateComponent implements OnInit {
     private _contact: IContact;
     isSaving: boolean;
 
+    companies: ICompany[];
+
     notificationgroups: INotificationGroup[];
 
     constructor(
         private jhiAlertService: JhiAlertService,
         private contactService: ContactService,
+        private companyService: CompanyService,
         private notificationGroupService: NotificationGroupService,
         private activatedRoute: ActivatedRoute
     ) {}
@@ -31,6 +36,12 @@ export class ContactUpdateComponent implements OnInit {
         this.activatedRoute.data.subscribe(({ contact }) => {
             this.contact = contact;
         });
+        this.companyService.query().subscribe(
+            (res: HttpResponse<ICompany[]>) => {
+                this.companies = res.body;
+            },
+            (res: HttpErrorResponse) => this.onError(res.message)
+        );
         this.notificationGroupService.query().subscribe(
             (res: HttpResponse<INotificationGroup[]>) => {
                 this.notificationgroups = res.body;
@@ -67,6 +78,10 @@ export class ContactUpdateComponent implements OnInit {
 
     private onError(errorMessage: string) {
         this.jhiAlertService.error(errorMessage, null, null);
+    }
+
+    trackCompanyById(index: number, item: ICompany) {
+        return item.id;
     }
 
     trackNotificationGroupById(index: number, item: INotificationGroup) {

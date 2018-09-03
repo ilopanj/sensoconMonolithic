@@ -42,20 +42,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = SensoconMonolithicApp.class)
 public class ContactResourceIntTest {
 
-    private static final String DEFAULT_EMAIL_ADDRESS = "AAAAAAAAAA";
-    private static final String UPDATED_EMAIL_ADDRESS = "BBBBBBBBBB";
-
-    private static final String DEFAULT_FIRST_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_FIRST_NAME = "BBBBBBBBBB";
-
-    private static final String DEFAULT_LAST_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_LAST_NAME = "BBBBBBBBBB";
-
-    private static final String DEFAULT_PHONE_NUMBER = "AAAAAAAAAA";
-    private static final String UPDATED_PHONE_NUMBER = "BBBBBBBBBB";
-
-    private static final String DEFAULT_ALERT_NUMBER = "AAAAAAAAAA";
-    private static final String UPDATED_ALERT_NUMBER = "BBBBBBBBBB";
+    private static final String DEFAULT_ALERT_PHONE_NUMBER = "AAAAAAAAAA";
+    private static final String UPDATED_ALERT_PHONE_NUMBER = "BBBBBBBBBB";
 
     private static final String DEFAULT_ALERT_EMAIL = "AAAAAAAAAA";
     private static final String UPDATED_ALERT_EMAIL = "BBBBBBBBBB";
@@ -106,11 +94,7 @@ public class ContactResourceIntTest {
      */
     public static Contact createEntity(EntityManager em) {
         Contact contact = new Contact()
-            .emailAddress(DEFAULT_EMAIL_ADDRESS)
-            .firstName(DEFAULT_FIRST_NAME)
-            .lastName(DEFAULT_LAST_NAME)
-            .phoneNumber(DEFAULT_PHONE_NUMBER)
-            .alertNumber(DEFAULT_ALERT_NUMBER)
+            .alertPhoneNumber(DEFAULT_ALERT_PHONE_NUMBER)
             .alertEmail(DEFAULT_ALERT_EMAIL);
         return contact;
     }
@@ -136,11 +120,7 @@ public class ContactResourceIntTest {
         List<Contact> contactList = contactRepository.findAll();
         assertThat(contactList).hasSize(databaseSizeBeforeCreate + 1);
         Contact testContact = contactList.get(contactList.size() - 1);
-        assertThat(testContact.getEmailAddress()).isEqualTo(DEFAULT_EMAIL_ADDRESS);
-        assertThat(testContact.getFirstName()).isEqualTo(DEFAULT_FIRST_NAME);
-        assertThat(testContact.getLastName()).isEqualTo(DEFAULT_LAST_NAME);
-        assertThat(testContact.getPhoneNumber()).isEqualTo(DEFAULT_PHONE_NUMBER);
-        assertThat(testContact.getAlertNumber()).isEqualTo(DEFAULT_ALERT_NUMBER);
+        assertThat(testContact.getAlertPhoneNumber()).isEqualTo(DEFAULT_ALERT_PHONE_NUMBER);
         assertThat(testContact.getAlertEmail()).isEqualTo(DEFAULT_ALERT_EMAIL);
     }
 
@@ -166,63 +146,6 @@ public class ContactResourceIntTest {
 
     @Test
     @Transactional
-    public void checkEmailAddressIsRequired() throws Exception {
-        int databaseSizeBeforeTest = contactRepository.findAll().size();
-        // set the field null
-        contact.setEmailAddress(null);
-
-        // Create the Contact, which fails.
-        ContactDTO contactDTO = contactMapper.toDto(contact);
-
-        restContactMockMvc.perform(post("/api/contacts")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(contactDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Contact> contactList = contactRepository.findAll();
-        assertThat(contactList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkFirstNameIsRequired() throws Exception {
-        int databaseSizeBeforeTest = contactRepository.findAll().size();
-        // set the field null
-        contact.setFirstName(null);
-
-        // Create the Contact, which fails.
-        ContactDTO contactDTO = contactMapper.toDto(contact);
-
-        restContactMockMvc.perform(post("/api/contacts")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(contactDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Contact> contactList = contactRepository.findAll();
-        assertThat(contactList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkLastNameIsRequired() throws Exception {
-        int databaseSizeBeforeTest = contactRepository.findAll().size();
-        // set the field null
-        contact.setLastName(null);
-
-        // Create the Contact, which fails.
-        ContactDTO contactDTO = contactMapper.toDto(contact);
-
-        restContactMockMvc.perform(post("/api/contacts")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(contactDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Contact> contactList = contactRepository.findAll();
-        assertThat(contactList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void getAllContacts() throws Exception {
         // Initialize the database
         contactRepository.saveAndFlush(contact);
@@ -232,11 +155,7 @@ public class ContactResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(contact.getId().intValue())))
-            .andExpect(jsonPath("$.[*].emailAddress").value(hasItem(DEFAULT_EMAIL_ADDRESS.toString())))
-            .andExpect(jsonPath("$.[*].firstName").value(hasItem(DEFAULT_FIRST_NAME.toString())))
-            .andExpect(jsonPath("$.[*].lastName").value(hasItem(DEFAULT_LAST_NAME.toString())))
-            .andExpect(jsonPath("$.[*].phoneNumber").value(hasItem(DEFAULT_PHONE_NUMBER.toString())))
-            .andExpect(jsonPath("$.[*].alertNumber").value(hasItem(DEFAULT_ALERT_NUMBER.toString())))
+            .andExpect(jsonPath("$.[*].alertPhoneNumber").value(hasItem(DEFAULT_ALERT_PHONE_NUMBER.toString())))
             .andExpect(jsonPath("$.[*].alertEmail").value(hasItem(DEFAULT_ALERT_EMAIL.toString())));
     }
     
@@ -252,11 +171,7 @@ public class ContactResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(contact.getId().intValue()))
-            .andExpect(jsonPath("$.emailAddress").value(DEFAULT_EMAIL_ADDRESS.toString()))
-            .andExpect(jsonPath("$.firstName").value(DEFAULT_FIRST_NAME.toString()))
-            .andExpect(jsonPath("$.lastName").value(DEFAULT_LAST_NAME.toString()))
-            .andExpect(jsonPath("$.phoneNumber").value(DEFAULT_PHONE_NUMBER.toString()))
-            .andExpect(jsonPath("$.alertNumber").value(DEFAULT_ALERT_NUMBER.toString()))
+            .andExpect(jsonPath("$.alertPhoneNumber").value(DEFAULT_ALERT_PHONE_NUMBER.toString()))
             .andExpect(jsonPath("$.alertEmail").value(DEFAULT_ALERT_EMAIL.toString()));
     }
     @Test
@@ -280,11 +195,7 @@ public class ContactResourceIntTest {
         // Disconnect from session so that the updates on updatedContact are not directly saved in db
         em.detach(updatedContact);
         updatedContact
-            .emailAddress(UPDATED_EMAIL_ADDRESS)
-            .firstName(UPDATED_FIRST_NAME)
-            .lastName(UPDATED_LAST_NAME)
-            .phoneNumber(UPDATED_PHONE_NUMBER)
-            .alertNumber(UPDATED_ALERT_NUMBER)
+            .alertPhoneNumber(UPDATED_ALERT_PHONE_NUMBER)
             .alertEmail(UPDATED_ALERT_EMAIL);
         ContactDTO contactDTO = contactMapper.toDto(updatedContact);
 
@@ -297,11 +208,7 @@ public class ContactResourceIntTest {
         List<Contact> contactList = contactRepository.findAll();
         assertThat(contactList).hasSize(databaseSizeBeforeUpdate);
         Contact testContact = contactList.get(contactList.size() - 1);
-        assertThat(testContact.getEmailAddress()).isEqualTo(UPDATED_EMAIL_ADDRESS);
-        assertThat(testContact.getFirstName()).isEqualTo(UPDATED_FIRST_NAME);
-        assertThat(testContact.getLastName()).isEqualTo(UPDATED_LAST_NAME);
-        assertThat(testContact.getPhoneNumber()).isEqualTo(UPDATED_PHONE_NUMBER);
-        assertThat(testContact.getAlertNumber()).isEqualTo(UPDATED_ALERT_NUMBER);
+        assertThat(testContact.getAlertPhoneNumber()).isEqualTo(UPDATED_ALERT_PHONE_NUMBER);
         assertThat(testContact.getAlertEmail()).isEqualTo(UPDATED_ALERT_EMAIL);
     }
 

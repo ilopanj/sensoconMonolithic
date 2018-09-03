@@ -2,10 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import * as moment from 'moment';
+import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 import { JhiAlertService } from 'ng-jhipster';
 
 import { ISensor } from 'app/shared/model/sensor.model';
 import { SensorService } from './sensor.service';
+import { ISensorGroup } from 'app/shared/model/sensor-group.model';
+import { SensorGroupService } from 'app/entities/sensor-group';
 import { ISensorDevice } from 'app/shared/model/sensor-device.model';
 import { SensorDeviceService } from 'app/entities/sensor-device';
 
@@ -17,11 +21,15 @@ export class SensorUpdateComponent implements OnInit {
     private _sensor: ISensor;
     isSaving: boolean;
 
+    sensorgroups: ISensorGroup[];
+
     sensordevices: ISensorDevice[];
+    lastAlert: string;
 
     constructor(
         private jhiAlertService: JhiAlertService,
         private sensorService: SensorService,
+        private sensorGroupService: SensorGroupService,
         private sensorDeviceService: SensorDeviceService,
         private activatedRoute: ActivatedRoute
     ) {}
@@ -31,6 +39,21 @@ export class SensorUpdateComponent implements OnInit {
         this.activatedRoute.data.subscribe(({ sensor }) => {
             this.sensor = sensor;
         });
+        this.sensorGroupService.query({ filter: 'sensor-is-null' }).subscribe(
+            (res: HttpResponse<ISensorGroup[]>) => {
+                if (!this.sensor.sensorGroupId) {
+                    this.sensorgroups = res.body;
+                } else {
+                    this.sensorGroupService.find(this.sensor.sensorGroupId).subscribe(
+                        (subRes: HttpResponse<ISensorGroup>) => {
+                            this.sensorgroups = [subRes.body].concat(res.body);
+                        },
+                        (subRes: HttpErrorResponse) => this.onError(subRes.message)
+                    );
+                }
+            },
+            (res: HttpErrorResponse) => this.onError(res.message)
+        );
         this.sensorDeviceService.query().subscribe(
             (res: HttpResponse<ISensorDevice[]>) => {
                 this.sensordevices = res.body;
@@ -45,6 +68,7 @@ export class SensorUpdateComponent implements OnInit {
 
     save() {
         this.isSaving = true;
+        this.sensor.lastAlert = moment(this.lastAlert, DATE_TIME_FORMAT);
         if (this.sensor.id !== undefined) {
             this.subscribeToSaveResponse(this.sensorService.update(this.sensor));
         } else {
@@ -69,6 +93,10 @@ export class SensorUpdateComponent implements OnInit {
         this.jhiAlertService.error(errorMessage, null, null);
     }
 
+    trackSensorGroupById(index: number, item: ISensorGroup) {
+        return item.id;
+    }
+
     trackSensorDeviceById(index: number, item: ISensorDevice) {
         return item.id;
     }
@@ -78,5 +106,6 @@ export class SensorUpdateComponent implements OnInit {
 
     set sensor(sensor: ISensor) {
         this._sensor = sensor;
+        this.lastAlert = moment(sensor.lastAlert).format(DATE_TIME_FORMAT);
     }
 }

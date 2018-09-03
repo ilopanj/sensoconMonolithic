@@ -1,5 +1,6 @@
 package com.sensocon.core.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -30,6 +31,18 @@ public class SensorThreshold implements Serializable {
 
     @Column(name = "jhi_value")
     private Double value;
+
+    @ManyToOne
+    @JsonIgnoreProperties("thresholds")
+    private SensorDevice sensorDevice;
+
+    @ManyToOne
+    @JsonIgnoreProperties("thresholds")
+    private Sensor sensor;
+
+    @ManyToOne
+    @JsonIgnoreProperties("defaultThresholds")
+    private SensorGroup sensorGroup;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -64,6 +77,45 @@ public class SensorThreshold implements Serializable {
 
     public void setValue(Double value) {
         this.value = value;
+    }
+
+    public SensorDevice getSensorDevice() {
+        return sensorDevice;
+    }
+
+    public SensorThreshold sensorDevice(SensorDevice sensorDevice) {
+        this.sensorDevice = sensorDevice;
+        return this;
+    }
+
+    public void setSensorDevice(SensorDevice sensorDevice) {
+        this.sensorDevice = sensorDevice;
+    }
+
+    public Sensor getSensor() {
+        return sensor;
+    }
+
+    public SensorThreshold sensor(Sensor sensor) {
+        this.sensor = sensor;
+        return this;
+    }
+
+    public void setSensor(Sensor sensor) {
+        this.sensor = sensor;
+    }
+
+    public SensorGroup getSensorGroup() {
+        return sensorGroup;
+    }
+
+    public SensorThreshold sensorGroup(SensorGroup sensorGroup) {
+        this.sensorGroup = sensorGroup;
+        return this;
+    }
+
+    public void setSensorGroup(SensorGroup sensorGroup) {
+        this.sensorGroup = sensorGroup;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

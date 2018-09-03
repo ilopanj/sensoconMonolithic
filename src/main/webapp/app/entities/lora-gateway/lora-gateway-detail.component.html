@@ -13,6 +13,12 @@
                 <dd>
                     <span>{{loraGateway.name}}</span>
                 </dd>
+                <dt><span>Location</span></dt>
+                <dd>
+                    <div *ngIf="loraGateway.locationId">
+                        <a [routerLink]="['/location', loraGateway.locationId, 'view']">{{loraGateway.locationId}}</a>
+                    </div>
+                </dd>
             </dl>
 
             <button type="submit"

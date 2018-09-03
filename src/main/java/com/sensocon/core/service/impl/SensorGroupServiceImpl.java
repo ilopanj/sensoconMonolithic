@@ -15,6 +15,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 /**
  * Service Implementation for managing SensorGroup.
  */
@@ -61,6 +62,21 @@ public class SensorGroupServiceImpl implements SensorGroupService {
             .collect(Collectors.toCollection(LinkedList::new));
     }
 
+
+
+    /**
+     *  get all the sensorGroups where Sensor is null.
+     *  @return the list of entities
+     */
+    @Transactional(readOnly = true) 
+    public List<SensorGroupDTO> findAllWhereSensorIsNull() {
+        log.debug("Request to get all sensorGroups where Sensor is null");
+        return StreamSupport
+            .stream(sensorGroupRepository.findAll().spliterator(), false)
+            .filter(sensorGroup -> sensorGroup.getSensor() == null)
+            .map(sensorGroupMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
 
     /**
      * Get one sensorGroup by id.

@@ -16,7 +16,10 @@
             <tr>
             <th><span>ID</span></th>
             <th><span>Name</span></th>
-            <th><span>Alerts Enabled</span></th>
+            <th><span>Status</span></th>
+            <th><span>Sensor Type</span></th>
+            <th><span>Last Alert</span></th>
+            <th><span>Sensor Group</span></th>
             <th><span>Sensor Device</span></th>
             <th></th>
             </tr>
@@ -25,7 +28,14 @@
             <tr *ngFor="let sensor of sensors ;trackBy: trackId">
                 <td><a [routerLink]="['/sensor', sensor.id, 'view' ]">{{sensor.id}}</a></td>
                 <td>{{sensor.name}}</td>
-                <td>{{sensor.alertsEnabled}}</td>
+                <td>{{sensor.status}}</td>
+                <td>{{sensor.sensorType}}</td>
+                <td>{{sensor.lastAlert | date:'medium'}}</td>
+                <td>
+                    <div *ngIf="sensor.sensorGroupId">
+                        <a [routerLink]="['../sensor-group', sensor.sensorGroupId , 'view' ]" >{{sensor.sensorGroupId}}</a>
+                    </div>
+                </td>
                 <td>
                     <div *ngIf="sensor.sensorDeviceId">
                         <a [routerLink]="['../sensor-device', sensor.sensorDeviceId , 'view' ]" >{{sensor.sensorDeviceId}}</a>

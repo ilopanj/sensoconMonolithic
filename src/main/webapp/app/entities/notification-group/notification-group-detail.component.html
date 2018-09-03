@@ -15,6 +15,12 @@
                         <a [routerLink]="['/contact', contact?.id, 'view' ]">{{contact.id}}</a>{{last ? '' : ', '}}
                     </span>
                 </dd>
+                <dt><span>Company</span></dt>
+                <dd>
+                    <div *ngIf="notificationGroup.companyId">
+                        <a [routerLink]="['/company', notificationGroup.companyId, 'view']">{{notificationGroup.companyId}}</a>
+                    </div>
+                </dd>
             </dl>
 
             <button type="submit"

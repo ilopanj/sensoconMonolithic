@@ -1,11 +1,11 @@
 package com.sensocon.core.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -26,26 +26,15 @@ public class Contact implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
-    @Column(name = "email_address", nullable = false)
-    private String emailAddress;
-
-    @NotNull
-    @Column(name = "first_name", nullable = false)
-    private String firstName;
-
-    @NotNull
-    @Column(name = "last_name", nullable = false)
-    private String lastName;
-
-    @Column(name = "phone_number")
-    private String phoneNumber;
-
-    @Column(name = "alert_number")
-    private String alertNumber;
+    @Column(name = "alert_phone_number")
+    private String alertPhoneNumber;
 
     @Column(name = "alert_email")
     private String alertEmail;
+
+    @ManyToOne
+    @JsonIgnoreProperties("contacts")
+    private Company company;
 
     @ManyToMany(mappedBy = "contacts")
     @JsonIgnore
@@ -61,69 +50,17 @@ public class Contact implements Serializable {
         this.id = id;
     }
 
-    public String getEmailAddress() {
-        return emailAddress;
+    public String getAlertPhoneNumber() {
+        return alertPhoneNumber;
     }
 
-    public Contact emailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
+    public Contact alertPhoneNumber(String alertPhoneNumber) {
+        this.alertPhoneNumber = alertPhoneNumber;
         return this;
     }
 
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public Contact firstName(String firstName) {
-        this.firstName = firstName;
-        return this;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public Contact lastName(String lastName) {
-        this.lastName = lastName;
-        return this;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public Contact phoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-        return this;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getAlertNumber() {
-        return alertNumber;
-    }
-
-    public Contact alertNumber(String alertNumber) {
-        this.alertNumber = alertNumber;
-        return this;
-    }
-
-    public void setAlertNumber(String alertNumber) {
-        this.alertNumber = alertNumber;
+    public void setAlertPhoneNumber(String alertPhoneNumber) {
+        this.alertPhoneNumber = alertPhoneNumber;
     }
 
     public String getAlertEmail() {
@@ -137,6 +74,19 @@ public class Contact implements Serializable {
 
     public void setAlertEmail(String alertEmail) {
         this.alertEmail = alertEmail;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public Contact company(Company company) {
+        this.company = company;
+        return this;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
     }
 
     public Set<NotificationGroup> getNotificationGroups() {
@@ -189,11 +139,7 @@ public class Contact implements Serializable {
     public String toString() {
         return "Contact{" +
             "id=" + getId() +
-            ", emailAddress='" + getEmailAddress() + "'" +
-            ", firstName='" + getFirstName() + "'" +
-            ", lastName='" + getLastName() + "'" +
-            ", phoneNumber='" + getPhoneNumber() + "'" +
-            ", alertNumber='" + getAlertNumber() + "'" +
+            ", alertPhoneNumber='" + getAlertPhoneNumber() + "'" +
             ", alertEmail='" + getAlertEmail() + "'" +
             "}";
     }

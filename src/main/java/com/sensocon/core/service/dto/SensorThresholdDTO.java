@@ -15,6 +15,12 @@ public class SensorThresholdDTO implements Serializable {
 
     private Double value;
 
+    private Long sensorDeviceId;
+
+    private Long sensorId;
+
+    private Long sensorGroupId;
+
     public Long getId() {
         return id;
     }
@@ -37,6 +43,30 @@ public class SensorThresholdDTO implements Serializable {
 
     public void setValue(Double value) {
         this.value = value;
+    }
+
+    public Long getSensorDeviceId() {
+        return sensorDeviceId;
+    }
+
+    public void setSensorDeviceId(Long sensorDeviceId) {
+        this.sensorDeviceId = sensorDeviceId;
+    }
+
+    public Long getSensorId() {
+        return sensorId;
+    }
+
+    public void setSensorId(Long sensorId) {
+        this.sensorId = sensorId;
+    }
+
+    public Long getSensorGroupId() {
+        return sensorGroupId;
+    }
+
+    public void setSensorGroupId(Long sensorGroupId) {
+        this.sensorGroupId = sensorGroupId;
     }
 
     @Override
@@ -66,6 +96,9 @@ public class SensorThresholdDTO implements Serializable {
             "id=" + getId() +
             ", type='" + getType() + "'" +
             ", value=" + getValue() +
+            ", sensorDevice=" + getSensorDeviceId() +
+            ", sensor=" + getSensorId() +
+            ", sensorGroup=" + getSensorGroupId() +
             "}";
     }
 }

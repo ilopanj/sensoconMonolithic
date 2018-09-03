@@ -24,6 +24,12 @@ public interface CompanySettingsService {
      * @return the list of entities
      */
     List<CompanySettingsDTO> findAll();
+    /**
+     * Get all the CompanySettingsDTO where Company is null.
+     *
+     * @return the list of entities
+     */
+    List<CompanySettingsDTO> findAllWhereCompanyIsNull();
 
 
     /**

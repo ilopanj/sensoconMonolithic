@@ -1,31 +1,20 @@
 package com.sensocon.core.service.dto;
 
-import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * A DTO for the Contact entity.
  */
-@SuppressWarnings("serial")
 public class ContactDTO implements Serializable {
 
     private Long id;
 
-    @NotNull
-    private String emailAddress;
-
-    @NotNull
-    private String firstName;
-
-    @NotNull
-    private String lastName;
-
-    private String phoneNumber;
-
-    private String alertNumber;
+    private String alertPhoneNumber;
 
     private String alertEmail;
+
+    private Long companyId;
 
     public Long getId() {
         return id;
@@ -35,44 +24,12 @@ public class ContactDTO implements Serializable {
         this.id = id;
     }
 
-    public String getEmailAddress() {
-        return emailAddress;
+    public String getAlertPhoneNumber() {
+        return alertPhoneNumber;
     }
 
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getAlertNumber() {
-        return alertNumber;
-    }
-
-    public void setAlertNumber(String alertNumber) {
-        this.alertNumber = alertNumber;
+    public void setAlertPhoneNumber(String alertPhoneNumber) {
+        this.alertPhoneNumber = alertPhoneNumber;
     }
 
     public String getAlertEmail() {
@@ -81,6 +38,14 @@ public class ContactDTO implements Serializable {
 
     public void setAlertEmail(String alertEmail) {
         this.alertEmail = alertEmail;
+    }
+
+    public Long getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(Long companyId) {
+        this.companyId = companyId;
     }
 
     @Override
@@ -108,12 +73,9 @@ public class ContactDTO implements Serializable {
     public String toString() {
         return "ContactDTO{" +
             "id=" + getId() +
-            ", emailAddress='" + getEmailAddress() + "'" +
-            ", firstName='" + getFirstName() + "'" +
-            ", lastName='" + getLastName() + "'" +
-            ", phoneNumber='" + getPhoneNumber() + "'" +
-            ", alertNumber='" + getAlertNumber() + "'" +
+            ", alertPhoneNumber='" + getAlertPhoneNumber() + "'" +
             ", alertEmail='" + getAlertEmail() + "'" +
+            ", company=" + getCompanyId() +
             "}";
     }
 }

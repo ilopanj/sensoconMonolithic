@@ -10,47 +10,9 @@
                         [(ngModel)]="contact.id" readonly />
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" for="field_emailAddress">Email Address</label>
-                    <input type="text" class="form-control" name="emailAddress" id="field_emailAddress"
-                        [(ngModel)]="contact.emailAddress" required/>
-                    <div [hidden]="!(editForm.controls.emailAddress?.dirty && editForm.controls.emailAddress?.invalid)">
-                        <small class="form-text text-danger"
-                        [hidden]="!editForm.controls.emailAddress?.errors?.required">
-                        This field is required.
-                        </small>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_firstName">First Name</label>
-                    <input type="text" class="form-control" name="firstName" id="field_firstName"
-                        [(ngModel)]="contact.firstName" required/>
-                    <div [hidden]="!(editForm.controls.firstName?.dirty && editForm.controls.firstName?.invalid)">
-                        <small class="form-text text-danger"
-                        [hidden]="!editForm.controls.firstName?.errors?.required">
-                        This field is required.
-                        </small>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_lastName">Last Name</label>
-                    <input type="text" class="form-control" name="lastName" id="field_lastName"
-                        [(ngModel)]="contact.lastName" required/>
-                    <div [hidden]="!(editForm.controls.lastName?.dirty && editForm.controls.lastName?.invalid)">
-                        <small class="form-text text-danger"
-                        [hidden]="!editForm.controls.lastName?.errors?.required">
-                        This field is required.
-                        </small>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_phoneNumber">Phone Number</label>
-                    <input type="text" class="form-control" name="phoneNumber" id="field_phoneNumber"
-                        [(ngModel)]="contact.phoneNumber" />
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_alertNumber">Alert Number</label>
-                    <input type="text" class="form-control" name="alertNumber" id="field_alertNumber"
-                        [(ngModel)]="contact.alertNumber" />
+                    <label class="form-control-label" for="field_alertPhoneNumber">Alert Phone Number</label>
+                    <input type="text" class="form-control" name="alertPhoneNumber" id="field_alertPhoneNumber"
+                        [(ngModel)]="contact.alertPhoneNumber" />
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" for="field_alertEmail">Alert Email</label>
@@ -58,6 +20,13 @@
                         [(ngModel)]="contact.alertEmail" />
                 </div>
 
+                <div class="form-group">
+                    <label class="form-control-label" for="field_company">Company</label>
+                    <select class="form-control" id="field_company" name="company" [(ngModel)]="contact.companyId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="companyOption.id" *ngFor="let companyOption of companies; trackBy: trackCompanyById">{{companyOption.id}}</option>
+                    </select>
+                </div>
             </div>
             <div>
                 <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">

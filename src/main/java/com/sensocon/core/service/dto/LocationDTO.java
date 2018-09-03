@@ -6,7 +6,6 @@ import java.util.Objects;
 /**
  * A DTO for the Location entity.
  */
-@SuppressWarnings("serial")
 public class LocationDTO implements Serializable {
 
     private Long id;

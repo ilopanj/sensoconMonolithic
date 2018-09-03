@@ -9,6 +9,16 @@
                 <dd>
                     <span>{{sensorGroup.name}}</span>
                 </dd>
+                <dt><span>Sensor Type</span></dt>
+                <dd>
+                    <span>{{sensorGroup.sensorType}}</span>
+                </dd>
+                <dt><span>Company</span></dt>
+                <dd>
+                    <div *ngIf="sensorGroup.companyId">
+                        <a [routerLink]="['/company', sensorGroup.companyId, 'view']">{{sensorGroup.companyId}}</a>
+                    </div>
+                </dd>
             </dl>
 
             <button type="submit"

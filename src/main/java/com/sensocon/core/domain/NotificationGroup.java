@@ -1,6 +1,7 @@
 package com.sensocon.core.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -38,6 +39,10 @@ public class NotificationGroup implements Serializable {
                joinColumns = @JoinColumn(name = "notification_groups_id", referencedColumnName = "id"),
                inverseJoinColumns = @JoinColumn(name = "contacts_id", referencedColumnName = "id"))
     private Set<Contact> contacts = new HashSet<>();
+
+    @ManyToOne
+    @JsonIgnoreProperties("notificationGroups")
+    private Company company;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -109,6 +114,19 @@ public class NotificationGroup implements Serializable {
 
     public void setContacts(Set<Contact> contacts) {
         this.contacts = contacts;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public NotificationGroup company(Company company) {
+        this.company = company;
+        return this;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

@@ -26,16 +26,27 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="alerts_enabled" type="bit">
+            <column name="status" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
 
+            <column name="sensor_type" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="last_alert" type="datetime">
+                <constraints nullable="true" />
+            </column>
+            <column name="sensor_group_id" type="bigint">
+                <constraints unique="true" nullable="true" uniqueConstraintName="ux_sensor_sensor_group_id" />
+            </column>
             <column name="sensor_device_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
+        <dropDefaultValue tableName="sensor" columnName="last_alert" columnDataType="datetime"/>
         
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->

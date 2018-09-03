@@ -22,11 +22,11 @@
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="rssi" type="double">
+            <column name="gateway_id" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
 
-            <column name="battery_level" type="double">
+            <column name="rssi" type="double">
                 <constraints nullable="true" />
             </column>
 
@@ -34,11 +34,11 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="temperature" type="double">
+            <column name="temperature_farenheit" type="double">
                 <constraints nullable="true" />
             </column>
 
-            <column name="pressure" type="double">
+            <column name="pressure_psi" type="double">
                 <constraints nullable="true" />
             </column>
 

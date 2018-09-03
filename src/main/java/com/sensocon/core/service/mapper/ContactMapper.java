@@ -8,10 +8,13 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity Contact and its DTO ContactDTO.
  */
-@Mapper(componentModel = "spring", uses = {})
+@Mapper(componentModel = "spring", uses = {CompanyMapper.class})
 public interface ContactMapper extends EntityMapper<ContactDTO, Contact> {
 
+    @Mapping(source = "company.id", target = "companyId")
+    ContactDTO toDto(Contact contact);
 
+    @Mapping(source = "companyId", target = "company")
     @Mapping(target = "notificationGroups", ignore = true)
     Contact toEntity(ContactDTO contactDTO);
 

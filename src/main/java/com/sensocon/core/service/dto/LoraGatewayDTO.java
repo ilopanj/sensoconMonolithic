@@ -6,7 +6,6 @@ import java.util.Objects;
 /**
  * A DTO for the LoraGateway entity.
  */
-@SuppressWarnings("serial")
 public class LoraGatewayDTO implements Serializable {
 
     private Long id;
@@ -14,6 +13,8 @@ public class LoraGatewayDTO implements Serializable {
     private String gatewayId;
 
     private String name;
+
+    private Long locationId;
 
     public Long getId() {
         return id;
@@ -37,6 +38,14 @@ public class LoraGatewayDTO implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Long getLocationId() {
+        return locationId;
+    }
+
+    public void setLocationId(Long locationId) {
+        this.locationId = locationId;
     }
 
     @Override
@@ -66,6 +75,7 @@ public class LoraGatewayDTO implements Serializable {
             "id=" + getId() +
             ", gatewayId='" + getGatewayId() + "'" +
             ", name='" + getName() + "'" +
+            ", location=" + getLocationId() +
             "}";
     }
 }

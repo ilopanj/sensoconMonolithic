@@ -8,10 +8,14 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity LoraGateway and its DTO LoraGatewayDTO.
  */
-@Mapper(componentModel = "spring", uses = {})
+@Mapper(componentModel = "spring", uses = {LocationMapper.class})
 public interface LoraGatewayMapper extends EntityMapper<LoraGatewayDTO, LoraGateway> {
 
+    @Mapping(source = "location.id", target = "locationId")
+    LoraGatewayDTO toDto(LoraGateway loraGateway);
 
+    @Mapping(source = "locationId", target = "location")
+    LoraGateway toEntity(LoraGatewayDTO loraGatewayDTO);
 
     default LoraGateway fromId(Long id) {
         if (id == null) {

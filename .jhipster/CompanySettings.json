@@ -10,7 +10,15 @@
             "fieldType": "Long"
         }
     ],
-    "relationships": [],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "company",
+            "otherEntityName": "company",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "companySettings"
+        }
+    ],
     "changelogDate": "20180822202323",
     "entityTableName": "company_settings",
     "dto": "mapstruct",

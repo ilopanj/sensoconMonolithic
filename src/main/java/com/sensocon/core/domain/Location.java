@@ -47,6 +47,10 @@ public class Location implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<SensorDevice> sensorDevices = new HashSet<>();
 
+    @OneToMany(mappedBy = "location")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<LoraGateway> gateways = new HashSet<>();
+
     @ManyToOne
     @JsonIgnoreProperties("locations")
     private Company company;
@@ -134,13 +138,13 @@ public class Location implements Serializable {
         return this;
     }
 
-    public Location addSensorDevice(SensorDevice sensorDevice) {
+    public Location addSensorDevices(SensorDevice sensorDevice) {
         this.sensorDevices.add(sensorDevice);
         sensorDevice.setLocation(this);
         return this;
     }
 
-    public Location removeSensorDevice(SensorDevice sensorDevice) {
+    public Location removeSensorDevices(SensorDevice sensorDevice) {
         this.sensorDevices.remove(sensorDevice);
         sensorDevice.setLocation(null);
         return this;
@@ -148,6 +152,31 @@ public class Location implements Serializable {
 
     public void setSensorDevices(Set<SensorDevice> sensorDevices) {
         this.sensorDevices = sensorDevices;
+    }
+
+    public Set<LoraGateway> getGateways() {
+        return gateways;
+    }
+
+    public Location gateways(Set<LoraGateway> loraGateways) {
+        this.gateways = loraGateways;
+        return this;
+    }
+
+    public Location addGateways(LoraGateway loraGateway) {
+        this.gateways.add(loraGateway);
+        loraGateway.setLocation(this);
+        return this;
+    }
+
+    public Location removeGateways(LoraGateway loraGateway) {
+        this.gateways.remove(loraGateway);
+        loraGateway.setLocation(null);
+        return this;
+    }
+
+    public void setGateways(Set<LoraGateway> loraGateways) {
+        this.gateways = loraGateways;
     }
 
     public Company getCompany() {

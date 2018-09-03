@@ -1,5 +1,6 @@
 package com.sensocon.core.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -7,7 +8,14 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 
 import java.io.Serializable;
+import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
+
+import com.sensocon.core.domain.enumeration.SensorStatus;
+
+import com.sensocon.core.domain.enumeration.SensorType;
 
 /**
  * A Sensor.
@@ -26,8 +34,24 @@ public class Sensor implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "alerts_enabled")
-    private Boolean alertsEnabled;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private SensorStatus status;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "sensor_type")
+    private SensorType sensorType;
+
+    @Column(name = "last_alert")
+    private Instant lastAlert;
+
+    @OneToOne
+    @JoinColumn(unique = true)
+    private SensorGroup sensorGroup;
+
+    @OneToMany(mappedBy = "sensor")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<SensorThreshold> thresholds = new HashSet<>();
 
     @ManyToOne
     @JsonIgnoreProperties("sensors")
@@ -55,17 +79,81 @@ public class Sensor implements Serializable {
         this.name = name;
     }
 
-    public Boolean isAlertsEnabled() {
-        return alertsEnabled;
+    public SensorStatus getStatus() {
+        return status;
     }
 
-    public Sensor alertsEnabled(Boolean alertsEnabled) {
-        this.alertsEnabled = alertsEnabled;
+    public Sensor status(SensorStatus status) {
+        this.status = status;
         return this;
     }
 
-    public void setAlertsEnabled(Boolean alertsEnabled) {
-        this.alertsEnabled = alertsEnabled;
+    public void setStatus(SensorStatus status) {
+        this.status = status;
+    }
+
+    public SensorType getSensorType() {
+        return sensorType;
+    }
+
+    public Sensor sensorType(SensorType sensorType) {
+        this.sensorType = sensorType;
+        return this;
+    }
+
+    public void setSensorType(SensorType sensorType) {
+        this.sensorType = sensorType;
+    }
+
+    public Instant getLastAlert() {
+        return lastAlert;
+    }
+
+    public Sensor lastAlert(Instant lastAlert) {
+        this.lastAlert = lastAlert;
+        return this;
+    }
+
+    public void setLastAlert(Instant lastAlert) {
+        this.lastAlert = lastAlert;
+    }
+
+    public SensorGroup getSensorGroup() {
+        return sensorGroup;
+    }
+
+    public Sensor sensorGroup(SensorGroup sensorGroup) {
+        this.sensorGroup = sensorGroup;
+        return this;
+    }
+
+    public void setSensorGroup(SensorGroup sensorGroup) {
+        this.sensorGroup = sensorGroup;
+    }
+
+    public Set<SensorThreshold> getThresholds() {
+        return thresholds;
+    }
+
+    public Sensor thresholds(Set<SensorThreshold> sensorThresholds) {
+        this.thresholds = sensorThresholds;
+        return this;
+    }
+
+    public Sensor addThresholds(SensorThreshold sensorThreshold) {
+        this.thresholds.add(sensorThreshold);
+        sensorThreshold.setSensor(this);
+        return this;
+    }
+
+    public Sensor removeThresholds(SensorThreshold sensorThreshold) {
+        this.thresholds.remove(sensorThreshold);
+        sensorThreshold.setSensor(null);
+        return this;
+    }
+
+    public void setThresholds(Set<SensorThreshold> sensorThresholds) {
+        this.thresholds = sensorThresholds;
     }
 
     public SensorDevice getSensorDevice() {
@@ -107,7 +195,9 @@ public class Sensor implements Serializable {
         return "Sensor{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", alertsEnabled='" + isAlertsEnabled() + "'" +
+            ", status='" + getStatus() + "'" +
+            ", sensorType='" + getSensorType() + "'" +
+            ", lastAlert='" + getLastAlert() + "'" +
             "}";
     }
 }

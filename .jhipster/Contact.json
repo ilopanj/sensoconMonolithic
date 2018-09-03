@@ -2,32 +2,7 @@
     "name": "Contact",
     "fields": [
         {
-            "fieldName": "emailAddress",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-            "fieldName": "firstName",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-            "fieldName": "lastName",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-            "fieldName": "phoneNumber",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "alertNumber",
+            "fieldName": "alertPhoneNumber",
             "fieldType": "String"
         },
         {
@@ -36,6 +11,12 @@
         }
     ],
     "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "company",
+            "otherEntityName": "company",
+            "otherEntityField": "id"
+        },
         {
             "relationshipType": "many-to-many",
             "relationshipName": "notificationGroup",

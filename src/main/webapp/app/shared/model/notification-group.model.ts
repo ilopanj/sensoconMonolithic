@@ -6,8 +6,15 @@ export interface INotificationGroup {
     name?: string;
     sensorDevices?: ISensorDevice[];
     contacts?: IContact[];
+    companyId?: number;
 }
 
 export class NotificationGroup implements INotificationGroup {
-    constructor(public id?: number, public name?: string, public sensorDevices?: ISensorDevice[], public contacts?: IContact[]) {}
+    constructor(
+        public id?: number,
+        public name?: string,
+        public sensorDevices?: ISensorDevice[],
+        public contacts?: IContact[],
+        public companyId?: number
+    ) {}
 }

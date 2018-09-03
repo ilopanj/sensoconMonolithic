@@ -2,6 +2,7 @@ package com.sensocon.core.service.dto;
 
 import java.io.Serializable;
 import java.util.Objects;
+import com.sensocon.core.domain.enumeration.SensorType;
 
 /**
  * A DTO for the SensorGroup entity.
@@ -11,6 +12,10 @@ public class SensorGroupDTO implements Serializable {
     private Long id;
 
     private String name;
+
+    private SensorType sensorType;
+
+    private Long companyId;
 
     public Long getId() {
         return id;
@@ -26,6 +31,22 @@ public class SensorGroupDTO implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public SensorType getSensorType() {
+        return sensorType;
+    }
+
+    public void setSensorType(SensorType sensorType) {
+        this.sensorType = sensorType;
+    }
+
+    public Long getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(Long companyId) {
+        this.companyId = companyId;
     }
 
     @Override
@@ -54,6 +75,8 @@ public class SensorGroupDTO implements Serializable {
         return "SensorGroupDTO{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
+            ", sensorType='" + getSensorType() + "'" +
+            ", company=" + getCompanyId() +
             "}";
     }
 }

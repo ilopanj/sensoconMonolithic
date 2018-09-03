@@ -8,6 +8,8 @@ import { INotificationGroup } from 'app/shared/model/notification-group.model';
 import { NotificationGroupService } from './notification-group.service';
 import { IContact } from 'app/shared/model/contact.model';
 import { ContactService } from 'app/entities/contact';
+import { ICompany } from 'app/shared/model/company.model';
+import { CompanyService } from 'app/entities/company';
 
 @Component({
     selector: 'jhi-notification-group-update',
@@ -19,10 +21,13 @@ export class NotificationGroupUpdateComponent implements OnInit {
 
     contacts: IContact[];
 
+    companies: ICompany[];
+
     constructor(
         private jhiAlertService: JhiAlertService,
         private notificationGroupService: NotificationGroupService,
         private contactService: ContactService,
+        private companyService: CompanyService,
         private activatedRoute: ActivatedRoute
     ) {}
 
@@ -34,6 +39,12 @@ export class NotificationGroupUpdateComponent implements OnInit {
         this.contactService.query().subscribe(
             (res: HttpResponse<IContact[]>) => {
                 this.contacts = res.body;
+            },
+            (res: HttpErrorResponse) => this.onError(res.message)
+        );
+        this.companyService.query().subscribe(
+            (res: HttpResponse<ICompany[]>) => {
+                this.companies = res.body;
             },
             (res: HttpErrorResponse) => this.onError(res.message)
         );
@@ -70,6 +81,10 @@ export class NotificationGroupUpdateComponent implements OnInit {
     }
 
     trackContactById(index: number, item: IContact) {
+        return item.id;
+    }
+
+    trackCompanyById(index: number, item: ICompany) {
         return item.id;
     }
 

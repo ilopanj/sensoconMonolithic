@@ -15,6 +15,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 /**
  * Service Implementation for managing CompanySettings.
  */
@@ -61,6 +62,21 @@ public class CompanySettingsServiceImpl implements CompanySettingsService {
             .collect(Collectors.toCollection(LinkedList::new));
     }
 
+
+
+    /**
+     *  get all the companySettings where Company is null.
+     *  @return the list of entities
+     */
+    @Transactional(readOnly = true) 
+    public List<CompanySettingsDTO> findAllWhereCompanyIsNull() {
+        log.debug("Request to get all companySettings where Company is null");
+        return StreamSupport
+            .stream(companySettingsRepository.findAll().spliterator(), false)
+            .filter(companySettings -> companySettings.getCompany() == null)
+            .map(companySettingsMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
 
     /**
      * Get one companySettings by id.

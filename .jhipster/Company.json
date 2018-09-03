@@ -24,9 +24,35 @@
     ],
     "relationships": [
         {
+            "relationshipType": "one-to-one",
+            "relationshipName": "companySettings",
+            "otherEntityName": "companySettings",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "company"
+        },
+        {
             "relationshipType": "one-to-many",
             "relationshipName": "location",
             "otherEntityName": "location",
+            "otherEntityRelationshipName": "company"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "sensorGroup",
+            "otherEntityName": "sensorGroup",
+            "otherEntityRelationshipName": "company"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "contact",
+            "otherEntityName": "contact",
+            "otherEntityRelationshipName": "company"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "notificationGroup",
+            "otherEntityName": "notificationGroup",
             "otherEntityRelationshipName": "company"
         }
     ],

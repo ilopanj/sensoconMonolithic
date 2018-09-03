@@ -2,11 +2,11 @@
     "name": "LoraPacket",
     "fields": [
         {
-            "fieldName": "rssi",
-            "fieldType": "Double"
+            "fieldName": "gatewayId",
+            "fieldType": "String"
         },
         {
-            "fieldName": "batteryLevel",
+            "fieldName": "rssi",
             "fieldType": "Double"
         },
         {
@@ -14,11 +14,11 @@
             "fieldType": "Instant"
         },
         {
-            "fieldName": "temperature",
+            "fieldName": "temperatureFarenheit",
             "fieldType": "Double"
         },
         {
-            "fieldName": "pressure",
+            "fieldName": "pressurePsi",
             "fieldType": "Double"
         }
     ],

@@ -12,6 +12,8 @@ import org.mapstruct.*;
 public interface CompanySettingsMapper extends EntityMapper<CompanySettingsDTO, CompanySettings> {
 
 
+    @Mapping(target = "company", ignore = true)
+    CompanySettings toEntity(CompanySettingsDTO companySettingsDTO);
 
     default CompanySettings fromId(Long id) {
         if (id == null) {

@@ -56,6 +56,13 @@ public class CacheConfiguration {
             cm.createCache(com.sensocon.core.domain.LoraPacket.class.getName(), jcacheConfiguration);
             cm.createCache(com.sensocon.core.domain.Location.class.getName(), jcacheConfiguration);
             cm.createCache(com.sensocon.core.domain.Location.class.getName() + ".sensorDevices", jcacheConfiguration);
+            cm.createCache(com.sensocon.core.domain.Company.class.getName() + ".sensorGroups", jcacheConfiguration);
+            cm.createCache(com.sensocon.core.domain.Company.class.getName() + ".contacts", jcacheConfiguration);
+            cm.createCache(com.sensocon.core.domain.Company.class.getName() + ".notificationGroups", jcacheConfiguration);
+            cm.createCache(com.sensocon.core.domain.SensorDevice.class.getName() + ".thresholds", jcacheConfiguration);
+            cm.createCache(com.sensocon.core.domain.Sensor.class.getName() + ".thresholds", jcacheConfiguration);
+            cm.createCache(com.sensocon.core.domain.SensorGroup.class.getName() + ".defaultThresholds", jcacheConfiguration);
+            cm.createCache(com.sensocon.core.domain.Location.class.getName() + ".gateways", jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

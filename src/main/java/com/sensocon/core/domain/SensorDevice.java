@@ -40,15 +40,19 @@ public class SensorDevice implements Serializable {
 
     @OneToMany(mappedBy = "sensorDevice")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<SensorThreshold> thresholds = new HashSet<>();
+
+    @ManyToOne
+    @JsonIgnoreProperties("sensorDevices")
+    private NotificationGroup notificationGroup;
+
+    @OneToMany(mappedBy = "sensorDevice")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<LoraPacket> loraPackets = new HashSet<>();
 
     @ManyToOne
     @JsonIgnoreProperties("sensorDevices")
     private Location location;
-
-    @ManyToOne
-    @JsonIgnoreProperties("sensorDevices")
-    private NotificationGroup notificationGroup;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -94,13 +98,13 @@ public class SensorDevice implements Serializable {
         return this;
     }
 
-    public SensorDevice addSensor(Sensor sensor) {
+    public SensorDevice addSensors(Sensor sensor) {
         this.sensors.add(sensor);
         sensor.setSensorDevice(this);
         return this;
     }
 
-    public SensorDevice removeSensor(Sensor sensor) {
+    public SensorDevice removeSensors(Sensor sensor) {
         this.sensors.remove(sensor);
         sensor.setSensorDevice(null);
         return this;
@@ -108,6 +112,44 @@ public class SensorDevice implements Serializable {
 
     public void setSensors(Set<Sensor> sensors) {
         this.sensors = sensors;
+    }
+
+    public Set<SensorThreshold> getThresholds() {
+        return thresholds;
+    }
+
+    public SensorDevice thresholds(Set<SensorThreshold> sensorThresholds) {
+        this.thresholds = sensorThresholds;
+        return this;
+    }
+
+    public SensorDevice addThresholds(SensorThreshold sensorThreshold) {
+        this.thresholds.add(sensorThreshold);
+        sensorThreshold.setSensorDevice(this);
+        return this;
+    }
+
+    public SensorDevice removeThresholds(SensorThreshold sensorThreshold) {
+        this.thresholds.remove(sensorThreshold);
+        sensorThreshold.setSensorDevice(null);
+        return this;
+    }
+
+    public void setThresholds(Set<SensorThreshold> sensorThresholds) {
+        this.thresholds = sensorThresholds;
+    }
+
+    public NotificationGroup getNotificationGroup() {
+        return notificationGroup;
+    }
+
+    public SensorDevice notificationGroup(NotificationGroup notificationGroup) {
+        this.notificationGroup = notificationGroup;
+        return this;
+    }
+
+    public void setNotificationGroup(NotificationGroup notificationGroup) {
+        this.notificationGroup = notificationGroup;
     }
 
     public Set<LoraPacket> getLoraPackets() {
@@ -146,19 +188,6 @@ public class SensorDevice implements Serializable {
 
     public void setLocation(Location location) {
         this.location = location;
-    }
-
-    public NotificationGroup getNotificationGroup() {
-        return notificationGroup;
-    }
-
-    public SensorDevice notificationGroup(NotificationGroup notificationGroup) {
-        this.notificationGroup = notificationGroup;
-        return this;
-    }
-
-    public void setNotificationGroup(NotificationGroup notificationGroup) {
-        this.notificationGroup = notificationGroup;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

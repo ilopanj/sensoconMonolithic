@@ -16,6 +16,7 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.StreamSupport;
 
 /**
  * REST controller for managing SensorGroup.
@@ -79,11 +80,16 @@ public class SensorGroupResource {
     /**
      * GET  /sensor-groups : get all the sensorGroups.
      *
+     * @param filter the filter of the request
      * @return the ResponseEntity with status 200 (OK) and the list of sensorGroups in body
      */
     @GetMapping("/sensor-groups")
     @Timed
-    public List<SensorGroupDTO> getAllSensorGroups() {
+    public List<SensorGroupDTO> getAllSensorGroups(@RequestParam(required = false) String filter) {
+        if ("sensor-is-null".equals(filter)) {
+            log.debug("REST request to get all SensorGroups where sensor is null");
+            return sensorGroupService.findAllWhereSensorIsNull();
+        }
         log.debug("REST request to get all SensorGroups");
         return sensorGroupService.findAll();
     }

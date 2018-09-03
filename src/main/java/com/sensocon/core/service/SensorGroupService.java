@@ -24,6 +24,12 @@ public interface SensorGroupService {
      * @return the list of entities
      */
     List<SensorGroupDTO> findAll();
+    /**
+     * Get all the SensorGroupDTO where Sensor is null.
+     *
+     * @return the list of entities
+     */
+    List<SensorGroupDTO> findAllWhereSensorIsNull();
 
 
     /**

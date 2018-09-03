@@ -13,16 +13,16 @@
                 <dd>
                     <span>{{sensorDevice.name}}</span>
                 </dd>
-                <dt><span>Location</span></dt>
-                <dd>
-                    <div *ngIf="sensorDevice.locationId">
-                        <a [routerLink]="['/location', sensorDevice.locationId, 'view']">{{sensorDevice.locationId}}</a>
-                    </div>
-                </dd>
                 <dt><span>Notification Group</span></dt>
                 <dd>
                     <div *ngIf="sensorDevice.notificationGroupId">
                         <a [routerLink]="['/notification-group', sensorDevice.notificationGroupId, 'view']">{{sensorDevice.notificationGroupId}}</a>
+                    </div>
+                </dd>
+                <dt><span>Location</span></dt>
+                <dd>
+                    <div *ngIf="sensorDevice.locationId">
+                        <a [routerLink]="['/location', sensorDevice.locationId, 'view']">{{sensorDevice.locationId}}</a>
                     </div>
                 </dd>
             </dl>

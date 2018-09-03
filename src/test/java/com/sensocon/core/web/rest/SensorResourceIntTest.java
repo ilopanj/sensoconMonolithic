@@ -24,6 +24,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 
@@ -33,6 +35,8 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import com.sensocon.core.domain.enumeration.SensorStatus;
+import com.sensocon.core.domain.enumeration.SensorType;
 /**
  * Test class for the SensorResource REST controller.
  *
@@ -45,8 +49,14 @@ public class SensorResourceIntTest {
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
-    private static final Boolean DEFAULT_ALERTS_ENABLED = false;
-    private static final Boolean UPDATED_ALERTS_ENABLED = true;
+    private static final SensorStatus DEFAULT_STATUS = SensorStatus.STATE_NORMAL;
+    private static final SensorStatus UPDATED_STATUS = SensorStatus.STATE_ALERT;
+
+    private static final SensorType DEFAULT_SENSOR_TYPE = SensorType.PRESSURE;
+    private static final SensorType UPDATED_SENSOR_TYPE = SensorType.TEMPERATURE;
+
+    private static final Instant DEFAULT_LAST_ALERT = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_LAST_ALERT = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
     @Autowired
     private SensorRepository sensorRepository;
@@ -95,7 +105,9 @@ public class SensorResourceIntTest {
     public static Sensor createEntity(EntityManager em) {
         Sensor sensor = new Sensor()
             .name(DEFAULT_NAME)
-            .alertsEnabled(DEFAULT_ALERTS_ENABLED);
+            .status(DEFAULT_STATUS)
+            .sensorType(DEFAULT_SENSOR_TYPE)
+            .lastAlert(DEFAULT_LAST_ALERT);
         return sensor;
     }
 
@@ -121,7 +133,9 @@ public class SensorResourceIntTest {
         assertThat(sensorList).hasSize(databaseSizeBeforeCreate + 1);
         Sensor testSensor = sensorList.get(sensorList.size() - 1);
         assertThat(testSensor.getName()).isEqualTo(DEFAULT_NAME);
-        assertThat(testSensor.isAlertsEnabled()).isEqualTo(DEFAULT_ALERTS_ENABLED);
+        assertThat(testSensor.getStatus()).isEqualTo(DEFAULT_STATUS);
+        assertThat(testSensor.getSensorType()).isEqualTo(DEFAULT_SENSOR_TYPE);
+        assertThat(testSensor.getLastAlert()).isEqualTo(DEFAULT_LAST_ALERT);
     }
 
     @Test
@@ -156,7 +170,9 @@ public class SensorResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(sensor.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
-            .andExpect(jsonPath("$.[*].alertsEnabled").value(hasItem(DEFAULT_ALERTS_ENABLED.booleanValue())));
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
+            .andExpect(jsonPath("$.[*].sensorType").value(hasItem(DEFAULT_SENSOR_TYPE.toString())))
+            .andExpect(jsonPath("$.[*].lastAlert").value(hasItem(DEFAULT_LAST_ALERT.toString())));
     }
     
 
@@ -172,7 +188,9 @@ public class SensorResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(sensor.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
-            .andExpect(jsonPath("$.alertsEnabled").value(DEFAULT_ALERTS_ENABLED.booleanValue()));
+            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
+            .andExpect(jsonPath("$.sensorType").value(DEFAULT_SENSOR_TYPE.toString()))
+            .andExpect(jsonPath("$.lastAlert").value(DEFAULT_LAST_ALERT.toString()));
     }
     @Test
     @Transactional
@@ -196,7 +214,9 @@ public class SensorResourceIntTest {
         em.detach(updatedSensor);
         updatedSensor
             .name(UPDATED_NAME)
-            .alertsEnabled(UPDATED_ALERTS_ENABLED);
+            .status(UPDATED_STATUS)
+            .sensorType(UPDATED_SENSOR_TYPE)
+            .lastAlert(UPDATED_LAST_ALERT);
         SensorDTO sensorDTO = sensorMapper.toDto(updatedSensor);
 
         restSensorMockMvc.perform(put("/api/sensors")
@@ -209,7 +229,9 @@ public class SensorResourceIntTest {
         assertThat(sensorList).hasSize(databaseSizeBeforeUpdate);
         Sensor testSensor = sensorList.get(sensorList.size() - 1);
         assertThat(testSensor.getName()).isEqualTo(UPDATED_NAME);
-        assertThat(testSensor.isAlertsEnabled()).isEqualTo(UPDATED_ALERTS_ENABLED);
+        assertThat(testSensor.getStatus()).isEqualTo(UPDATED_STATUS);
+        assertThat(testSensor.getSensorType()).isEqualTo(UPDATED_SENSOR_TYPE);
+        assertThat(testSensor.getLastAlert()).isEqualTo(UPDATED_LAST_ALERT);
     }
 
     @Test

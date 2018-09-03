@@ -1,5 +1,6 @@
 package com.sensocon.core.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -27,6 +28,10 @@ public class CompanySettings implements Serializable {
 
     @Column(name = "default_suppression_seconds")
     private Long defaultSuppressionSeconds;
+
+    @OneToOne(mappedBy = "companySettings")
+    @JsonIgnore
+    private Company company;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -61,6 +66,19 @@ public class CompanySettings implements Serializable {
 
     public void setDefaultSuppressionSeconds(Long defaultSuppressionSeconds) {
         this.defaultSuppressionSeconds = defaultSuppressionSeconds;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public CompanySettings company(Company company) {
+        this.company = company;
+        return this;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

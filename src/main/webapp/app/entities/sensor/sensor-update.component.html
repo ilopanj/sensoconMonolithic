@@ -15,11 +15,37 @@
                         [(ngModel)]="sensor.name" />
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" for="field_alertsEnabled">Alerts Enabled</label>
-                    <input type="checkbox" class="form-control" name="alertsEnabled" id="field_alertsEnabled"
-                        [(ngModel)]="sensor.alertsEnabled" />
+                    <label class="form-control-label" for="field_status">Status</label>
+                    <select class="form-control" name="status" [(ngModel)]="sensor.status" id="field_status" >
+                        <option value="STATE_NORMAL">STATE_NORMAL</option>
+                        <option value="STATE_ALERT">STATE_ALERT</option>
+                        <option value="STATE_INACTIVE">STATE_INACTIVE</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_sensorType">Sensor Type</label>
+                    <select class="form-control" name="sensorType" [(ngModel)]="sensor.sensorType" id="field_sensorType" >
+                        <option value="PRESSURE">PRESSURE</option>
+                        <option value="TEMPERATURE">TEMPERATURE</option>
+                        <option value="HUMIDITY">HUMIDITY</option>
+                        <option value="ON_OFF">ON_OFF</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_lastAlert">Last Alert</label>
+                    <div class="d-flex">
+                        <input id="field_lastAlert" type="datetime-local" class="form-control" name="lastAlert" [(ngModel)]="lastAlert"
+                        />
+                    </div>
                 </div>
 
+                <div class="form-group">
+                    <label class="form-control-label" for="field_sensorGroup">Sensor Group</label>
+                    <select class="form-control" id="field_sensorGroup" name="sensorGroup" [(ngModel)]="sensor.sensorGroupId">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="sensorGroupOption.id" *ngFor="let sensorGroupOption of sensorgroups; trackBy: trackSensorGroupById">{{sensorGroupOption.id}}</option>
+                    </select>
+                </div>
                 <div class="form-group">
                     <label class="form-control-label" for="field_sensorDevice">Sensor Device</label>
                     <select class="form-control" id="field_sensorDevice" name="sensorDevice" [(ngModel)]="sensor.sensorDeviceId" >

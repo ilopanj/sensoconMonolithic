@@ -6,10 +6,10 @@ import { JhiAlertService } from 'ng-jhipster';
 
 import { ISensorDevice } from 'app/shared/model/sensor-device.model';
 import { SensorDeviceService } from './sensor-device.service';
-import { ILocation } from 'app/shared/model/location.model';
-import { LocationService } from 'app/entities/location';
 import { INotificationGroup } from 'app/shared/model/notification-group.model';
 import { NotificationGroupService } from 'app/entities/notification-group';
+import { ILocation } from 'app/shared/model/location.model';
+import { LocationService } from 'app/entities/location';
 
 @Component({
     selector: 'jhi-sensor-device-update',
@@ -19,15 +19,15 @@ export class SensorDeviceUpdateComponent implements OnInit {
     private _sensorDevice: ISensorDevice;
     isSaving: boolean;
 
-    locations: ILocation[];
-
     notificationgroups: INotificationGroup[];
+
+    locations: ILocation[];
 
     constructor(
         private jhiAlertService: JhiAlertService,
         private sensorDeviceService: SensorDeviceService,
-        private locationService: LocationService,
         private notificationGroupService: NotificationGroupService,
+        private locationService: LocationService,
         private activatedRoute: ActivatedRoute
     ) {}
 
@@ -36,15 +36,15 @@ export class SensorDeviceUpdateComponent implements OnInit {
         this.activatedRoute.data.subscribe(({ sensorDevice }) => {
             this.sensorDevice = sensorDevice;
         });
-        this.locationService.query().subscribe(
-            (res: HttpResponse<ILocation[]>) => {
-                this.locations = res.body;
-            },
-            (res: HttpErrorResponse) => this.onError(res.message)
-        );
         this.notificationGroupService.query().subscribe(
             (res: HttpResponse<INotificationGroup[]>) => {
                 this.notificationgroups = res.body;
+            },
+            (res: HttpErrorResponse) => this.onError(res.message)
+        );
+        this.locationService.query().subscribe(
+            (res: HttpResponse<ILocation[]>) => {
+                this.locations = res.body;
             },
             (res: HttpErrorResponse) => this.onError(res.message)
         );
@@ -80,11 +80,11 @@ export class SensorDeviceUpdateComponent implements OnInit {
         this.jhiAlertService.error(errorMessage, null, null);
     }
 
-    trackLocationById(index: number, item: ILocation) {
+    trackNotificationGroupById(index: number, item: INotificationGroup) {
         return item.id;
     }
 
-    trackNotificationGroupById(index: number, item: INotificationGroup) {
+    trackLocationById(index: number, item: ILocation) {
         return item.id;
     }
     get sensorDevice() {

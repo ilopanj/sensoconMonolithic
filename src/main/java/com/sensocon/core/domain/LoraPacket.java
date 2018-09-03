@@ -24,20 +24,20 @@ public class LoraPacket implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "gateway_id")
+    private String gatewayId;
+
     @Column(name = "rssi")
     private Double rssi;
-
-    @Column(name = "battery_level")
-    private Double batteryLevel;
 
     @Column(name = "jhi_timestamp")
     private Instant timestamp;
 
-    @Column(name = "temperature")
-    private Double temperature;
+    @Column(name = "temperature_farenheit")
+    private Double temperatureFarenheit;
 
-    @Column(name = "pressure")
-    private Double pressure;
+    @Column(name = "pressure_psi")
+    private Double pressurePsi;
 
     @ManyToOne
     @JsonIgnoreProperties("loraPackets")
@@ -50,6 +50,19 @@ public class LoraPacket implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getGatewayId() {
+        return gatewayId;
+    }
+
+    public LoraPacket gatewayId(String gatewayId) {
+        this.gatewayId = gatewayId;
+        return this;
+    }
+
+    public void setGatewayId(String gatewayId) {
+        this.gatewayId = gatewayId;
     }
 
     public Double getRssi() {
@@ -65,19 +78,6 @@ public class LoraPacket implements Serializable {
         this.rssi = rssi;
     }
 
-    public Double getBatteryLevel() {
-        return batteryLevel;
-    }
-
-    public LoraPacket batteryLevel(Double batteryLevel) {
-        this.batteryLevel = batteryLevel;
-        return this;
-    }
-
-    public void setBatteryLevel(Double batteryLevel) {
-        this.batteryLevel = batteryLevel;
-    }
-
     public Instant getTimestamp() {
         return timestamp;
     }
@@ -91,30 +91,30 @@ public class LoraPacket implements Serializable {
         this.timestamp = timestamp;
     }
 
-    public Double getTemperature() {
-        return temperature;
+    public Double getTemperatureFarenheit() {
+        return temperatureFarenheit;
     }
 
-    public LoraPacket temperature(Double temperature) {
-        this.temperature = temperature;
+    public LoraPacket temperatureFarenheit(Double temperatureFarenheit) {
+        this.temperatureFarenheit = temperatureFarenheit;
         return this;
     }
 
-    public void setTemperature(Double temperature) {
-        this.temperature = temperature;
+    public void setTemperatureFarenheit(Double temperatureFarenheit) {
+        this.temperatureFarenheit = temperatureFarenheit;
     }
 
-    public Double getPressure() {
-        return pressure;
+    public Double getPressurePsi() {
+        return pressurePsi;
     }
 
-    public LoraPacket pressure(Double pressure) {
-        this.pressure = pressure;
+    public LoraPacket pressurePsi(Double pressurePsi) {
+        this.pressurePsi = pressurePsi;
         return this;
     }
 
-    public void setPressure(Double pressure) {
-        this.pressure = pressure;
+    public void setPressurePsi(Double pressurePsi) {
+        this.pressurePsi = pressurePsi;
     }
 
     public SensorDevice getSensorDevice() {
@@ -155,11 +155,11 @@ public class LoraPacket implements Serializable {
     public String toString() {
         return "LoraPacket{" +
             "id=" + getId() +
+            ", gatewayId='" + getGatewayId() + "'" +
             ", rssi=" + getRssi() +
-            ", batteryLevel=" + getBatteryLevel() +
             ", timestamp='" + getTimestamp() + "'" +
-            ", temperature=" + getTemperature() +
-            ", pressure=" + getPressure() +
+            ", temperatureFarenheit=" + getTemperatureFarenheit() +
+            ", pressurePsi=" + getPressurePsi() +
             "}";
     }
 }

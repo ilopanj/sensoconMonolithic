@@ -8,6 +8,12 @@
     -->
     <changeSet id="20180822202326-2" author="jhipster">
         
+        <addForeignKeyConstraint baseColumnNames="sensor_group_id"
+                                 baseTableName="sensor"
+                                 constraintName="fk_sensor_sensor_group_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="sensor_group"/>
+
         <addForeignKeyConstraint baseColumnNames="sensor_device_id"
                                  baseTableName="sensor"
                                  constraintName="fk_sensor_sensor_device_id"

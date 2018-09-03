@@ -35,6 +35,13 @@
                         [(ngModel)]="company.stateProvince" />
                 </div>
 
+                <div class="form-group">
+                    <label class="form-control-label" for="field_companySettings">Company Settings</label>
+                    <select class="form-control" id="field_companySettings" name="companySettings" [(ngModel)]="company.companySettingsId">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="companySettingsOption.id" *ngFor="let companySettingsOption of companysettings; trackBy: trackCompanySettingsById">{{companySettingsOption.id}}</option>
+                    </select>
+                </div>
             </div>
             <div>
                 <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">

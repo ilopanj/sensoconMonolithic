@@ -14,7 +14,23 @@
                     <input type="text" class="form-control" name="name" id="field_name"
                         [(ngModel)]="sensorGroup.name" />
                 </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_sensorType">Sensor Type</label>
+                    <select class="form-control" name="sensorType" [(ngModel)]="sensorGroup.sensorType" id="field_sensorType" >
+                        <option value="PRESSURE">PRESSURE</option>
+                        <option value="TEMPERATURE">TEMPERATURE</option>
+                        <option value="HUMIDITY">HUMIDITY</option>
+                        <option value="ON_OFF">ON_OFF</option>
+                    </select>
+                </div>
 
+                <div class="form-group">
+                    <label class="form-control-label" for="field_company">Company</label>
+                    <select class="form-control" id="field_company" name="company" [(ngModel)]="sensorGroup.companyId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="companyOption.id" *ngFor="let companyOption of companies; trackBy: trackCompanyById">{{companyOption.id}}</option>
+                    </select>
+                </div>
             </div>
             <div>
                 <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">

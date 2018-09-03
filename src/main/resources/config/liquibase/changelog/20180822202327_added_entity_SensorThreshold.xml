@@ -30,6 +30,18 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="sensor_device_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="sensor_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="sensor_group_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
         

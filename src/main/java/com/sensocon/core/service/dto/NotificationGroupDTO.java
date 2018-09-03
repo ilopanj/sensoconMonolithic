@@ -16,6 +16,8 @@ public class NotificationGroupDTO implements Serializable {
 
     private Set<ContactDTO> contacts = new HashSet<>();
 
+    private Long companyId;
+
     public Long getId() {
         return id;
     }
@@ -38,6 +40,14 @@ public class NotificationGroupDTO implements Serializable {
 
     public void setContacts(Set<ContactDTO> contacts) {
         this.contacts = contacts;
+    }
+
+    public Long getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(Long companyId) {
+        this.companyId = companyId;
     }
 
     @Override
@@ -66,6 +76,7 @@ public class NotificationGroupDTO implements Serializable {
         return "NotificationGroupDTO{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
+            ", company=" + getCompanyId() +
             "}";
     }
 }

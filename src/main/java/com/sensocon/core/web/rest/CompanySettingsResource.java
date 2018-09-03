@@ -16,6 +16,7 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.StreamSupport;
 
 /**
  * REST controller for managing CompanySettings.
@@ -79,11 +80,16 @@ public class CompanySettingsResource {
     /**
      * GET  /company-settings : get all the companySettings.
      *
+     * @param filter the filter of the request
      * @return the ResponseEntity with status 200 (OK) and the list of companySettings in body
      */
     @GetMapping("/company-settings")
     @Timed
-    public List<CompanySettingsDTO> getAllCompanySettings() {
+    public List<CompanySettingsDTO> getAllCompanySettings(@RequestParam(required = false) String filter) {
+        if ("company-is-null".equals(filter)) {
+            log.debug("REST request to get all CompanySettingss where company is null");
+            return companySettingsService.findAllWhereCompanyIsNull();
+        }
         log.debug("REST request to get all CompanySettings");
         return companySettingsService.findAll();
     }

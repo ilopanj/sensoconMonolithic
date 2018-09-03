@@ -15,6 +15,7 @@
                         <option value="THRESHOLD_GE">THRESHOLD_GE</option>
                         <option value="THRESHOLD_LE">THRESHOLD_LE</option>
                         <option value="THRESHOLD_TIMEOUT">THRESHOLD_TIMEOUT</option>
+                        <option value="THRESHOLD_RSSI">THRESHOLD_RSSI</option>
                         <option value="THRESHOLD_BATTERY_LEVEL">THRESHOLD_BATTERY_LEVEL</option>
                     </select>
                 </div>
@@ -24,6 +25,27 @@
                         [(ngModel)]="sensorThreshold.value" />
                 </div>
 
+                <div class="form-group">
+                    <label class="form-control-label" for="field_sensorDevice">Sensor Device</label>
+                    <select class="form-control" id="field_sensorDevice" name="sensorDevice" [(ngModel)]="sensorThreshold.sensorDeviceId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="sensorDeviceOption.id" *ngFor="let sensorDeviceOption of sensordevices; trackBy: trackSensorDeviceById">{{sensorDeviceOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_sensor">Sensor</label>
+                    <select class="form-control" id="field_sensor" name="sensor" [(ngModel)]="sensorThreshold.sensorId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="sensorOption.id" *ngFor="let sensorOption of sensors; trackBy: trackSensorById">{{sensorOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_sensorGroup">Sensor Group</label>
+                    <select class="form-control" id="field_sensorGroup" name="sensorGroup" [(ngModel)]="sensorThreshold.sensorGroupId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="sensorGroupOption.id" *ngFor="let sensorGroupOption of sensorgroups; trackBy: trackSensorGroupById">{{sensorGroupOption.id}}</option>
+                    </select>
+                </div>
             </div>
             <div>
                 <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">

@@ -13,6 +13,24 @@
                 <dd>
                     <span>{{sensorThreshold.value}}</span>
                 </dd>
+                <dt><span>Sensor Device</span></dt>
+                <dd>
+                    <div *ngIf="sensorThreshold.sensorDeviceId">
+                        <a [routerLink]="['/sensor-device', sensorThreshold.sensorDeviceId, 'view']">{{sensorThreshold.sensorDeviceId}}</a>
+                    </div>
+                </dd>
+                <dt><span>Sensor</span></dt>
+                <dd>
+                    <div *ngIf="sensorThreshold.sensorId">
+                        <a [routerLink]="['/sensor', sensorThreshold.sensorId, 'view']">{{sensorThreshold.sensorId}}</a>
+                    </div>
+                </dd>
+                <dt><span>Sensor Group</span></dt>
+                <dd>
+                    <div *ngIf="sensorThreshold.sensorGroupId">
+                        <a [routerLink]="['/sensor-group', sensorThreshold.sensorGroupId, 'view']">{{sensorThreshold.sensorGroupId}}</a>
+                    </div>
+                </dd>
             </dl>
 
             <button type="submit"

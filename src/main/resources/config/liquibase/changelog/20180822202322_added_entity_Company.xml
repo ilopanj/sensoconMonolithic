@@ -41,7 +41,9 @@
             <column name="state_province" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-
+            <column name="company_settings_id" type="bigint">
+                <constraints unique="true" nullable="true" uniqueConstraintName="ux_company_company_settings_id" />
+            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
         

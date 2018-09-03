@@ -4,14 +4,33 @@
         {
             "fieldName": "type",
             "fieldType": "ThresholdType",
-            "fieldValues": "THRESHOLD_GE,THRESHOLD_LE,THRESHOLD_TIMEOUT,THRESHOLD_BATTERY_LEVEL"
+            "fieldValues": "THRESHOLD_GE,THRESHOLD_LE,THRESHOLD_TIMEOUT,THRESHOLD_RSSI,THRESHOLD_BATTERY_LEVEL"
         },
         {
             "fieldName": "value",
             "fieldType": "Double"
         }
     ],
-    "relationships": [],
+    "relationships": [
+        {
+            "relationshipName": "sensorDevice",
+            "otherEntityName": "sensorDevice",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipName": "sensor",
+            "otherEntityName": "sensor",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipName": "sensorGroup",
+            "otherEntityName": "sensorGroup",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        }
+    ],
     "changelogDate": "20180822202327",
     "entityTableName": "sensor_threshold",
     "dto": "mapstruct",

@@ -17,6 +17,7 @@
             <th><span>ID</span></th>
             <th><span>Name</span></th>
             <th><span>Contact</span></th>
+            <th><span>Company</span></th>
             <th></th>
             </tr>
             </thead>
@@ -28,6 +29,11 @@
                     <span *ngFor="let contact of notificationGroup.contacts; let last = last">
                             <a class="form-control-static" [routerLink]="['../contact', contact?.id, 'view' ]">{{contact.id}}</a>{{last ? '' : ', '}}
                         </span>
+                </td>
+                <td>
+                    <div *ngIf="notificationGroup.companyId">
+                        <a [routerLink]="['../company', notificationGroup.companyId , 'view' ]" >{{notificationGroup.companyId}}</a>
+                    </div>
                 </td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">

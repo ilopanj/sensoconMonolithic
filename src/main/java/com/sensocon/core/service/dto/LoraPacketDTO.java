@@ -7,20 +7,19 @@ import java.util.Objects;
 /**
  * A DTO for the LoraPacket entity.
  */
-@SuppressWarnings("serial")
 public class LoraPacketDTO implements Serializable {
 
     private Long id;
 
-    private Double rssi;
+    private String gatewayId;
 
-    private Double batteryLevel;
+    private Double rssi;
 
     private Instant timestamp;
 
-    private Double temperature;
+    private Double temperatureFarenheit;
 
-    private Double pressure;
+    private Double pressurePsi;
 
     private Long sensorDeviceId;
 
@@ -32,20 +31,20 @@ public class LoraPacketDTO implements Serializable {
         this.id = id;
     }
 
+    public String getGatewayId() {
+        return gatewayId;
+    }
+
+    public void setGatewayId(String gatewayId) {
+        this.gatewayId = gatewayId;
+    }
+
     public Double getRssi() {
         return rssi;
     }
 
     public void setRssi(Double rssi) {
         this.rssi = rssi;
-    }
-
-    public Double getBatteryLevel() {
-        return batteryLevel;
-    }
-
-    public void setBatteryLevel(Double batteryLevel) {
-        this.batteryLevel = batteryLevel;
     }
 
     public Instant getTimestamp() {
@@ -56,20 +55,20 @@ public class LoraPacketDTO implements Serializable {
         this.timestamp = timestamp;
     }
 
-    public Double getTemperature() {
-        return temperature;
+    public Double getTemperatureFarenheit() {
+        return temperatureFarenheit;
     }
 
-    public void setTemperature(Double temperature) {
-        this.temperature = temperature;
+    public void setTemperatureFarenheit(Double temperatureFarenheit) {
+        this.temperatureFarenheit = temperatureFarenheit;
     }
 
-    public Double getPressure() {
-        return pressure;
+    public Double getPressurePsi() {
+        return pressurePsi;
     }
 
-    public void setPressure(Double pressure) {
-        this.pressure = pressure;
+    public void setPressurePsi(Double pressurePsi) {
+        this.pressurePsi = pressurePsi;
     }
 
     public Long getSensorDeviceId() {
@@ -105,11 +104,11 @@ public class LoraPacketDTO implements Serializable {
     public String toString() {
         return "LoraPacketDTO{" +
             "id=" + getId() +
+            ", gatewayId='" + getGatewayId() + "'" +
             ", rssi=" + getRssi() +
-            ", batteryLevel=" + getBatteryLevel() +
             ", timestamp='" + getTimestamp() + "'" +
-            ", temperature=" + getTemperature() +
-            ", pressure=" + getPressure() +
+            ", temperatureFarenheit=" + getTemperatureFarenheit() +
+            ", pressurePsi=" + getPressurePsi() +
             ", sensorDevice=" + getSensorDeviceId() +
             "}";
     }

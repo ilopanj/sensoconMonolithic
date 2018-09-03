@@ -25,8 +25,14 @@
     "relationships": [
         {
             "relationshipType": "one-to-many",
-            "relationshipName": "sensorDevice",
+            "relationshipName": "sensorDevices",
             "otherEntityName": "sensorDevice",
+            "otherEntityRelationshipName": "location"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "gateways",
+            "otherEntityName": "loraGateway",
             "otherEntityRelationshipName": "location"
         },
         {

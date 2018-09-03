@@ -1,4 +1,5 @@
 import { ISensorDevice } from 'app/shared/model//sensor-device.model';
+import { ILoraGateway } from 'app/shared/model//lora-gateway.model';
 
 export interface ILocation {
     id?: number;
@@ -8,6 +9,7 @@ export interface ILocation {
     city?: string;
     stateProvince?: string;
     sensorDevices?: ISensorDevice[];
+    gateways?: ILoraGateway[];
     companyId?: number;
 }
 
@@ -20,6 +22,7 @@ export class Location implements ILocation {
         public city?: string,
         public stateProvince?: string,
         public sensorDevices?: ISensorDevice[],
+        public gateways?: ILoraGateway[],
         public companyId?: number
     ) {}
 }

@@ -1,7 +1,10 @@
 package com.sensocon.core.service.dto;
 
+import java.time.Instant;
 import java.io.Serializable;
 import java.util.Objects;
+import com.sensocon.core.domain.enumeration.SensorStatus;
+import com.sensocon.core.domain.enumeration.SensorType;
 
 /**
  * A DTO for the Sensor entity.
@@ -12,7 +15,13 @@ public class SensorDTO implements Serializable {
 
     private String name;
 
-    private Boolean alertsEnabled;
+    private SensorStatus status;
+
+    private SensorType sensorType;
+
+    private Instant lastAlert;
+
+    private Long sensorGroupId;
 
     private Long sensorDeviceId;
 
@@ -32,12 +41,36 @@ public class SensorDTO implements Serializable {
         this.name = name;
     }
 
-    public Boolean isAlertsEnabled() {
-        return alertsEnabled;
+    public SensorStatus getStatus() {
+        return status;
     }
 
-    public void setAlertsEnabled(Boolean alertsEnabled) {
-        this.alertsEnabled = alertsEnabled;
+    public void setStatus(SensorStatus status) {
+        this.status = status;
+    }
+
+    public SensorType getSensorType() {
+        return sensorType;
+    }
+
+    public void setSensorType(SensorType sensorType) {
+        this.sensorType = sensorType;
+    }
+
+    public Instant getLastAlert() {
+        return lastAlert;
+    }
+
+    public void setLastAlert(Instant lastAlert) {
+        this.lastAlert = lastAlert;
+    }
+
+    public Long getSensorGroupId() {
+        return sensorGroupId;
+    }
+
+    public void setSensorGroupId(Long sensorGroupId) {
+        this.sensorGroupId = sensorGroupId;
     }
 
     public Long getSensorDeviceId() {
@@ -74,7 +107,10 @@ public class SensorDTO implements Serializable {
         return "SensorDTO{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", alertsEnabled='" + isAlertsEnabled() + "'" +
+            ", status='" + getStatus() + "'" +
+            ", sensorType='" + getSensorType() + "'" +
+            ", lastAlert='" + getLastAlert() + "'" +
+            ", sensorGroup=" + getSensorGroupId() +
             ", sensorDevice=" + getSensorDeviceId() +
             "}";
     }

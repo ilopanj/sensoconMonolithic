@@ -5,25 +5,25 @@
             <hr>
             <jhi-alert-error></jhi-alert-error>
             <dl class="row-md jh-entity-details">
+                <dt><span>Gateway Id</span></dt>
+                <dd>
+                    <span>{{loraPacket.gatewayId}}</span>
+                </dd>
                 <dt><span>Rssi</span></dt>
                 <dd>
                     <span>{{loraPacket.rssi}}</span>
-                </dd>
-                <dt><span>Battery Level</span></dt>
-                <dd>
-                    <span>{{loraPacket.batteryLevel}}</span>
                 </dd>
                 <dt><span>Timestamp</span></dt>
                 <dd>
                     <span>{{loraPacket.timestamp}}</span>
                 </dd>
-                <dt><span>Temperature</span></dt>
+                <dt><span>Temperature Farenheit</span></dt>
                 <dd>
-                    <span>{{loraPacket.temperature}}</span>
+                    <span>{{loraPacket.temperatureFarenheit}}</span>
                 </dd>
-                <dt><span>Pressure</span></dt>
+                <dt><span>Pressure Psi</span></dt>
                 <dd>
-                    <span>{{loraPacket.pressure}}</span>
+                    <span>{{loraPacket.pressurePsi}}</span>
                 </dd>
                 <dt><span>Sensor Device</span></dt>
                 <dd>

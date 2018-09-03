@@ -1,0 +1,136 @@
+entity Company {
+    name String,
+    streetAddress String,
+	postalCode String,
+	city String,
+	stateProvince String
+}
+
+entity CompanySettings
+{
+	defaultTimeoutSeconds	Long
+    defaultSuppressionSeconds	Long
+}
+
+entity Contact
+{
+    alertPhoneNumber String
+    alertEmail String
+}
+
+
+enum SensorType {
+    PRESSURE, TEMPERATURE, HUMIDITY, ON_OFF
+}
+
+enum UnitsPressure
+{
+	PSI, MILLIBARS, INCHES_WC, MILLIMETERS_WC, CENTIMETERS_WC, PASCALS, KILO_PASCALS, RAW
+}
+
+enum UnitsHumidity
+{
+	RAW, PERCENT
+}
+
+enum UnitsTemperature
+{
+	FARENHEIT, CELSIUS, RAW
+}
+
+enum ThresholdType {
+	THRESHOLD_GE, THRESHOLD_LE, THRESHOLD_TIMEOUT, THRESHOLD_RSSI, THRESHOLD_BATTERY_LEVEL
+}
+
+enum SensorStatus {
+	STATE_NORMAL,
+    STATE_ALERT,
+    STATE_INACTIVE
+}
+
+entity SensorDevice {
+	deviceId String required
+    name String 
+}
+
+entity Sensor {
+    name String
+    status SensorStatus
+    sensorType SensorType
+    lastAlert Instant
+}
+
+entity SensorThreshold
+{
+	type ThresholdType
+    value Double
+}
+
+entity SensorGroup
+{
+	name String
+    sensorType SensorType
+}
+
+entity NotificationGroup
+{
+	name String
+}
+
+entity LoraGateway
+{
+	gatewayId String
+    name String
+}
+
+entity LoraPacket {
+	gatewayId	String
+	rssi	Double
+	timestamp	Instant
+	temperatureFarenheit	Double
+	pressurePsi	Double
+}
+
+// an ignored comment
+/** not an ignored comment */
+entity Location {
+	name String
+	streetAddress String
+	postalCode String
+	city String
+	stateProvince String
+}
+
+// defining multiple OneToMany relationships with comments
+relationship OneToMany {
+    Company to Location,
+    Company to SensorGroup,
+    Company to Contact,
+    Company to NotificationGroup,
+    Location{sensorDevices} to SensorDevice,
+    Location{gateways} to LoraGateway,
+    SensorDevice{sensors} to Sensor{sensorDevice},
+    NotificationGroup{sensorDevice} to SensorDevice{notificationGroup},
+    SensorDevice{thresholds} to SensorThreshold,
+    Sensor{thresholds} to SensorThreshold,
+    SensorGroup{defaultThresholds} to SensorThreshold
+}
+
+relationship ManyToOne {
+	LoraPacket to SensorDevice
+}
+
+relationship OneToOne {
+	Sensor to SensorGroup,
+    Company to CompanySettings
+}
+
+relationship ManyToMany {
+	NotificationGroup{contact} to Contact{notificationGroup}
+}
+
+dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl 
+
