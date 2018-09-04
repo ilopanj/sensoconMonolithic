@@ -5,6 +5,10 @@
             <hr>
             <jhi-alert-error></jhi-alert-error>
             <dl class="row-md jh-entity-details">
+                <dt><span>Name</span></dt>
+                <dd>
+                    <span>{{contact.name}}</span>
+                </dd>
                 <dt><span>Alert Phone Number</span></dt>
                 <dd>
                     <span>{{contact.alertPhoneNumber}}</span>
@@ -15,8 +19,8 @@
                 </dd>
                 <dt><span>Company</span></dt>
                 <dd>
-                    <div *ngIf="contact.companyId">
-                        <a [routerLink]="['/company', contact.companyId, 'view']">{{contact.companyId}}</a>
+                    <div *ngIf="contact.company">
+                        <a [routerLink]="['/company', contact.company?.id, 'view']">{{contact.company?.name}}</a>
                     </div>
                 </dd>
             </dl>

@@ -1,6 +1,6 @@
 package com.sensocon.core.service;
 
-import com.sensocon.core.service.dto.LoraGatewayDTO;
+import com.sensocon.core.domain.LoraGateway;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,17 +13,17 @@ public interface LoraGatewayService {
     /**
      * Save a loraGateway.
      *
-     * @param loraGatewayDTO the entity to save
+     * @param loraGateway the entity to save
      * @return the persisted entity
      */
-    LoraGatewayDTO save(LoraGatewayDTO loraGatewayDTO);
+    LoraGateway save(LoraGateway loraGateway);
 
     /**
      * Get all the loraGateways.
      *
      * @return the list of entities
      */
-    List<LoraGatewayDTO> findAll();
+    List<LoraGateway> findAll();
 
 
     /**
@@ -32,7 +32,7 @@ public interface LoraGatewayService {
      * @param id the id of the entity
      * @return the entity
      */
-    Optional<LoraGatewayDTO> findOne(Long id);
+    Optional<LoraGateway> findOne(Long id);
 
     /**
      * Delete the "id" loraGateway.

@@ -5,8 +5,6 @@ import com.sensocon.core.SensoconMonolithicApp;
 import com.sensocon.core.domain.SensorThreshold;
 import com.sensocon.core.repository.SensorThresholdRepository;
 import com.sensocon.core.service.SensorThresholdService;
-import com.sensocon.core.service.dto.SensorThresholdDTO;
-import com.sensocon.core.service.mapper.SensorThresholdMapper;
 import com.sensocon.core.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -43,6 +41,9 @@ import com.sensocon.core.domain.enumeration.ThresholdType;
 @SpringBootTest(classes = SensoconMonolithicApp.class)
 public class SensorThresholdResourceIntTest {
 
+    private static final String DEFAULT_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_NAME = "BBBBBBBBBB";
+
     private static final ThresholdType DEFAULT_TYPE = ThresholdType.THRESHOLD_GE;
     private static final ThresholdType UPDATED_TYPE = ThresholdType.THRESHOLD_LE;
 
@@ -52,9 +53,6 @@ public class SensorThresholdResourceIntTest {
     @Autowired
     private SensorThresholdRepository sensorThresholdRepository;
 
-
-    @Autowired
-    private SensorThresholdMapper sensorThresholdMapper;
     
 
     @Autowired
@@ -95,6 +93,7 @@ public class SensorThresholdResourceIntTest {
      */
     public static SensorThreshold createEntity(EntityManager em) {
         SensorThreshold sensorThreshold = new SensorThreshold()
+            .name(DEFAULT_NAME)
             .type(DEFAULT_TYPE)
             .value(DEFAULT_VALUE);
         return sensorThreshold;
@@ -111,16 +110,16 @@ public class SensorThresholdResourceIntTest {
         int databaseSizeBeforeCreate = sensorThresholdRepository.findAll().size();
 
         // Create the SensorThreshold
-        SensorThresholdDTO sensorThresholdDTO = sensorThresholdMapper.toDto(sensorThreshold);
         restSensorThresholdMockMvc.perform(post("/api/sensor-thresholds")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(sensorThresholdDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(sensorThreshold)))
             .andExpect(status().isCreated());
 
         // Validate the SensorThreshold in the database
         List<SensorThreshold> sensorThresholdList = sensorThresholdRepository.findAll();
         assertThat(sensorThresholdList).hasSize(databaseSizeBeforeCreate + 1);
         SensorThreshold testSensorThreshold = sensorThresholdList.get(sensorThresholdList.size() - 1);
+        assertThat(testSensorThreshold.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testSensorThreshold.getType()).isEqualTo(DEFAULT_TYPE);
         assertThat(testSensorThreshold.getValue()).isEqualTo(DEFAULT_VALUE);
     }
@@ -132,12 +131,11 @@ public class SensorThresholdResourceIntTest {
 
         // Create the SensorThreshold with an existing ID
         sensorThreshold.setId(1L);
-        SensorThresholdDTO sensorThresholdDTO = sensorThresholdMapper.toDto(sensorThreshold);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restSensorThresholdMockMvc.perform(post("/api/sensor-thresholds")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(sensorThresholdDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(sensorThreshold)))
             .andExpect(status().isBadRequest());
 
         // Validate the SensorThreshold in the database
@@ -156,6 +154,7 @@ public class SensorThresholdResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(sensorThreshold.getId().intValue())))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
             .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())))
             .andExpect(jsonPath("$.[*].value").value(hasItem(DEFAULT_VALUE.doubleValue())));
     }
@@ -172,6 +171,7 @@ public class SensorThresholdResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(sensorThreshold.getId().intValue()))
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
             .andExpect(jsonPath("$.type").value(DEFAULT_TYPE.toString()))
             .andExpect(jsonPath("$.value").value(DEFAULT_VALUE.doubleValue()));
     }
@@ -187,7 +187,7 @@ public class SensorThresholdResourceIntTest {
     @Transactional
     public void updateSensorThreshold() throws Exception {
         // Initialize the database
-        sensorThresholdRepository.saveAndFlush(sensorThreshold);
+        sensorThresholdService.save(sensorThreshold);
 
         int databaseSizeBeforeUpdate = sensorThresholdRepository.findAll().size();
 
@@ -196,19 +196,20 @@ public class SensorThresholdResourceIntTest {
         // Disconnect from session so that the updates on updatedSensorThreshold are not directly saved in db
         em.detach(updatedSensorThreshold);
         updatedSensorThreshold
+            .name(UPDATED_NAME)
             .type(UPDATED_TYPE)
             .value(UPDATED_VALUE);
-        SensorThresholdDTO sensorThresholdDTO = sensorThresholdMapper.toDto(updatedSensorThreshold);
 
         restSensorThresholdMockMvc.perform(put("/api/sensor-thresholds")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(sensorThresholdDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(updatedSensorThreshold)))
             .andExpect(status().isOk());
 
         // Validate the SensorThreshold in the database
         List<SensorThreshold> sensorThresholdList = sensorThresholdRepository.findAll();
         assertThat(sensorThresholdList).hasSize(databaseSizeBeforeUpdate);
         SensorThreshold testSensorThreshold = sensorThresholdList.get(sensorThresholdList.size() - 1);
+        assertThat(testSensorThreshold.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testSensorThreshold.getType()).isEqualTo(UPDATED_TYPE);
         assertThat(testSensorThreshold.getValue()).isEqualTo(UPDATED_VALUE);
     }
@@ -219,12 +220,11 @@ public class SensorThresholdResourceIntTest {
         int databaseSizeBeforeUpdate = sensorThresholdRepository.findAll().size();
 
         // Create the SensorThreshold
-        SensorThresholdDTO sensorThresholdDTO = sensorThresholdMapper.toDto(sensorThreshold);
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException 
         restSensorThresholdMockMvc.perform(put("/api/sensor-thresholds")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(sensorThresholdDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(sensorThreshold)))
             .andExpect(status().isBadRequest());
 
         // Validate the SensorThreshold in the database
@@ -236,7 +236,7 @@ public class SensorThresholdResourceIntTest {
     @Transactional
     public void deleteSensorThreshold() throws Exception {
         // Initialize the database
-        sensorThresholdRepository.saveAndFlush(sensorThreshold);
+        sensorThresholdService.save(sensorThreshold);
 
         int databaseSizeBeforeDelete = sensorThresholdRepository.findAll().size();
 
@@ -263,28 +263,5 @@ public class SensorThresholdResourceIntTest {
         assertThat(sensorThreshold1).isNotEqualTo(sensorThreshold2);
         sensorThreshold1.setId(null);
         assertThat(sensorThreshold1).isNotEqualTo(sensorThreshold2);
-    }
-
-    @Test
-    @Transactional
-    public void dtoEqualsVerifier() throws Exception {
-        TestUtil.equalsVerifier(SensorThresholdDTO.class);
-        SensorThresholdDTO sensorThresholdDTO1 = new SensorThresholdDTO();
-        sensorThresholdDTO1.setId(1L);
-        SensorThresholdDTO sensorThresholdDTO2 = new SensorThresholdDTO();
-        assertThat(sensorThresholdDTO1).isNotEqualTo(sensorThresholdDTO2);
-        sensorThresholdDTO2.setId(sensorThresholdDTO1.getId());
-        assertThat(sensorThresholdDTO1).isEqualTo(sensorThresholdDTO2);
-        sensorThresholdDTO2.setId(2L);
-        assertThat(sensorThresholdDTO1).isNotEqualTo(sensorThresholdDTO2);
-        sensorThresholdDTO1.setId(null);
-        assertThat(sensorThresholdDTO1).isNotEqualTo(sensorThresholdDTO2);
-    }
-
-    @Test
-    @Transactional
-    public void testEntityFromId() {
-        assertThat(sensorThresholdMapper.fromId(42L).getId()).isEqualTo(42);
-        assertThat(sensorThresholdMapper.fromId(null)).isNull();
     }
 }

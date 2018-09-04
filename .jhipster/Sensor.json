@@ -25,7 +25,7 @@
             "relationshipType": "one-to-one",
             "relationshipName": "sensorGroup",
             "otherEntityName": "sensorGroup",
-            "otherEntityField": "id",
+            "otherEntityField": "name",
             "ownerSide": true,
             "otherEntityRelationshipName": "sensor"
         },
@@ -39,12 +39,12 @@
             "relationshipType": "many-to-one",
             "relationshipName": "sensorDevice",
             "otherEntityName": "sensorDevice",
-            "otherEntityField": "id"
+            "otherEntityField": "deviceId"
         }
     ],
     "changelogDate": "20180822202326",
     "entityTableName": "sensor",
-    "dto": "mapstruct",
+    "dto": "no",
     "pagination": "no",
     "service": "serviceImpl",
     "jpaMetamodelFiltering": false,

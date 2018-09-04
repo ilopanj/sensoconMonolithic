@@ -40,7 +40,6 @@ public class CacheConfiguration {
             cm.createCache(com.sensocon.core.domain.User.class.getName() + ".authorities", jcacheConfiguration);
             cm.createCache(com.sensocon.core.domain.Company.class.getName(), jcacheConfiguration);
             cm.createCache(com.sensocon.core.domain.Company.class.getName() + ".locations", jcacheConfiguration);
-            cm.createCache(com.sensocon.core.domain.CompanySettings.class.getName(), jcacheConfiguration);
             cm.createCache(com.sensocon.core.domain.Contact.class.getName(), jcacheConfiguration);
             cm.createCache(com.sensocon.core.domain.Contact.class.getName() + ".notificationGroups", jcacheConfiguration);
             cm.createCache(com.sensocon.core.domain.SensorDevice.class.getName(), jcacheConfiguration);

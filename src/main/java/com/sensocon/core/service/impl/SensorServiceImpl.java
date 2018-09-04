@@ -3,18 +3,15 @@ package com.sensocon.core.service.impl;
 import com.sensocon.core.service.SensorService;
 import com.sensocon.core.domain.Sensor;
 import com.sensocon.core.repository.SensorRepository;
-import com.sensocon.core.service.dto.SensorDTO;
-import com.sensocon.core.service.mapper.SensorMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.LinkedList;
+
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 /**
  * Service Implementation for managing Sensor.
  */
@@ -26,25 +23,19 @@ public class SensorServiceImpl implements SensorService {
 
     private final SensorRepository sensorRepository;
 
-    private final SensorMapper sensorMapper;
-
-    public SensorServiceImpl(SensorRepository sensorRepository, SensorMapper sensorMapper) {
+    public SensorServiceImpl(SensorRepository sensorRepository) {
         this.sensorRepository = sensorRepository;
-        this.sensorMapper = sensorMapper;
     }
 
     /**
      * Save a sensor.
      *
-     * @param sensorDTO the entity to save
+     * @param sensor the entity to save
      * @return the persisted entity
      */
     @Override
-    public SensorDTO save(SensorDTO sensorDTO) {
-        log.debug("Request to save Sensor : {}", sensorDTO);
-        Sensor sensor = sensorMapper.toEntity(sensorDTO);
-        sensor = sensorRepository.save(sensor);
-        return sensorMapper.toDto(sensor);
+    public Sensor save(Sensor sensor) {
+        log.debug("Request to save Sensor : {}", sensor);        return sensorRepository.save(sensor);
     }
 
     /**
@@ -54,11 +45,9 @@ public class SensorServiceImpl implements SensorService {
      */
     @Override
     @Transactional(readOnly = true)
-    public List<SensorDTO> findAll() {
+    public List<Sensor> findAll() {
         log.debug("Request to get all Sensors");
-        return sensorRepository.findAll().stream()
-            .map(sensorMapper::toDto)
-            .collect(Collectors.toCollection(LinkedList::new));
+        return sensorRepository.findAll();
     }
 
 
@@ -70,10 +59,9 @@ public class SensorServiceImpl implements SensorService {
      */
     @Override
     @Transactional(readOnly = true)
-    public Optional<SensorDTO> findOne(Long id) {
+    public Optional<Sensor> findOne(Long id) {
         log.debug("Request to get Sensor : {}", id);
-        return sensorRepository.findById(id)
-            .map(sensorMapper::toDto);
+        return sensorRepository.findById(id);
     }
 
     /**

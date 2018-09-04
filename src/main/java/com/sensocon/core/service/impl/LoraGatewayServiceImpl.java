@@ -3,18 +3,15 @@ package com.sensocon.core.service.impl;
 import com.sensocon.core.service.LoraGatewayService;
 import com.sensocon.core.domain.LoraGateway;
 import com.sensocon.core.repository.LoraGatewayRepository;
-import com.sensocon.core.service.dto.LoraGatewayDTO;
-import com.sensocon.core.service.mapper.LoraGatewayMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.LinkedList;
+
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 /**
  * Service Implementation for managing LoraGateway.
  */
@@ -26,25 +23,19 @@ public class LoraGatewayServiceImpl implements LoraGatewayService {
 
     private final LoraGatewayRepository loraGatewayRepository;
 
-    private final LoraGatewayMapper loraGatewayMapper;
-
-    public LoraGatewayServiceImpl(LoraGatewayRepository loraGatewayRepository, LoraGatewayMapper loraGatewayMapper) {
+    public LoraGatewayServiceImpl(LoraGatewayRepository loraGatewayRepository) {
         this.loraGatewayRepository = loraGatewayRepository;
-        this.loraGatewayMapper = loraGatewayMapper;
     }
 
     /**
      * Save a loraGateway.
      *
-     * @param loraGatewayDTO the entity to save
+     * @param loraGateway the entity to save
      * @return the persisted entity
      */
     @Override
-    public LoraGatewayDTO save(LoraGatewayDTO loraGatewayDTO) {
-        log.debug("Request to save LoraGateway : {}", loraGatewayDTO);
-        LoraGateway loraGateway = loraGatewayMapper.toEntity(loraGatewayDTO);
-        loraGateway = loraGatewayRepository.save(loraGateway);
-        return loraGatewayMapper.toDto(loraGateway);
+    public LoraGateway save(LoraGateway loraGateway) {
+        log.debug("Request to save LoraGateway : {}", loraGateway);        return loraGatewayRepository.save(loraGateway);
     }
 
     /**
@@ -54,11 +45,9 @@ public class LoraGatewayServiceImpl implements LoraGatewayService {
      */
     @Override
     @Transactional(readOnly = true)
-    public List<LoraGatewayDTO> findAll() {
+    public List<LoraGateway> findAll() {
         log.debug("Request to get all LoraGateways");
-        return loraGatewayRepository.findAll().stream()
-            .map(loraGatewayMapper::toDto)
-            .collect(Collectors.toCollection(LinkedList::new));
+        return loraGatewayRepository.findAll();
     }
 
 
@@ -70,10 +59,9 @@ public class LoraGatewayServiceImpl implements LoraGatewayService {
      */
     @Override
     @Transactional(readOnly = true)
-    public Optional<LoraGatewayDTO> findOne(Long id) {
+    public Optional<LoraGateway> findOne(Long id) {
         log.debug("Request to get LoraGateway : {}", id);
-        return loraGatewayRepository.findById(id)
-            .map(loraGatewayMapper::toDto);
+        return loraGatewayRepository.findById(id);
     }
 
     /**

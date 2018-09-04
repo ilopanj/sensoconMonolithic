@@ -26,6 +26,9 @@ public class Contact implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "name")
+    private String name;
+
     @Column(name = "alert_phone_number")
     private String alertPhoneNumber;
 
@@ -48,6 +51,19 @@ public class Contact implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Contact name(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getAlertPhoneNumber() {
@@ -139,6 +155,7 @@ public class Contact implements Serializable {
     public String toString() {
         return "Contact{" +
             "id=" + getId() +
+            ", name='" + getName() + "'" +
             ", alertPhoneNumber='" + getAlertPhoneNumber() + "'" +
             ", alertEmail='" + getAlertEmail() + "'" +
             "}";

@@ -5,8 +5,6 @@ import com.sensocon.core.SensoconMonolithicApp;
 import com.sensocon.core.domain.SensorDevice;
 import com.sensocon.core.repository.SensorDeviceRepository;
 import com.sensocon.core.service.SensorDeviceService;
-import com.sensocon.core.service.dto.SensorDeviceDTO;
-import com.sensocon.core.service.mapper.SensorDeviceMapper;
 import com.sensocon.core.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -51,9 +49,6 @@ public class SensorDeviceResourceIntTest {
     @Autowired
     private SensorDeviceRepository sensorDeviceRepository;
 
-
-    @Autowired
-    private SensorDeviceMapper sensorDeviceMapper;
     
 
     @Autowired
@@ -110,10 +105,9 @@ public class SensorDeviceResourceIntTest {
         int databaseSizeBeforeCreate = sensorDeviceRepository.findAll().size();
 
         // Create the SensorDevice
-        SensorDeviceDTO sensorDeviceDTO = sensorDeviceMapper.toDto(sensorDevice);
         restSensorDeviceMockMvc.perform(post("/api/sensor-devices")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(sensorDeviceDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(sensorDevice)))
             .andExpect(status().isCreated());
 
         // Validate the SensorDevice in the database
@@ -131,12 +125,11 @@ public class SensorDeviceResourceIntTest {
 
         // Create the SensorDevice with an existing ID
         sensorDevice.setId(1L);
-        SensorDeviceDTO sensorDeviceDTO = sensorDeviceMapper.toDto(sensorDevice);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restSensorDeviceMockMvc.perform(post("/api/sensor-devices")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(sensorDeviceDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(sensorDevice)))
             .andExpect(status().isBadRequest());
 
         // Validate the SensorDevice in the database
@@ -152,11 +145,10 @@ public class SensorDeviceResourceIntTest {
         sensorDevice.setDeviceId(null);
 
         // Create the SensorDevice, which fails.
-        SensorDeviceDTO sensorDeviceDTO = sensorDeviceMapper.toDto(sensorDevice);
 
         restSensorDeviceMockMvc.perform(post("/api/sensor-devices")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(sensorDeviceDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(sensorDevice)))
             .andExpect(status().isBadRequest());
 
         List<SensorDevice> sensorDeviceList = sensorDeviceRepository.findAll();
@@ -205,7 +197,7 @@ public class SensorDeviceResourceIntTest {
     @Transactional
     public void updateSensorDevice() throws Exception {
         // Initialize the database
-        sensorDeviceRepository.saveAndFlush(sensorDevice);
+        sensorDeviceService.save(sensorDevice);
 
         int databaseSizeBeforeUpdate = sensorDeviceRepository.findAll().size();
 
@@ -216,11 +208,10 @@ public class SensorDeviceResourceIntTest {
         updatedSensorDevice
             .deviceId(UPDATED_DEVICE_ID)
             .name(UPDATED_NAME);
-        SensorDeviceDTO sensorDeviceDTO = sensorDeviceMapper.toDto(updatedSensorDevice);
 
         restSensorDeviceMockMvc.perform(put("/api/sensor-devices")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(sensorDeviceDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(updatedSensorDevice)))
             .andExpect(status().isOk());
 
         // Validate the SensorDevice in the database
@@ -237,12 +228,11 @@ public class SensorDeviceResourceIntTest {
         int databaseSizeBeforeUpdate = sensorDeviceRepository.findAll().size();
 
         // Create the SensorDevice
-        SensorDeviceDTO sensorDeviceDTO = sensorDeviceMapper.toDto(sensorDevice);
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException 
         restSensorDeviceMockMvc.perform(put("/api/sensor-devices")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(sensorDeviceDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(sensorDevice)))
             .andExpect(status().isBadRequest());
 
         // Validate the SensorDevice in the database
@@ -254,7 +244,7 @@ public class SensorDeviceResourceIntTest {
     @Transactional
     public void deleteSensorDevice() throws Exception {
         // Initialize the database
-        sensorDeviceRepository.saveAndFlush(sensorDevice);
+        sensorDeviceService.save(sensorDevice);
 
         int databaseSizeBeforeDelete = sensorDeviceRepository.findAll().size();
 
@@ -281,28 +271,5 @@ public class SensorDeviceResourceIntTest {
         assertThat(sensorDevice1).isNotEqualTo(sensorDevice2);
         sensorDevice1.setId(null);
         assertThat(sensorDevice1).isNotEqualTo(sensorDevice2);
-    }
-
-    @Test
-    @Transactional
-    public void dtoEqualsVerifier() throws Exception {
-        TestUtil.equalsVerifier(SensorDeviceDTO.class);
-        SensorDeviceDTO sensorDeviceDTO1 = new SensorDeviceDTO();
-        sensorDeviceDTO1.setId(1L);
-        SensorDeviceDTO sensorDeviceDTO2 = new SensorDeviceDTO();
-        assertThat(sensorDeviceDTO1).isNotEqualTo(sensorDeviceDTO2);
-        sensorDeviceDTO2.setId(sensorDeviceDTO1.getId());
-        assertThat(sensorDeviceDTO1).isEqualTo(sensorDeviceDTO2);
-        sensorDeviceDTO2.setId(2L);
-        assertThat(sensorDeviceDTO1).isNotEqualTo(sensorDeviceDTO2);
-        sensorDeviceDTO1.setId(null);
-        assertThat(sensorDeviceDTO1).isNotEqualTo(sensorDeviceDTO2);
-    }
-
-    @Test
-    @Transactional
-    public void testEntityFromId() {
-        assertThat(sensorDeviceMapper.fromId(42L).getId()).isEqualTo(42);
-        assertThat(sensorDeviceMapper.fromId(null)).isNull();
     }
 }

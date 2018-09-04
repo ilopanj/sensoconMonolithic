@@ -3,18 +3,15 @@ package com.sensocon.core.service.impl;
 import com.sensocon.core.service.SensorDeviceService;
 import com.sensocon.core.domain.SensorDevice;
 import com.sensocon.core.repository.SensorDeviceRepository;
-import com.sensocon.core.service.dto.SensorDeviceDTO;
-import com.sensocon.core.service.mapper.SensorDeviceMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.LinkedList;
+
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 /**
  * Service Implementation for managing SensorDevice.
  */
@@ -26,25 +23,19 @@ public class SensorDeviceServiceImpl implements SensorDeviceService {
 
     private final SensorDeviceRepository sensorDeviceRepository;
 
-    private final SensorDeviceMapper sensorDeviceMapper;
-
-    public SensorDeviceServiceImpl(SensorDeviceRepository sensorDeviceRepository, SensorDeviceMapper sensorDeviceMapper) {
+    public SensorDeviceServiceImpl(SensorDeviceRepository sensorDeviceRepository) {
         this.sensorDeviceRepository = sensorDeviceRepository;
-        this.sensorDeviceMapper = sensorDeviceMapper;
     }
 
     /**
      * Save a sensorDevice.
      *
-     * @param sensorDeviceDTO the entity to save
+     * @param sensorDevice the entity to save
      * @return the persisted entity
      */
     @Override
-    public SensorDeviceDTO save(SensorDeviceDTO sensorDeviceDTO) {
-        log.debug("Request to save SensorDevice : {}", sensorDeviceDTO);
-        SensorDevice sensorDevice = sensorDeviceMapper.toEntity(sensorDeviceDTO);
-        sensorDevice = sensorDeviceRepository.save(sensorDevice);
-        return sensorDeviceMapper.toDto(sensorDevice);
+    public SensorDevice save(SensorDevice sensorDevice) {
+        log.debug("Request to save SensorDevice : {}", sensorDevice);        return sensorDeviceRepository.save(sensorDevice);
     }
 
     /**
@@ -54,11 +45,9 @@ public class SensorDeviceServiceImpl implements SensorDeviceService {
      */
     @Override
     @Transactional(readOnly = true)
-    public List<SensorDeviceDTO> findAll() {
+    public List<SensorDevice> findAll() {
         log.debug("Request to get all SensorDevices");
-        return sensorDeviceRepository.findAll().stream()
-            .map(sensorDeviceMapper::toDto)
-            .collect(Collectors.toCollection(LinkedList::new));
+        return sensorDeviceRepository.findAll();
     }
 
 
@@ -70,10 +59,9 @@ public class SensorDeviceServiceImpl implements SensorDeviceService {
      */
     @Override
     @Transactional(readOnly = true)
-    public Optional<SensorDeviceDTO> findOne(Long id) {
+    public Optional<SensorDevice> findOne(Long id) {
         log.debug("Request to get SensorDevice : {}", id);
-        return sensorDeviceRepository.findById(id)
-            .map(sensorDeviceMapper::toDto);
+        return sensorDeviceRepository.findById(id);
     }
 
     /**

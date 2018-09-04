@@ -15,6 +15,7 @@
             <thead>
             <tr>
             <th><span>ID</span></th>
+            <th><span>Name</span></th>
             <th><span>Alert Phone Number</span></th>
             <th><span>Alert Email</span></th>
             <th><span>Company</span></th>
@@ -24,11 +25,12 @@
             <tbody>
             <tr *ngFor="let contact of contacts ;trackBy: trackId">
                 <td><a [routerLink]="['/contact', contact.id, 'view' ]">{{contact.id}}</a></td>
+                <td>{{contact.name}}</td>
                 <td>{{contact.alertPhoneNumber}}</td>
                 <td>{{contact.alertEmail}}</td>
                 <td>
-                    <div *ngIf="contact.companyId">
-                        <a [routerLink]="['../company', contact.companyId , 'view' ]" >{{contact.companyId}}</a>
+                    <div *ngIf="contact.company">
+                        <a [routerLink]="['../company', contact.company?.id, 'view' ]" >{{contact.company?.name}}</a>
                     </div>
                 </td>
                 <td class="text-right">

@@ -18,19 +18,19 @@
             "otherEntityRelationshipName": "notificationGroup",
             "relationshipName": "contact",
             "otherEntityName": "contact",
-            "otherEntityField": "id",
+            "otherEntityField": "name",
             "ownerSide": true
         },
         {
             "relationshipType": "many-to-one",
             "relationshipName": "company",
             "otherEntityName": "company",
-            "otherEntityField": "id"
+            "otherEntityField": "name"
         }
     ],
     "changelogDate": "20180822202329",
     "entityTableName": "notification_group",
-    "dto": "mapstruct",
+    "dto": "no",
     "pagination": "no",
     "service": "serviceImpl",
     "jpaMetamodelFiltering": false,

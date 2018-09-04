@@ -26,9 +26,9 @@
 
                 <div class="form-group">
                     <label class="form-control-label" for="field_company">Company</label>
-                    <select class="form-control" id="field_company" name="company" [(ngModel)]="sensorGroup.companyId" >
+                    <select class="form-control" id="field_company" name="company" [(ngModel)]="sensorGroup.company" >
                         <option [ngValue]="null"></option>
-                        <option [ngValue]="companyOption.id" *ngFor="let companyOption of companies; trackBy: trackCompanyById">{{companyOption.id}}</option>
+                        <option [ngValue]="companyOption.id === sensorGroup.company?.id ? sensorGroup.company : companyOption" *ngFor="let companyOption of companies; trackBy: trackCompanyById">{{companyOption.name}}</option>
                     </select>
                 </div>
             </div>

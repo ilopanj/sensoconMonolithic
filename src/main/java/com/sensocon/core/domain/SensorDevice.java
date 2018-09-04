@@ -48,11 +48,11 @@ public class SensorDevice implements Serializable {
 
     @ManyToOne
     @JsonIgnoreProperties("sensorDevices")
-    private NotificationGroup notificationGroup;
+    private Location location;
 
     @ManyToOne
     @JsonIgnoreProperties("sensorDevices")
-    private Location location;
+    private NotificationGroup notificationGroup;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -164,19 +164,6 @@ public class SensorDevice implements Serializable {
         this.packets = loraPackets;
     }
 
-    public NotificationGroup getNotificationGroup() {
-        return notificationGroup;
-    }
-
-    public SensorDevice notificationGroup(NotificationGroup notificationGroup) {
-        this.notificationGroup = notificationGroup;
-        return this;
-    }
-
-    public void setNotificationGroup(NotificationGroup notificationGroup) {
-        this.notificationGroup = notificationGroup;
-    }
-
     public Location getLocation() {
         return location;
     }
@@ -188,6 +175,19 @@ public class SensorDevice implements Serializable {
 
     public void setLocation(Location location) {
         this.location = location;
+    }
+
+    public NotificationGroup getNotificationGroup() {
+        return notificationGroup;
+    }
+
+    public SensorDevice notificationGroup(NotificationGroup notificationGroup) {
+        this.notificationGroup = notificationGroup;
+        return this;
+    }
+
+    public void setNotificationGroup(NotificationGroup notificationGroup) {
+        this.notificationGroup = notificationGroup;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

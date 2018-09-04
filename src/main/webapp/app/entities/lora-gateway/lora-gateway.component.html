@@ -27,8 +27,8 @@
                 <td>{{loraGateway.gatewayId}}</td>
                 <td>{{loraGateway.name}}</td>
                 <td>
-                    <div *ngIf="loraGateway.locationId">
-                        <a [routerLink]="['../location', loraGateway.locationId , 'view' ]" >{{loraGateway.locationId}}</a>
+                    <div *ngIf="loraGateway.location">
+                        <a [routerLink]="['../location', loraGateway.location?.id, 'view' ]" >{{loraGateway.location?.name}}</a>
                     </div>
                 </td>
                 <td class="text-right">

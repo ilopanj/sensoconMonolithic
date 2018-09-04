@@ -37,9 +37,9 @@
 
                 <div class="form-group">
                     <label class="form-control-label" for="field_company">Company</label>
-                    <select class="form-control" id="field_company" name="company" [(ngModel)]="location.companyId" >
+                    <select class="form-control" id="field_company" name="company" [(ngModel)]="location.company" >
                         <option [ngValue]="null"></option>
-                        <option [ngValue]="companyOption.id" *ngFor="let companyOption of companies; trackBy: trackCompanyById">{{companyOption.id}}</option>
+                        <option [ngValue]="companyOption.id === location.company?.id ? location.company : companyOption" *ngFor="let companyOption of companies; trackBy: trackCompanyById">{{companyOption.name}}</option>
                     </select>
                 </div>
             </div>

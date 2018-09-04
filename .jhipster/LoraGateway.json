@@ -12,15 +12,15 @@
     ],
     "relationships": [
         {
+            "relationshipType": "many-to-one",
             "relationshipName": "location",
             "otherEntityName": "location",
-            "relationshipType": "many-to-one",
-            "otherEntityField": "id"
+            "otherEntityField": "name"
         }
     ],
     "changelogDate": "20180822202330",
     "entityTableName": "lora_gateway",
-    "dto": "mapstruct",
+    "dto": "no",
     "pagination": "no",
     "service": "serviceImpl",
     "jpaMetamodelFiltering": false,

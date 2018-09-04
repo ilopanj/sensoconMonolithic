@@ -39,10 +39,6 @@ public class SensorGroup implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<SensorThreshold> defaultThresholds = new HashSet<>();
 
-    @OneToOne(mappedBy = "sensorGroup")
-    @JsonIgnore
-    private Sensor sensor;
-
     @ManyToOne
     @JsonIgnoreProperties("sensorGroups")
     private Company company;
@@ -105,19 +101,6 @@ public class SensorGroup implements Serializable {
 
     public void setDefaultThresholds(Set<SensorThreshold> sensorThresholds) {
         this.defaultThresholds = sensorThresholds;
-    }
-
-    public Sensor getSensor() {
-        return sensor;
-    }
-
-    public SensorGroup sensor(Sensor sensor) {
-        this.sensor = sensor;
-        return this;
-    }
-
-    public void setSensor(Sensor sensor) {
-        this.sensor = sensor;
     }
 
     public Company getCompany() {

@@ -1,10 +1,10 @@
 package com.sensocon.core.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.sensocon.core.domain.LoraPacket;
 import com.sensocon.core.service.LoraPacketService;
 import com.sensocon.core.web.rest.errors.BadRequestAlertException;
 import com.sensocon.core.web.rest.util.HeaderUtil;
-import com.sensocon.core.service.dto.LoraPacketDTO;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,18 +37,18 @@ public class LoraPacketResource {
     /**
      * POST  /lora-packets : Create a new loraPacket.
      *
-     * @param loraPacketDTO the loraPacketDTO to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new loraPacketDTO, or with status 400 (Bad Request) if the loraPacket has already an ID
+     * @param loraPacket the loraPacket to create
+     * @return the ResponseEntity with status 201 (Created) and with body the new loraPacket, or with status 400 (Bad Request) if the loraPacket has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/lora-packets")
     @Timed
-    public ResponseEntity<LoraPacketDTO> createLoraPacket(@RequestBody LoraPacketDTO loraPacketDTO) throws URISyntaxException {
-        log.debug("REST request to save LoraPacket : {}", loraPacketDTO);
-        if (loraPacketDTO.getId() != null) {
+    public ResponseEntity<LoraPacket> createLoraPacket(@RequestBody LoraPacket loraPacket) throws URISyntaxException {
+        log.debug("REST request to save LoraPacket : {}", loraPacket);
+        if (loraPacket.getId() != null) {
             throw new BadRequestAlertException("A new loraPacket cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        LoraPacketDTO result = loraPacketService.save(loraPacketDTO);
+        LoraPacket result = loraPacketService.save(loraPacket);
         return ResponseEntity.created(new URI("/api/lora-packets/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -57,22 +57,22 @@ public class LoraPacketResource {
     /**
      * PUT  /lora-packets : Updates an existing loraPacket.
      *
-     * @param loraPacketDTO the loraPacketDTO to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated loraPacketDTO,
-     * or with status 400 (Bad Request) if the loraPacketDTO is not valid,
-     * or with status 500 (Internal Server Error) if the loraPacketDTO couldn't be updated
+     * @param loraPacket the loraPacket to update
+     * @return the ResponseEntity with status 200 (OK) and with body the updated loraPacket,
+     * or with status 400 (Bad Request) if the loraPacket is not valid,
+     * or with status 500 (Internal Server Error) if the loraPacket couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/lora-packets")
     @Timed
-    public ResponseEntity<LoraPacketDTO> updateLoraPacket(@RequestBody LoraPacketDTO loraPacketDTO) throws URISyntaxException {
-        log.debug("REST request to update LoraPacket : {}", loraPacketDTO);
-        if (loraPacketDTO.getId() == null) {
+    public ResponseEntity<LoraPacket> updateLoraPacket(@RequestBody LoraPacket loraPacket) throws URISyntaxException {
+        log.debug("REST request to update LoraPacket : {}", loraPacket);
+        if (loraPacket.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        LoraPacketDTO result = loraPacketService.save(loraPacketDTO);
+        LoraPacket result = loraPacketService.save(loraPacket);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, loraPacketDTO.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, loraPacket.getId().toString()))
             .body(result);
     }
 
@@ -83,7 +83,7 @@ public class LoraPacketResource {
      */
     @GetMapping("/lora-packets")
     @Timed
-    public List<LoraPacketDTO> getAllLoraPackets() {
+    public List<LoraPacket> getAllLoraPackets() {
         log.debug("REST request to get all LoraPackets");
         return loraPacketService.findAll();
     }
@@ -91,21 +91,21 @@ public class LoraPacketResource {
     /**
      * GET  /lora-packets/:id : get the "id" loraPacket.
      *
-     * @param id the id of the loraPacketDTO to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the loraPacketDTO, or with status 404 (Not Found)
+     * @param id the id of the loraPacket to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the loraPacket, or with status 404 (Not Found)
      */
     @GetMapping("/lora-packets/{id}")
     @Timed
-    public ResponseEntity<LoraPacketDTO> getLoraPacket(@PathVariable Long id) {
+    public ResponseEntity<LoraPacket> getLoraPacket(@PathVariable Long id) {
         log.debug("REST request to get LoraPacket : {}", id);
-        Optional<LoraPacketDTO> loraPacketDTO = loraPacketService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(loraPacketDTO);
+        Optional<LoraPacket> loraPacket = loraPacketService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(loraPacket);
     }
 
     /**
      * DELETE  /lora-packets/:id : delete the "id" loraPacket.
      *
-     * @param id the id of the loraPacketDTO to delete
+     * @param id the id of the loraPacket to delete
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/lora-packets/{id}")

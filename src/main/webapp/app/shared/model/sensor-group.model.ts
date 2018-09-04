@@ -1,4 +1,5 @@
 import { ISensorThreshold } from 'app/shared/model//sensor-threshold.model';
+import { ICompany } from 'app/shared/model//company.model';
 
 export const enum SensorType {
     PRESSURE = 'PRESSURE',
@@ -12,8 +13,7 @@ export interface ISensorGroup {
     name?: string;
     sensorType?: SensorType;
     defaultThresholds?: ISensorThreshold[];
-    sensorId?: number;
-    companyId?: number;
+    company?: ICompany;
 }
 
 export class SensorGroup implements ISensorGroup {
@@ -22,7 +22,6 @@ export class SensorGroup implements ISensorGroup {
         public name?: string,
         public sensorType?: SensorType,
         public defaultThresholds?: ISensorThreshold[],
-        public sensorId?: number,
-        public companyId?: number
+        public company?: ICompany
     ) {}
 }

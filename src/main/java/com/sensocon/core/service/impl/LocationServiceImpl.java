@@ -3,18 +3,15 @@ package com.sensocon.core.service.impl;
 import com.sensocon.core.service.LocationService;
 import com.sensocon.core.domain.Location;
 import com.sensocon.core.repository.LocationRepository;
-import com.sensocon.core.service.dto.LocationDTO;
-import com.sensocon.core.service.mapper.LocationMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.LinkedList;
+
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 /**
  * Service Implementation for managing Location.
  */
@@ -26,25 +23,19 @@ public class LocationServiceImpl implements LocationService {
 
     private final LocationRepository locationRepository;
 
-    private final LocationMapper locationMapper;
-
-    public LocationServiceImpl(LocationRepository locationRepository, LocationMapper locationMapper) {
+    public LocationServiceImpl(LocationRepository locationRepository) {
         this.locationRepository = locationRepository;
-        this.locationMapper = locationMapper;
     }
 
     /**
      * Save a location.
      *
-     * @param locationDTO the entity to save
+     * @param location the entity to save
      * @return the persisted entity
      */
     @Override
-    public LocationDTO save(LocationDTO locationDTO) {
-        log.debug("Request to save Location : {}", locationDTO);
-        Location location = locationMapper.toEntity(locationDTO);
-        location = locationRepository.save(location);
-        return locationMapper.toDto(location);
+    public Location save(Location location) {
+        log.debug("Request to save Location : {}", location);        return locationRepository.save(location);
     }
 
     /**
@@ -54,11 +45,9 @@ public class LocationServiceImpl implements LocationService {
      */
     @Override
     @Transactional(readOnly = true)
-    public List<LocationDTO> findAll() {
+    public List<Location> findAll() {
         log.debug("Request to get all Locations");
-        return locationRepository.findAll().stream()
-            .map(locationMapper::toDto)
-            .collect(Collectors.toCollection(LinkedList::new));
+        return locationRepository.findAll();
     }
 
 
@@ -70,10 +59,9 @@ public class LocationServiceImpl implements LocationService {
      */
     @Override
     @Transactional(readOnly = true)
-    public Optional<LocationDTO> findOne(Long id) {
+    public Optional<Location> findOne(Long id) {
         log.debug("Request to get Location : {}", id);
-        return locationRepository.findById(id)
-            .map(locationMapper::toDto);
+        return locationRepository.findById(id);
     }
 
     /**

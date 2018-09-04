@@ -5,6 +5,10 @@
             <hr>
             <jhi-alert-error></jhi-alert-error>
             <dl class="row-md jh-entity-details">
+                <dt><span>Name</span></dt>
+                <dd>
+                    <span>{{sensorThreshold.name}}</span>
+                </dd>
                 <dt><span>Type</span></dt>
                 <dd>
                     <span>{{sensorThreshold.type}}</span>
@@ -15,20 +19,20 @@
                 </dd>
                 <dt><span>Sensor Device</span></dt>
                 <dd>
-                    <div *ngIf="sensorThreshold.sensorDeviceId">
-                        <a [routerLink]="['/sensor-device', sensorThreshold.sensorDeviceId, 'view']">{{sensorThreshold.sensorDeviceId}}</a>
+                    <div *ngIf="sensorThreshold.sensorDevice">
+                        <a [routerLink]="['/sensor-device', sensorThreshold.sensorDevice?.id, 'view']">{{sensorThreshold.sensorDevice?.deviceId}}</a>
                     </div>
                 </dd>
                 <dt><span>Sensor</span></dt>
                 <dd>
-                    <div *ngIf="sensorThreshold.sensorId">
-                        <a [routerLink]="['/sensor', sensorThreshold.sensorId, 'view']">{{sensorThreshold.sensorId}}</a>
+                    <div *ngIf="sensorThreshold.sensor">
+                        <a [routerLink]="['/sensor', sensorThreshold.sensor?.id, 'view']">{{sensorThreshold.sensor?.name}}</a>
                     </div>
                 </dd>
                 <dt><span>Sensor Group</span></dt>
                 <dd>
-                    <div *ngIf="sensorThreshold.sensorGroupId">
-                        <a [routerLink]="['/sensor-group', sensorThreshold.sensorGroupId, 'view']">{{sensorThreshold.sensorGroupId}}</a>
+                    <div *ngIf="sensorThreshold.sensorGroup">
+                        <a [routerLink]="['/sensor-group', sensorThreshold.sensorGroup?.id, 'view']">{{sensorThreshold.sensorGroup?.name}}</a>
                     </div>
                 </dd>
             </dl>

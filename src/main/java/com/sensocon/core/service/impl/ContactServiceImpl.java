@@ -3,18 +3,15 @@ package com.sensocon.core.service.impl;
 import com.sensocon.core.service.ContactService;
 import com.sensocon.core.domain.Contact;
 import com.sensocon.core.repository.ContactRepository;
-import com.sensocon.core.service.dto.ContactDTO;
-import com.sensocon.core.service.mapper.ContactMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.LinkedList;
+
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 /**
  * Service Implementation for managing Contact.
  */
@@ -26,25 +23,19 @@ public class ContactServiceImpl implements ContactService {
 
     private final ContactRepository contactRepository;
 
-    private final ContactMapper contactMapper;
-
-    public ContactServiceImpl(ContactRepository contactRepository, ContactMapper contactMapper) {
+    public ContactServiceImpl(ContactRepository contactRepository) {
         this.contactRepository = contactRepository;
-        this.contactMapper = contactMapper;
     }
 
     /**
      * Save a contact.
      *
-     * @param contactDTO the entity to save
+     * @param contact the entity to save
      * @return the persisted entity
      */
     @Override
-    public ContactDTO save(ContactDTO contactDTO) {
-        log.debug("Request to save Contact : {}", contactDTO);
-        Contact contact = contactMapper.toEntity(contactDTO);
-        contact = contactRepository.save(contact);
-        return contactMapper.toDto(contact);
+    public Contact save(Contact contact) {
+        log.debug("Request to save Contact : {}", contact);        return contactRepository.save(contact);
     }
 
     /**
@@ -54,11 +45,9 @@ public class ContactServiceImpl implements ContactService {
      */
     @Override
     @Transactional(readOnly = true)
-    public List<ContactDTO> findAll() {
+    public List<Contact> findAll() {
         log.debug("Request to get all Contacts");
-        return contactRepository.findAll().stream()
-            .map(contactMapper::toDto)
-            .collect(Collectors.toCollection(LinkedList::new));
+        return contactRepository.findAll();
     }
 
 
@@ -70,10 +59,9 @@ public class ContactServiceImpl implements ContactService {
      */
     @Override
     @Transactional(readOnly = true)
-    public Optional<ContactDTO> findOne(Long id) {
+    public Optional<Contact> findOne(Long id) {
         log.debug("Request to get Contact : {}", id);
-        return contactRepository.findById(id)
-            .map(contactMapper::toDto);
+        return contactRepository.findById(id);
     }
 
     /**

@@ -27,8 +27,8 @@
                 </dd>
                 <dt><span>Company</span></dt>
                 <dd>
-                    <div *ngIf="location.companyId">
-                        <a [routerLink]="['/company', location.companyId, 'view']">{{location.companyId}}</a>
+                    <div *ngIf="location.company">
+                        <a [routerLink]="['/company', location.company?.id, 'view']">{{location.company?.name}}</a>
                     </div>
                 </dd>
             </dl>

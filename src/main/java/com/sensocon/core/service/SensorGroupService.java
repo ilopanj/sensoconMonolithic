@@ -1,6 +1,6 @@
 package com.sensocon.core.service;
 
-import com.sensocon.core.service.dto.SensorGroupDTO;
+import com.sensocon.core.domain.SensorGroup;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,23 +13,17 @@ public interface SensorGroupService {
     /**
      * Save a sensorGroup.
      *
-     * @param sensorGroupDTO the entity to save
+     * @param sensorGroup the entity to save
      * @return the persisted entity
      */
-    SensorGroupDTO save(SensorGroupDTO sensorGroupDTO);
+    SensorGroup save(SensorGroup sensorGroup);
 
     /**
      * Get all the sensorGroups.
      *
      * @return the list of entities
      */
-    List<SensorGroupDTO> findAll();
-    /**
-     * Get all the SensorGroupDTO where Sensor is null.
-     *
-     * @return the list of entities
-     */
-    List<SensorGroupDTO> findAllWhereSensorIsNull();
+    List<SensorGroup> findAll();
 
 
     /**
@@ -38,7 +32,7 @@ public interface SensorGroupService {
      * @param id the id of the entity
      * @return the entity
      */
-    Optional<SensorGroupDTO> findOne(Long id);
+    Optional<SensorGroup> findOne(Long id);
 
     /**
      * Delete the "id" sensorGroup.

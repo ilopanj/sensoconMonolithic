@@ -1,4 +1,5 @@
 import { Moment } from 'moment';
+import { ISensorDevice } from 'app/shared/model//sensor-device.model';
 
 export interface ILoraPacket {
     id?: number;
@@ -10,7 +11,7 @@ export interface ILoraPacket {
     pressurePsi?: number;
     frequency?: number;
     dataRate?: string;
-    sensorDeviceId?: number;
+    sensorDevice?: ISensorDevice;
 }
 
 export class LoraPacket implements ILoraPacket {
@@ -24,6 +25,6 @@ export class LoraPacket implements ILoraPacket {
         public pressurePsi?: number,
         public frequency?: number,
         public dataRate?: string,
-        public sensorDeviceId?: number
+        public sensorDevice?: ISensorDevice
     ) {}
 }

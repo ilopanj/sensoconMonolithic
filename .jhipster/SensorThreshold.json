@@ -2,6 +2,10 @@
     "name": "SensorThreshold",
     "fields": [
         {
+            "fieldName": "name",
+            "fieldType": "String"
+        },
+        {
             "fieldName": "type",
             "fieldType": "ThresholdType",
             "fieldValues": "THRESHOLD_GE,THRESHOLD_LE,THRESHOLD_TIMEOUT,THRESHOLD_RSSI,THRESHOLD_BATTERY_LEVEL"
@@ -13,27 +17,27 @@
     ],
     "relationships": [
         {
+            "relationshipType": "many-to-one",
             "relationshipName": "sensorDevice",
             "otherEntityName": "sensorDevice",
-            "relationshipType": "many-to-one",
-            "otherEntityField": "id"
+            "otherEntityField": "deviceId"
         },
         {
+            "relationshipType": "many-to-one",
             "relationshipName": "sensor",
             "otherEntityName": "sensor",
-            "relationshipType": "many-to-one",
-            "otherEntityField": "id"
+            "otherEntityField": "name"
         },
         {
+            "relationshipType": "many-to-one",
             "relationshipName": "sensorGroup",
             "otherEntityName": "sensorGroup",
-            "relationshipType": "many-to-one",
-            "otherEntityField": "id"
+            "otherEntityField": "name"
         }
     ],
     "changelogDate": "20180822202327",
     "entityTableName": "sensor_threshold",
-    "dto": "mapstruct",
+    "dto": "no",
     "pagination": "no",
     "service": "serviceImpl",
     "jpaMetamodelFiltering": false,

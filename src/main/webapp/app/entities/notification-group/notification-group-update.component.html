@@ -18,14 +18,14 @@
                 <div class="form-group">
                     <label for="field_contact">Contact</label>
                     <select class="form-control" id="field_contact" multiple name="contact" [(ngModel)]="notificationGroup.contacts">
-                        <option [ngValue]="getSelected(notificationGroup.contacts, contactOption)" *ngFor="let contactOption of contacts; trackBy: trackContactById">{{contactOption.id}}</option>
+                        <option [ngValue]="getSelected(notificationGroup.contacts, contactOption)" *ngFor="let contactOption of contacts; trackBy: trackContactById">{{contactOption.name}}</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" for="field_company">Company</label>
-                    <select class="form-control" id="field_company" name="company" [(ngModel)]="notificationGroup.companyId" >
+                    <select class="form-control" id="field_company" name="company" [(ngModel)]="notificationGroup.company" >
                         <option [ngValue]="null"></option>
-                        <option [ngValue]="companyOption.id" *ngFor="let companyOption of companies; trackBy: trackCompanyById">{{companyOption.id}}</option>
+                        <option [ngValue]="companyOption.id === notificationGroup.company?.id ? notificationGroup.company : companyOption" *ngFor="let companyOption of companies; trackBy: trackCompanyById">{{companyOption.name}}</option>
                     </select>
                 </div>
             </div>

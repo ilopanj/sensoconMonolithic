@@ -41,16 +41,16 @@
 
                 <div class="form-group">
                     <label class="form-control-label" for="field_sensorGroup">Sensor Group</label>
-                    <select class="form-control" id="field_sensorGroup" name="sensorGroup" [(ngModel)]="sensor.sensorGroupId">
+                    <select class="form-control" id="field_sensorGroup" name="sensorGroup" [(ngModel)]="sensor.sensorGroup">
                         <option [ngValue]="null"></option>
-                        <option [ngValue]="sensorGroupOption.id" *ngFor="let sensorGroupOption of sensorgroups; trackBy: trackSensorGroupById">{{sensorGroupOption.id}}</option>
+                        <option [ngValue]="sensorGroupOption.id === sensor.sensorGroup?.id ? sensor.sensorGroup : sensorGroupOption" *ngFor="let sensorGroupOption of sensorgroups; trackBy: trackSensorGroupById">{{sensorGroupOption.name}}</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" for="field_sensorDevice">Sensor Device</label>
-                    <select class="form-control" id="field_sensorDevice" name="sensorDevice" [(ngModel)]="sensor.sensorDeviceId" >
+                    <select class="form-control" id="field_sensorDevice" name="sensorDevice" [(ngModel)]="sensor.sensorDevice" >
                         <option [ngValue]="null"></option>
-                        <option [ngValue]="sensorDeviceOption.id" *ngFor="let sensorDeviceOption of sensordevices; trackBy: trackSensorDeviceById">{{sensorDeviceOption.id}}</option>
+                        <option [ngValue]="sensorDeviceOption.id === sensor.sensorDevice?.id ? sensor.sensorDevice : sensorDeviceOption" *ngFor="let sensorDeviceOption of sensordevices; trackBy: trackSensorDeviceById">{{sensorDeviceOption.deviceId}}</option>
                     </select>
                 </div>
             </div>

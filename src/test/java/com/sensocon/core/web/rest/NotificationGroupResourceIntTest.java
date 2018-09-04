@@ -5,8 +5,6 @@ import com.sensocon.core.SensoconMonolithicApp;
 import com.sensocon.core.domain.NotificationGroup;
 import com.sensocon.core.repository.NotificationGroupRepository;
 import com.sensocon.core.service.NotificationGroupService;
-import com.sensocon.core.service.dto.NotificationGroupDTO;
-import com.sensocon.core.service.mapper.NotificationGroupMapper;
 import com.sensocon.core.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -54,9 +52,6 @@ public class NotificationGroupResourceIntTest {
     private NotificationGroupRepository notificationGroupRepository;
     @Mock
     private NotificationGroupRepository notificationGroupRepositoryMock;
-
-    @Autowired
-    private NotificationGroupMapper notificationGroupMapper;
     
     @Mock
     private NotificationGroupService notificationGroupServiceMock;
@@ -114,10 +109,9 @@ public class NotificationGroupResourceIntTest {
         int databaseSizeBeforeCreate = notificationGroupRepository.findAll().size();
 
         // Create the NotificationGroup
-        NotificationGroupDTO notificationGroupDTO = notificationGroupMapper.toDto(notificationGroup);
         restNotificationGroupMockMvc.perform(post("/api/notification-groups")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(notificationGroupDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(notificationGroup)))
             .andExpect(status().isCreated());
 
         // Validate the NotificationGroup in the database
@@ -134,12 +128,11 @@ public class NotificationGroupResourceIntTest {
 
         // Create the NotificationGroup with an existing ID
         notificationGroup.setId(1L);
-        NotificationGroupDTO notificationGroupDTO = notificationGroupMapper.toDto(notificationGroup);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restNotificationGroupMockMvc.perform(post("/api/notification-groups")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(notificationGroupDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(notificationGroup)))
             .andExpect(status().isBadRequest());
 
         // Validate the NotificationGroup in the database
@@ -217,7 +210,7 @@ public class NotificationGroupResourceIntTest {
     @Transactional
     public void updateNotificationGroup() throws Exception {
         // Initialize the database
-        notificationGroupRepository.saveAndFlush(notificationGroup);
+        notificationGroupService.save(notificationGroup);
 
         int databaseSizeBeforeUpdate = notificationGroupRepository.findAll().size();
 
@@ -227,11 +220,10 @@ public class NotificationGroupResourceIntTest {
         em.detach(updatedNotificationGroup);
         updatedNotificationGroup
             .name(UPDATED_NAME);
-        NotificationGroupDTO notificationGroupDTO = notificationGroupMapper.toDto(updatedNotificationGroup);
 
         restNotificationGroupMockMvc.perform(put("/api/notification-groups")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(notificationGroupDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(updatedNotificationGroup)))
             .andExpect(status().isOk());
 
         // Validate the NotificationGroup in the database
@@ -247,12 +239,11 @@ public class NotificationGroupResourceIntTest {
         int databaseSizeBeforeUpdate = notificationGroupRepository.findAll().size();
 
         // Create the NotificationGroup
-        NotificationGroupDTO notificationGroupDTO = notificationGroupMapper.toDto(notificationGroup);
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException 
         restNotificationGroupMockMvc.perform(put("/api/notification-groups")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(notificationGroupDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(notificationGroup)))
             .andExpect(status().isBadRequest());
 
         // Validate the NotificationGroup in the database
@@ -264,7 +255,7 @@ public class NotificationGroupResourceIntTest {
     @Transactional
     public void deleteNotificationGroup() throws Exception {
         // Initialize the database
-        notificationGroupRepository.saveAndFlush(notificationGroup);
+        notificationGroupService.save(notificationGroup);
 
         int databaseSizeBeforeDelete = notificationGroupRepository.findAll().size();
 
@@ -291,28 +282,5 @@ public class NotificationGroupResourceIntTest {
         assertThat(notificationGroup1).isNotEqualTo(notificationGroup2);
         notificationGroup1.setId(null);
         assertThat(notificationGroup1).isNotEqualTo(notificationGroup2);
-    }
-
-    @Test
-    @Transactional
-    public void dtoEqualsVerifier() throws Exception {
-        TestUtil.equalsVerifier(NotificationGroupDTO.class);
-        NotificationGroupDTO notificationGroupDTO1 = new NotificationGroupDTO();
-        notificationGroupDTO1.setId(1L);
-        NotificationGroupDTO notificationGroupDTO2 = new NotificationGroupDTO();
-        assertThat(notificationGroupDTO1).isNotEqualTo(notificationGroupDTO2);
-        notificationGroupDTO2.setId(notificationGroupDTO1.getId());
-        assertThat(notificationGroupDTO1).isEqualTo(notificationGroupDTO2);
-        notificationGroupDTO2.setId(2L);
-        assertThat(notificationGroupDTO1).isNotEqualTo(notificationGroupDTO2);
-        notificationGroupDTO1.setId(null);
-        assertThat(notificationGroupDTO1).isNotEqualTo(notificationGroupDTO2);
-    }
-
-    @Test
-    @Transactional
-    public void testEntityFromId() {
-        assertThat(notificationGroupMapper.fromId(42L).getId()).isEqualTo(42);
-        assertThat(notificationGroupMapper.fromId(null)).isNull();
     }
 }

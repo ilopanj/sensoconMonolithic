@@ -5,8 +5,6 @@ import com.sensocon.core.SensoconMonolithicApp;
 import com.sensocon.core.domain.Sensor;
 import com.sensocon.core.repository.SensorRepository;
 import com.sensocon.core.service.SensorService;
-import com.sensocon.core.service.dto.SensorDTO;
-import com.sensocon.core.service.mapper.SensorMapper;
 import com.sensocon.core.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -61,9 +59,6 @@ public class SensorResourceIntTest {
     @Autowired
     private SensorRepository sensorRepository;
 
-
-    @Autowired
-    private SensorMapper sensorMapper;
     
 
     @Autowired
@@ -122,10 +117,9 @@ public class SensorResourceIntTest {
         int databaseSizeBeforeCreate = sensorRepository.findAll().size();
 
         // Create the Sensor
-        SensorDTO sensorDTO = sensorMapper.toDto(sensor);
         restSensorMockMvc.perform(post("/api/sensors")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(sensorDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(sensor)))
             .andExpect(status().isCreated());
 
         // Validate the Sensor in the database
@@ -145,12 +139,11 @@ public class SensorResourceIntTest {
 
         // Create the Sensor with an existing ID
         sensor.setId(1L);
-        SensorDTO sensorDTO = sensorMapper.toDto(sensor);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restSensorMockMvc.perform(post("/api/sensors")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(sensorDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(sensor)))
             .andExpect(status().isBadRequest());
 
         // Validate the Sensor in the database
@@ -204,7 +197,7 @@ public class SensorResourceIntTest {
     @Transactional
     public void updateSensor() throws Exception {
         // Initialize the database
-        sensorRepository.saveAndFlush(sensor);
+        sensorService.save(sensor);
 
         int databaseSizeBeforeUpdate = sensorRepository.findAll().size();
 
@@ -217,11 +210,10 @@ public class SensorResourceIntTest {
             .status(UPDATED_STATUS)
             .sensorType(UPDATED_SENSOR_TYPE)
             .lastAlert(UPDATED_LAST_ALERT);
-        SensorDTO sensorDTO = sensorMapper.toDto(updatedSensor);
 
         restSensorMockMvc.perform(put("/api/sensors")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(sensorDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(updatedSensor)))
             .andExpect(status().isOk());
 
         // Validate the Sensor in the database
@@ -240,12 +232,11 @@ public class SensorResourceIntTest {
         int databaseSizeBeforeUpdate = sensorRepository.findAll().size();
 
         // Create the Sensor
-        SensorDTO sensorDTO = sensorMapper.toDto(sensor);
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException 
         restSensorMockMvc.perform(put("/api/sensors")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(sensorDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(sensor)))
             .andExpect(status().isBadRequest());
 
         // Validate the Sensor in the database
@@ -257,7 +248,7 @@ public class SensorResourceIntTest {
     @Transactional
     public void deleteSensor() throws Exception {
         // Initialize the database
-        sensorRepository.saveAndFlush(sensor);
+        sensorService.save(sensor);
 
         int databaseSizeBeforeDelete = sensorRepository.findAll().size();
 
@@ -284,28 +275,5 @@ public class SensorResourceIntTest {
         assertThat(sensor1).isNotEqualTo(sensor2);
         sensor1.setId(null);
         assertThat(sensor1).isNotEqualTo(sensor2);
-    }
-
-    @Test
-    @Transactional
-    public void dtoEqualsVerifier() throws Exception {
-        TestUtil.equalsVerifier(SensorDTO.class);
-        SensorDTO sensorDTO1 = new SensorDTO();
-        sensorDTO1.setId(1L);
-        SensorDTO sensorDTO2 = new SensorDTO();
-        assertThat(sensorDTO1).isNotEqualTo(sensorDTO2);
-        sensorDTO2.setId(sensorDTO1.getId());
-        assertThat(sensorDTO1).isEqualTo(sensorDTO2);
-        sensorDTO2.setId(2L);
-        assertThat(sensorDTO1).isNotEqualTo(sensorDTO2);
-        sensorDTO1.setId(null);
-        assertThat(sensorDTO1).isNotEqualTo(sensorDTO2);
-    }
-
-    @Test
-    @Transactional
-    public void testEntityFromId() {
-        assertThat(sensorMapper.fromId(42L).getId()).isEqualTo(42);
-        assertThat(sensorMapper.fromId(null)).isNull();
     }
 }

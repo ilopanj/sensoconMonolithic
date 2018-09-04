@@ -40,9 +40,11 @@ public class Company implements Serializable {
     @Column(name = "state_province")
     private String stateProvince;
 
-    @OneToOne
-    @JoinColumn(unique = true)
-    private CompanySettings companySettings;
+    @Column(name = "default_timeout_seconds")
+    private Long defaultTimeoutSeconds;
+
+    @Column(name = "default_suppression_seconds")
+    private Long defaultSuppressionSeconds;
 
     @OneToMany(mappedBy = "company")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -134,17 +136,30 @@ public class Company implements Serializable {
         this.stateProvince = stateProvince;
     }
 
-    public CompanySettings getCompanySettings() {
-        return companySettings;
+    public Long getDefaultTimeoutSeconds() {
+        return defaultTimeoutSeconds;
     }
 
-    public Company companySettings(CompanySettings companySettings) {
-        this.companySettings = companySettings;
+    public Company defaultTimeoutSeconds(Long defaultTimeoutSeconds) {
+        this.defaultTimeoutSeconds = defaultTimeoutSeconds;
         return this;
     }
 
-    public void setCompanySettings(CompanySettings companySettings) {
-        this.companySettings = companySettings;
+    public void setDefaultTimeoutSeconds(Long defaultTimeoutSeconds) {
+        this.defaultTimeoutSeconds = defaultTimeoutSeconds;
+    }
+
+    public Long getDefaultSuppressionSeconds() {
+        return defaultSuppressionSeconds;
+    }
+
+    public Company defaultSuppressionSeconds(Long defaultSuppressionSeconds) {
+        this.defaultSuppressionSeconds = defaultSuppressionSeconds;
+        return this;
+    }
+
+    public void setDefaultSuppressionSeconds(Long defaultSuppressionSeconds) {
+        this.defaultSuppressionSeconds = defaultSuppressionSeconds;
     }
 
     public Set<Location> getLocations() {
@@ -277,6 +292,8 @@ public class Company implements Serializable {
             ", postalCode='" + getPostalCode() + "'" +
             ", city='" + getCity() + "'" +
             ", stateProvince='" + getStateProvince() + "'" +
+            ", defaultTimeoutSeconds=" + getDefaultTimeoutSeconds() +
+            ", defaultSuppressionSeconds=" + getDefaultSuppressionSeconds() +
             "}";
     }
 }

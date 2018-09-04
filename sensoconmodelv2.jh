@@ -1,23 +1,19 @@
 entity Company {
-    name String,
-    streetAddress String,
-	postalCode String,
-	city String,
+    name String
+    streetAddress String
+	postalCode String
+	city String
 	stateProvince String
-}
-
-entity CompanySettings
-{
 	defaultTimeoutSeconds	Long
     defaultSuppressionSeconds	Long
 }
 
 entity Contact
 {
+	name String
     alertPhoneNumber String
     alertEmail String
 }
-
 
 enum SensorType {
     PRESSURE, TEMPERATURE, HUMIDITY, ON_OFF
@@ -60,25 +56,22 @@ entity Sensor {
     lastAlert Instant
 }
 
-entity SensorThreshold
-{
+entity SensorThreshold {
+	name String
 	type ThresholdType
     value Double
 }
 
-entity SensorGroup
-{
+entity SensorGroup {
 	name String
     sensorType SensorType
 }
 
-entity NotificationGroup
-{
+entity NotificationGroup {
 	name String
 }
 
-entity LoraGateway
-{
+entity LoraGateway {
 	gatewayId String
     name String
 }
@@ -106,30 +99,27 @@ entity Location {
 
 // defining multiple OneToMany relationships with comments
 relationship OneToMany {
-    Company to Location,
-    Company to SensorGroup,
-    Company to Contact,
-    Company to NotificationGroup,
-    Location{sensorDevices} to SensorDevice,
-    Location{gateways} to LoraGateway,
-    SensorDevice{sensors} to Sensor{sensorDevice},
-    NotificationGroup{sensorDevice} to SensorDevice{notificationGroup},
-    SensorDevice{thresholds} to SensorThreshold,
+    Company to Location{company(name)},
+    Company to SensorGroup{company(name)},
+    Company to Contact{company(name)},
+    Company to NotificationGroup{company(name)},
+    Location{sensorDevices} to SensorDevice{location(name)},
+    Location{gateways(gatewayId)} to LoraGateway{location(name)},
+    SensorDevice{sensors(name)} to Sensor{sensorDevice(deviceId)},
+    NotificationGroup{sensorDevice(deviceId)} to SensorDevice{notificationGroup(name)},
+    SensorDevice{thresholds(name)} to SensorThreshold{sensorDevice(deviceId)},
 	SensorDevice{packets} to LoraPacket,
-    Sensor{thresholds} to SensorThreshold,
-    SensorGroup{defaultThresholds} to SensorThreshold
+    Sensor{thresholds(name)} to SensorThreshold{sensor(name)},
+    SensorGroup{defaultThresholds(name)} to SensorThreshold{sensorGroup(name)}
 }
 
 relationship OneToOne {
-	Sensor to SensorGroup,
-    Company to CompanySettings
+	Sensor{sensorGroup(name)} to SensorGroup
 }
 
 relationship ManyToMany {
-	NotificationGroup{contact} to Contact{notificationGroup}
+	NotificationGroup{contact(name)} to Contact{notificationGroup(name)}
 }
-
-dto * with mapstruct
 
 // Set service options to all except few
 service all with serviceImpl 

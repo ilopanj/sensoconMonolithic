@@ -39,8 +39,8 @@
                 </dd>
                 <dt><span>Sensor Device</span></dt>
                 <dd>
-                    <div *ngIf="loraPacket.sensorDeviceId">
-                        <a [routerLink]="['/sensor-device', loraPacket.sensorDeviceId, 'view']">{{loraPacket.sensorDeviceId}}</a>
+                    <div *ngIf="loraPacket.sensorDevice">
+                        <a [routerLink]="['/sensor-device', loraPacket.sensorDevice?.id, 'view']">{{loraPacket.sensorDevice?.id}}</a>
                     </div>
                 </dd>
             </dl>

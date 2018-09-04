@@ -15,6 +15,7 @@
             <thead>
             <tr>
             <th><span>ID</span></th>
+            <th><span>Name</span></th>
             <th><span>Type</span></th>
             <th><span>Value</span></th>
             <th><span>Sensor Device</span></th>
@@ -26,21 +27,22 @@
             <tbody>
             <tr *ngFor="let sensorThreshold of sensorThresholds ;trackBy: trackId">
                 <td><a [routerLink]="['/sensor-threshold', sensorThreshold.id, 'view' ]">{{sensorThreshold.id}}</a></td>
+                <td>{{sensorThreshold.name}}</td>
                 <td>{{sensorThreshold.type}}</td>
                 <td>{{sensorThreshold.value}}</td>
                 <td>
-                    <div *ngIf="sensorThreshold.sensorDeviceId">
-                        <a [routerLink]="['../sensor-device', sensorThreshold.sensorDeviceId , 'view' ]" >{{sensorThreshold.sensorDeviceId}}</a>
+                    <div *ngIf="sensorThreshold.sensorDevice">
+                        <a [routerLink]="['../sensor-device', sensorThreshold.sensorDevice?.id, 'view' ]" >{{sensorThreshold.sensorDevice?.deviceId}}</a>
                     </div>
                 </td>
                 <td>
-                    <div *ngIf="sensorThreshold.sensorId">
-                        <a [routerLink]="['../sensor', sensorThreshold.sensorId , 'view' ]" >{{sensorThreshold.sensorId}}</a>
+                    <div *ngIf="sensorThreshold.sensor">
+                        <a [routerLink]="['../sensor', sensorThreshold.sensor?.id, 'view' ]" >{{sensorThreshold.sensor?.name}}</a>
                     </div>
                 </td>
                 <td>
-                    <div *ngIf="sensorThreshold.sensorGroupId">
-                        <a [routerLink]="['../sensor-group', sensorThreshold.sensorGroupId , 'view' ]" >{{sensorThreshold.sensorGroupId}}</a>
+                    <div *ngIf="sensorThreshold.sensorGroup">
+                        <a [routerLink]="['../sensor-group', sensorThreshold.sensorGroup?.id, 'view' ]" >{{sensorThreshold.sensorGroup?.name}}</a>
                     </div>
                 </td>
                 <td class="text-right">

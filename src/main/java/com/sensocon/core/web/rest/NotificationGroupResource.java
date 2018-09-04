@@ -1,10 +1,10 @@
 package com.sensocon.core.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.sensocon.core.domain.NotificationGroup;
 import com.sensocon.core.service.NotificationGroupService;
 import com.sensocon.core.web.rest.errors.BadRequestAlertException;
 import com.sensocon.core.web.rest.util.HeaderUtil;
-import com.sensocon.core.service.dto.NotificationGroupDTO;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,18 +37,18 @@ public class NotificationGroupResource {
     /**
      * POST  /notification-groups : Create a new notificationGroup.
      *
-     * @param notificationGroupDTO the notificationGroupDTO to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new notificationGroupDTO, or with status 400 (Bad Request) if the notificationGroup has already an ID
+     * @param notificationGroup the notificationGroup to create
+     * @return the ResponseEntity with status 201 (Created) and with body the new notificationGroup, or with status 400 (Bad Request) if the notificationGroup has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/notification-groups")
     @Timed
-    public ResponseEntity<NotificationGroupDTO> createNotificationGroup(@RequestBody NotificationGroupDTO notificationGroupDTO) throws URISyntaxException {
-        log.debug("REST request to save NotificationGroup : {}", notificationGroupDTO);
-        if (notificationGroupDTO.getId() != null) {
+    public ResponseEntity<NotificationGroup> createNotificationGroup(@RequestBody NotificationGroup notificationGroup) throws URISyntaxException {
+        log.debug("REST request to save NotificationGroup : {}", notificationGroup);
+        if (notificationGroup.getId() != null) {
             throw new BadRequestAlertException("A new notificationGroup cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        NotificationGroupDTO result = notificationGroupService.save(notificationGroupDTO);
+        NotificationGroup result = notificationGroupService.save(notificationGroup);
         return ResponseEntity.created(new URI("/api/notification-groups/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -57,22 +57,22 @@ public class NotificationGroupResource {
     /**
      * PUT  /notification-groups : Updates an existing notificationGroup.
      *
-     * @param notificationGroupDTO the notificationGroupDTO to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated notificationGroupDTO,
-     * or with status 400 (Bad Request) if the notificationGroupDTO is not valid,
-     * or with status 500 (Internal Server Error) if the notificationGroupDTO couldn't be updated
+     * @param notificationGroup the notificationGroup to update
+     * @return the ResponseEntity with status 200 (OK) and with body the updated notificationGroup,
+     * or with status 400 (Bad Request) if the notificationGroup is not valid,
+     * or with status 500 (Internal Server Error) if the notificationGroup couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/notification-groups")
     @Timed
-    public ResponseEntity<NotificationGroupDTO> updateNotificationGroup(@RequestBody NotificationGroupDTO notificationGroupDTO) throws URISyntaxException {
-        log.debug("REST request to update NotificationGroup : {}", notificationGroupDTO);
-        if (notificationGroupDTO.getId() == null) {
+    public ResponseEntity<NotificationGroup> updateNotificationGroup(@RequestBody NotificationGroup notificationGroup) throws URISyntaxException {
+        log.debug("REST request to update NotificationGroup : {}", notificationGroup);
+        if (notificationGroup.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        NotificationGroupDTO result = notificationGroupService.save(notificationGroupDTO);
+        NotificationGroup result = notificationGroupService.save(notificationGroup);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, notificationGroupDTO.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, notificationGroup.getId().toString()))
             .body(result);
     }
 
@@ -84,7 +84,7 @@ public class NotificationGroupResource {
      */
     @GetMapping("/notification-groups")
     @Timed
-    public List<NotificationGroupDTO> getAllNotificationGroups(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
+    public List<NotificationGroup> getAllNotificationGroups(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get all NotificationGroups");
         return notificationGroupService.findAll();
     }
@@ -92,21 +92,21 @@ public class NotificationGroupResource {
     /**
      * GET  /notification-groups/:id : get the "id" notificationGroup.
      *
-     * @param id the id of the notificationGroupDTO to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the notificationGroupDTO, or with status 404 (Not Found)
+     * @param id the id of the notificationGroup to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the notificationGroup, or with status 404 (Not Found)
      */
     @GetMapping("/notification-groups/{id}")
     @Timed
-    public ResponseEntity<NotificationGroupDTO> getNotificationGroup(@PathVariable Long id) {
+    public ResponseEntity<NotificationGroup> getNotificationGroup(@PathVariable Long id) {
         log.debug("REST request to get NotificationGroup : {}", id);
-        Optional<NotificationGroupDTO> notificationGroupDTO = notificationGroupService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(notificationGroupDTO);
+        Optional<NotificationGroup> notificationGroup = notificationGroupService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(notificationGroup);
     }
 
     /**
      * DELETE  /notification-groups/:id : delete the "id" notificationGroup.
      *
-     * @param id the id of the notificationGroupDTO to delete
+     * @param id the id of the notificationGroup to delete
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/notification-groups/{id}")

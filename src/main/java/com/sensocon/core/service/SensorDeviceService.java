@@ -1,6 +1,6 @@
 package com.sensocon.core.service;
 
-import com.sensocon.core.service.dto.SensorDeviceDTO;
+import com.sensocon.core.domain.SensorDevice;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,17 +13,17 @@ public interface SensorDeviceService {
     /**
      * Save a sensorDevice.
      *
-     * @param sensorDeviceDTO the entity to save
+     * @param sensorDevice the entity to save
      * @return the persisted entity
      */
-    SensorDeviceDTO save(SensorDeviceDTO sensorDeviceDTO);
+    SensorDevice save(SensorDevice sensorDevice);
 
     /**
      * Get all the sensorDevices.
      *
      * @return the list of entities
      */
-    List<SensorDeviceDTO> findAll();
+    List<SensorDevice> findAll();
 
 
     /**
@@ -32,7 +32,7 @@ public interface SensorDeviceService {
      * @param id the id of the entity
      * @return the entity
      */
-    Optional<SensorDeviceDTO> findOne(Long id);
+    Optional<SensorDevice> findOne(Long id);
 
     /**
      * Delete the "id" sensorDevice.

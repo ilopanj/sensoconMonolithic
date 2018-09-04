@@ -10,7 +10,8 @@ export interface ICompany {
     postalCode?: string;
     city?: string;
     stateProvince?: string;
-    companySettingsId?: number;
+    defaultTimeoutSeconds?: number;
+    defaultSuppressionSeconds?: number;
     locations?: ILocation[];
     sensorGroups?: ISensorGroup[];
     contacts?: IContact[];
@@ -25,7 +26,8 @@ export class Company implements ICompany {
         public postalCode?: string,
         public city?: string,
         public stateProvince?: string,
-        public companySettingsId?: number,
+        public defaultTimeoutSeconds?: number,
+        public defaultSuppressionSeconds?: number,
         public locations?: ILocation[],
         public sensorGroups?: ISensorGroup[],
         public contacts?: IContact[],

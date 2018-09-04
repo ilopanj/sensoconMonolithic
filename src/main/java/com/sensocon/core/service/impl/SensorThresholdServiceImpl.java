@@ -3,18 +3,15 @@ package com.sensocon.core.service.impl;
 import com.sensocon.core.service.SensorThresholdService;
 import com.sensocon.core.domain.SensorThreshold;
 import com.sensocon.core.repository.SensorThresholdRepository;
-import com.sensocon.core.service.dto.SensorThresholdDTO;
-import com.sensocon.core.service.mapper.SensorThresholdMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.LinkedList;
+
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 /**
  * Service Implementation for managing SensorThreshold.
  */
@@ -26,25 +23,19 @@ public class SensorThresholdServiceImpl implements SensorThresholdService {
 
     private final SensorThresholdRepository sensorThresholdRepository;
 
-    private final SensorThresholdMapper sensorThresholdMapper;
-
-    public SensorThresholdServiceImpl(SensorThresholdRepository sensorThresholdRepository, SensorThresholdMapper sensorThresholdMapper) {
+    public SensorThresholdServiceImpl(SensorThresholdRepository sensorThresholdRepository) {
         this.sensorThresholdRepository = sensorThresholdRepository;
-        this.sensorThresholdMapper = sensorThresholdMapper;
     }
 
     /**
      * Save a sensorThreshold.
      *
-     * @param sensorThresholdDTO the entity to save
+     * @param sensorThreshold the entity to save
      * @return the persisted entity
      */
     @Override
-    public SensorThresholdDTO save(SensorThresholdDTO sensorThresholdDTO) {
-        log.debug("Request to save SensorThreshold : {}", sensorThresholdDTO);
-        SensorThreshold sensorThreshold = sensorThresholdMapper.toEntity(sensorThresholdDTO);
-        sensorThreshold = sensorThresholdRepository.save(sensorThreshold);
-        return sensorThresholdMapper.toDto(sensorThreshold);
+    public SensorThreshold save(SensorThreshold sensorThreshold) {
+        log.debug("Request to save SensorThreshold : {}", sensorThreshold);        return sensorThresholdRepository.save(sensorThreshold);
     }
 
     /**
@@ -54,11 +45,9 @@ public class SensorThresholdServiceImpl implements SensorThresholdService {
      */
     @Override
     @Transactional(readOnly = true)
-    public List<SensorThresholdDTO> findAll() {
+    public List<SensorThreshold> findAll() {
         log.debug("Request to get all SensorThresholds");
-        return sensorThresholdRepository.findAll().stream()
-            .map(sensorThresholdMapper::toDto)
-            .collect(Collectors.toCollection(LinkedList::new));
+        return sensorThresholdRepository.findAll();
     }
 
 
@@ -70,10 +59,9 @@ public class SensorThresholdServiceImpl implements SensorThresholdService {
      */
     @Override
     @Transactional(readOnly = true)
-    public Optional<SensorThresholdDTO> findOne(Long id) {
+    public Optional<SensorThreshold> findOne(Long id) {
         log.debug("Request to get SensorThreshold : {}", id);
-        return sensorThresholdRepository.findById(id)
-            .map(sensorThresholdMapper::toDto);
+        return sensorThresholdRepository.findById(id);
     }
 
     /**

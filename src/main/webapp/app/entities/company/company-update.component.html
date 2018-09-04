@@ -34,14 +34,17 @@
                     <input type="text" class="form-control" name="stateProvince" id="field_stateProvince"
                         [(ngModel)]="company.stateProvince" />
                 </div>
-
                 <div class="form-group">
-                    <label class="form-control-label" for="field_companySettings">Company Settings</label>
-                    <select class="form-control" id="field_companySettings" name="companySettings" [(ngModel)]="company.companySettingsId">
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="companySettingsOption.id" *ngFor="let companySettingsOption of companysettings; trackBy: trackCompanySettingsById">{{companySettingsOption.id}}</option>
-                    </select>
+                    <label class="form-control-label" for="field_defaultTimeoutSeconds">Default Timeout Seconds</label>
+                    <input type="number" class="form-control" name="defaultTimeoutSeconds" id="field_defaultTimeoutSeconds"
+                        [(ngModel)]="company.defaultTimeoutSeconds" />
                 </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_defaultSuppressionSeconds">Default Suppression Seconds</label>
+                    <input type="number" class="form-control" name="defaultSuppressionSeconds" id="field_defaultSuppressionSeconds"
+                        [(ngModel)]="company.defaultSuppressionSeconds" />
+                </div>
+
             </div>
             <div>
                 <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">

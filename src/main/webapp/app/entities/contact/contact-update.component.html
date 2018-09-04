@@ -10,6 +10,11 @@
                         [(ngModel)]="contact.id" readonly />
                 </div>
                 <div class="form-group">
+                    <label class="form-control-label" for="field_name">Name</label>
+                    <input type="text" class="form-control" name="name" id="field_name"
+                        [(ngModel)]="contact.name" />
+                </div>
+                <div class="form-group">
                     <label class="form-control-label" for="field_alertPhoneNumber">Alert Phone Number</label>
                     <input type="text" class="form-control" name="alertPhoneNumber" id="field_alertPhoneNumber"
                         [(ngModel)]="contact.alertPhoneNumber" />
@@ -22,9 +27,9 @@
 
                 <div class="form-group">
                     <label class="form-control-label" for="field_company">Company</label>
-                    <select class="form-control" id="field_company" name="company" [(ngModel)]="contact.companyId" >
+                    <select class="form-control" id="field_company" name="company" [(ngModel)]="contact.company" >
                         <option [ngValue]="null"></option>
-                        <option [ngValue]="companyOption.id" *ngFor="let companyOption of companies; trackBy: trackCompanyById">{{companyOption.id}}</option>
+                        <option [ngValue]="companyOption.id === contact.company?.id ? contact.company : companyOption" *ngFor="let companyOption of companies; trackBy: trackCompanyById">{{companyOption.name}}</option>
                     </select>
                 </div>
             </div>

@@ -34,20 +34,20 @@
         },
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "notificationGroup",
-            "otherEntityName": "notificationGroup",
-            "otherEntityField": "id"
-        },
-        {
             "relationshipName": "location",
             "otherEntityName": "location",
+            "otherEntityField": "name"
+        },
+        {
             "relationshipType": "many-to-one",
-            "otherEntityField": "id"
+            "relationshipName": "notificationGroup",
+            "otherEntityName": "notificationGroup",
+            "otherEntityField": "name"
         }
     ],
     "changelogDate": "20180822202325",
     "entityTableName": "sensor_device",
-    "dto": "mapstruct",
+    "dto": "no",
     "pagination": "no",
     "service": "serviceImpl",
     "jpaMetamodelFiltering": false,

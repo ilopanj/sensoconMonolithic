@@ -1,7 +1,6 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { SensoconMonolithicCompanyModule } from './company/company.module';
-import { SensoconMonolithicCompanySettingsModule } from './company-settings/company-settings.module';
 import { SensoconMonolithicContactModule } from './contact/contact.module';
 import { SensoconMonolithicSensorDeviceModule } from './sensor-device/sensor-device.module';
 import { SensoconMonolithicSensorModule } from './sensor/sensor.module';
@@ -17,7 +16,6 @@ import { SensoconMonolithicLocationModule } from './location/location.module';
     // prettier-ignore
     imports: [
         SensoconMonolithicCompanyModule,
-        SensoconMonolithicCompanySettingsModule,
         SensoconMonolithicContactModule,
         SensoconMonolithicSensorDeviceModule,
         SensoconMonolithicSensorModule,

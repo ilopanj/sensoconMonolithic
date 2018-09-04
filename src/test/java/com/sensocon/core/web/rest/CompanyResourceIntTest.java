@@ -5,8 +5,6 @@ import com.sensocon.core.SensoconMonolithicApp;
 import com.sensocon.core.domain.Company;
 import com.sensocon.core.repository.CompanyRepository;
 import com.sensocon.core.service.CompanyService;
-import com.sensocon.core.service.dto.CompanyDTO;
-import com.sensocon.core.service.mapper.CompanyMapper;
 import com.sensocon.core.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -57,12 +55,15 @@ public class CompanyResourceIntTest {
     private static final String DEFAULT_STATE_PROVINCE = "AAAAAAAAAA";
     private static final String UPDATED_STATE_PROVINCE = "BBBBBBBBBB";
 
+    private static final Long DEFAULT_DEFAULT_TIMEOUT_SECONDS = 1L;
+    private static final Long UPDATED_DEFAULT_TIMEOUT_SECONDS = 2L;
+
+    private static final Long DEFAULT_DEFAULT_SUPPRESSION_SECONDS = 1L;
+    private static final Long UPDATED_DEFAULT_SUPPRESSION_SECONDS = 2L;
+
     @Autowired
     private CompanyRepository companyRepository;
 
-
-    @Autowired
-    private CompanyMapper companyMapper;
     
 
     @Autowired
@@ -107,7 +108,9 @@ public class CompanyResourceIntTest {
             .streetAddress(DEFAULT_STREET_ADDRESS)
             .postalCode(DEFAULT_POSTAL_CODE)
             .city(DEFAULT_CITY)
-            .stateProvince(DEFAULT_STATE_PROVINCE);
+            .stateProvince(DEFAULT_STATE_PROVINCE)
+            .defaultTimeoutSeconds(DEFAULT_DEFAULT_TIMEOUT_SECONDS)
+            .defaultSuppressionSeconds(DEFAULT_DEFAULT_SUPPRESSION_SECONDS);
         return company;
     }
 
@@ -122,10 +125,9 @@ public class CompanyResourceIntTest {
         int databaseSizeBeforeCreate = companyRepository.findAll().size();
 
         // Create the Company
-        CompanyDTO companyDTO = companyMapper.toDto(company);
         restCompanyMockMvc.perform(post("/api/companies")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(companyDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(company)))
             .andExpect(status().isCreated());
 
         // Validate the Company in the database
@@ -137,6 +139,8 @@ public class CompanyResourceIntTest {
         assertThat(testCompany.getPostalCode()).isEqualTo(DEFAULT_POSTAL_CODE);
         assertThat(testCompany.getCity()).isEqualTo(DEFAULT_CITY);
         assertThat(testCompany.getStateProvince()).isEqualTo(DEFAULT_STATE_PROVINCE);
+        assertThat(testCompany.getDefaultTimeoutSeconds()).isEqualTo(DEFAULT_DEFAULT_TIMEOUT_SECONDS);
+        assertThat(testCompany.getDefaultSuppressionSeconds()).isEqualTo(DEFAULT_DEFAULT_SUPPRESSION_SECONDS);
     }
 
     @Test
@@ -146,12 +150,11 @@ public class CompanyResourceIntTest {
 
         // Create the Company with an existing ID
         company.setId(1L);
-        CompanyDTO companyDTO = companyMapper.toDto(company);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restCompanyMockMvc.perform(post("/api/companies")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(companyDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(company)))
             .andExpect(status().isBadRequest());
 
         // Validate the Company in the database
@@ -174,7 +177,9 @@ public class CompanyResourceIntTest {
             .andExpect(jsonPath("$.[*].streetAddress").value(hasItem(DEFAULT_STREET_ADDRESS.toString())))
             .andExpect(jsonPath("$.[*].postalCode").value(hasItem(DEFAULT_POSTAL_CODE.toString())))
             .andExpect(jsonPath("$.[*].city").value(hasItem(DEFAULT_CITY.toString())))
-            .andExpect(jsonPath("$.[*].stateProvince").value(hasItem(DEFAULT_STATE_PROVINCE.toString())));
+            .andExpect(jsonPath("$.[*].stateProvince").value(hasItem(DEFAULT_STATE_PROVINCE.toString())))
+            .andExpect(jsonPath("$.[*].defaultTimeoutSeconds").value(hasItem(DEFAULT_DEFAULT_TIMEOUT_SECONDS.intValue())))
+            .andExpect(jsonPath("$.[*].defaultSuppressionSeconds").value(hasItem(DEFAULT_DEFAULT_SUPPRESSION_SECONDS.intValue())));
     }
     
 
@@ -193,7 +198,9 @@ public class CompanyResourceIntTest {
             .andExpect(jsonPath("$.streetAddress").value(DEFAULT_STREET_ADDRESS.toString()))
             .andExpect(jsonPath("$.postalCode").value(DEFAULT_POSTAL_CODE.toString()))
             .andExpect(jsonPath("$.city").value(DEFAULT_CITY.toString()))
-            .andExpect(jsonPath("$.stateProvince").value(DEFAULT_STATE_PROVINCE.toString()));
+            .andExpect(jsonPath("$.stateProvince").value(DEFAULT_STATE_PROVINCE.toString()))
+            .andExpect(jsonPath("$.defaultTimeoutSeconds").value(DEFAULT_DEFAULT_TIMEOUT_SECONDS.intValue()))
+            .andExpect(jsonPath("$.defaultSuppressionSeconds").value(DEFAULT_DEFAULT_SUPPRESSION_SECONDS.intValue()));
     }
     @Test
     @Transactional
@@ -207,7 +214,7 @@ public class CompanyResourceIntTest {
     @Transactional
     public void updateCompany() throws Exception {
         // Initialize the database
-        companyRepository.saveAndFlush(company);
+        companyService.save(company);
 
         int databaseSizeBeforeUpdate = companyRepository.findAll().size();
 
@@ -220,12 +227,13 @@ public class CompanyResourceIntTest {
             .streetAddress(UPDATED_STREET_ADDRESS)
             .postalCode(UPDATED_POSTAL_CODE)
             .city(UPDATED_CITY)
-            .stateProvince(UPDATED_STATE_PROVINCE);
-        CompanyDTO companyDTO = companyMapper.toDto(updatedCompany);
+            .stateProvince(UPDATED_STATE_PROVINCE)
+            .defaultTimeoutSeconds(UPDATED_DEFAULT_TIMEOUT_SECONDS)
+            .defaultSuppressionSeconds(UPDATED_DEFAULT_SUPPRESSION_SECONDS);
 
         restCompanyMockMvc.perform(put("/api/companies")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(companyDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(updatedCompany)))
             .andExpect(status().isOk());
 
         // Validate the Company in the database
@@ -237,6 +245,8 @@ public class CompanyResourceIntTest {
         assertThat(testCompany.getPostalCode()).isEqualTo(UPDATED_POSTAL_CODE);
         assertThat(testCompany.getCity()).isEqualTo(UPDATED_CITY);
         assertThat(testCompany.getStateProvince()).isEqualTo(UPDATED_STATE_PROVINCE);
+        assertThat(testCompany.getDefaultTimeoutSeconds()).isEqualTo(UPDATED_DEFAULT_TIMEOUT_SECONDS);
+        assertThat(testCompany.getDefaultSuppressionSeconds()).isEqualTo(UPDATED_DEFAULT_SUPPRESSION_SECONDS);
     }
 
     @Test
@@ -245,12 +255,11 @@ public class CompanyResourceIntTest {
         int databaseSizeBeforeUpdate = companyRepository.findAll().size();
 
         // Create the Company
-        CompanyDTO companyDTO = companyMapper.toDto(company);
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException 
         restCompanyMockMvc.perform(put("/api/companies")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(companyDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(company)))
             .andExpect(status().isBadRequest());
 
         // Validate the Company in the database
@@ -262,7 +271,7 @@ public class CompanyResourceIntTest {
     @Transactional
     public void deleteCompany() throws Exception {
         // Initialize the database
-        companyRepository.saveAndFlush(company);
+        companyService.save(company);
 
         int databaseSizeBeforeDelete = companyRepository.findAll().size();
 
@@ -289,28 +298,5 @@ public class CompanyResourceIntTest {
         assertThat(company1).isNotEqualTo(company2);
         company1.setId(null);
         assertThat(company1).isNotEqualTo(company2);
-    }
-
-    @Test
-    @Transactional
-    public void dtoEqualsVerifier() throws Exception {
-        TestUtil.equalsVerifier(CompanyDTO.class);
-        CompanyDTO companyDTO1 = new CompanyDTO();
-        companyDTO1.setId(1L);
-        CompanyDTO companyDTO2 = new CompanyDTO();
-        assertThat(companyDTO1).isNotEqualTo(companyDTO2);
-        companyDTO2.setId(companyDTO1.getId());
-        assertThat(companyDTO1).isEqualTo(companyDTO2);
-        companyDTO2.setId(2L);
-        assertThat(companyDTO1).isNotEqualTo(companyDTO2);
-        companyDTO1.setId(null);
-        assertThat(companyDTO1).isNotEqualTo(companyDTO2);
-    }
-
-    @Test
-    @Transactional
-    public void testEntityFromId() {
-        assertThat(companyMapper.fromId(42L).getId()).isEqualTo(42);
-        assertThat(companyMapper.fromId(null)).isNull();
     }
 }

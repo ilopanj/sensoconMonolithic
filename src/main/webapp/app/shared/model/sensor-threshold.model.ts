@@ -1,3 +1,7 @@
+import { ISensorDevice } from 'app/shared/model//sensor-device.model';
+import { ISensor } from 'app/shared/model//sensor.model';
+import { ISensorGroup } from 'app/shared/model//sensor-group.model';
+
 export const enum ThresholdType {
     THRESHOLD_GE = 'THRESHOLD_GE',
     THRESHOLD_LE = 'THRESHOLD_LE',
@@ -8,20 +12,22 @@ export const enum ThresholdType {
 
 export interface ISensorThreshold {
     id?: number;
+    name?: string;
     type?: ThresholdType;
     value?: number;
-    sensorDeviceId?: number;
-    sensorId?: number;
-    sensorGroupId?: number;
+    sensorDevice?: ISensorDevice;
+    sensor?: ISensor;
+    sensorGroup?: ISensorGroup;
 }
 
 export class SensorThreshold implements ISensorThreshold {
     constructor(
         public id?: number,
+        public name?: string,
         public type?: ThresholdType,
         public value?: number,
-        public sensorDeviceId?: number,
-        public sensorId?: number,
-        public sensorGroupId?: number
+        public sensorDevice?: ISensorDevice,
+        public sensor?: ISensor,
+        public sensorGroup?: ISensorGroup
     ) {}
 }

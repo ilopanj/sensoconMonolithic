@@ -1,12 +1,13 @@
 import { ISensorDevice } from 'app/shared/model//sensor-device.model';
 import { IContact } from 'app/shared/model//contact.model';
+import { ICompany } from 'app/shared/model//company.model';
 
 export interface INotificationGroup {
     id?: number;
     name?: string;
     sensorDevices?: ISensorDevice[];
     contacts?: IContact[];
-    companyId?: number;
+    company?: ICompany;
 }
 
 export class NotificationGroup implements INotificationGroup {
@@ -15,6 +16,6 @@ export class NotificationGroup implements INotificationGroup {
         public name?: string,
         public sensorDevices?: ISensorDevice[],
         public contacts?: IContact[],
-        public companyId?: number
+        public company?: ICompany
     ) {}
 }

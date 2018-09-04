@@ -41,10 +41,10 @@ export class SensorUpdateComponent implements OnInit {
         });
         this.sensorGroupService.query({ filter: 'sensor-is-null' }).subscribe(
             (res: HttpResponse<ISensorGroup[]>) => {
-                if (!this.sensor.sensorGroupId) {
+                if (!this.sensor.sensorGroup || !this.sensor.sensorGroup.id) {
                     this.sensorgroups = res.body;
                 } else {
-                    this.sensorGroupService.find(this.sensor.sensorGroupId).subscribe(
+                    this.sensorGroupService.find(this.sensor.sensorGroup.id).subscribe(
                         (subRes: HttpResponse<ISensorGroup>) => {
                             this.sensorgroups = [subRes.body].concat(res.body);
                         },

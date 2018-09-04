@@ -1,5 +1,7 @@
 import { Moment } from 'moment';
+import { ISensorGroup } from 'app/shared/model//sensor-group.model';
 import { ISensorThreshold } from 'app/shared/model//sensor-threshold.model';
+import { ISensorDevice } from 'app/shared/model//sensor-device.model';
 
 export const enum SensorStatus {
     STATE_NORMAL = 'STATE_NORMAL',
@@ -20,9 +22,9 @@ export interface ISensor {
     status?: SensorStatus;
     sensorType?: SensorType;
     lastAlert?: Moment;
-    sensorGroupId?: number;
+    sensorGroup?: ISensorGroup;
     thresholds?: ISensorThreshold[];
-    sensorDeviceId?: number;
+    sensorDevice?: ISensorDevice;
 }
 
 export class Sensor implements ISensor {
@@ -32,8 +34,8 @@ export class Sensor implements ISensor {
         public status?: SensorStatus,
         public sensorType?: SensorType,
         public lastAlert?: Moment,
-        public sensorGroupId?: number,
+        public sensorGroup?: ISensorGroup,
         public thresholds?: ISensorThreshold[],
-        public sensorDeviceId?: number
+        public sensorDevice?: ISensorDevice
     ) {}
 }

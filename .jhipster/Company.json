@@ -20,17 +20,17 @@
         {
             "fieldName": "stateProvince",
             "fieldType": "String"
+        },
+        {
+            "fieldName": "defaultTimeoutSeconds",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "defaultSuppressionSeconds",
+            "fieldType": "Long"
         }
     ],
     "relationships": [
-        {
-            "relationshipType": "one-to-one",
-            "relationshipName": "companySettings",
-            "otherEntityName": "companySettings",
-            "otherEntityField": "id",
-            "ownerSide": true,
-            "otherEntityRelationshipName": "company"
-        },
         {
             "relationshipType": "one-to-many",
             "relationshipName": "location",
@@ -58,7 +58,7 @@
     ],
     "changelogDate": "20180822202322",
     "entityTableName": "company",
-    "dto": "mapstruct",
+    "dto": "no",
     "pagination": "no",
     "service": "serviceImpl",
     "jpaMetamodelFiltering": false,

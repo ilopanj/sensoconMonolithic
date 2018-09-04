@@ -8,17 +8,17 @@
     -->
     <changeSet id="20180822202325-2" author="jhipster">
         
-        <addForeignKeyConstraint baseColumnNames="notification_group_id"
-                                 baseTableName="sensor_device"
-                                 constraintName="fk_sensor_device_notification_group_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="notification_group"/>
-
         <addForeignKeyConstraint baseColumnNames="location_id"
                                  baseTableName="sensor_device"
                                  constraintName="fk_sensor_device_location_id"
                                  referencedColumnNames="id"
                                  referencedTableName="location"/>
+
+        <addForeignKeyConstraint baseColumnNames="notification_group_id"
+                                 baseTableName="sensor_device"
+                                 constraintName="fk_sensor_device_notification_group_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="notification_group"/>
 
     </changeSet>
 </databaseChangeLog>

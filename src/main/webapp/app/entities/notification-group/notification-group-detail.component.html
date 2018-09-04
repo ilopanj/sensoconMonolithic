@@ -12,13 +12,13 @@
                 <dt><span>Contact</span></dt>
                 <dd>
                     <span *ngFor="let contact of notificationGroup.contacts; let last = last">
-                        <a [routerLink]="['/contact', contact?.id, 'view' ]">{{contact.id}}</a>{{last ? '' : ', '}}
+                        <a [routerLink]="['/contact', contact?.id, 'view' ]">{{contact.name}}</a>{{last ? '' : ', '}}
                     </span>
                 </dd>
                 <dt><span>Company</span></dt>
                 <dd>
-                    <div *ngIf="notificationGroup.companyId">
-                        <a [routerLink]="['/company', notificationGroup.companyId, 'view']">{{notificationGroup.companyId}}</a>
+                    <div *ngIf="notificationGroup.company">
+                        <a [routerLink]="['/company', notificationGroup.company?.id, 'view']">{{notificationGroup.company?.name}}</a>
                     </div>
                 </dd>
             </dl>

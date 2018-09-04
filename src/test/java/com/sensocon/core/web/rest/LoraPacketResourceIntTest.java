@@ -5,8 +5,6 @@ import com.sensocon.core.SensoconMonolithicApp;
 import com.sensocon.core.domain.LoraPacket;
 import com.sensocon.core.repository.LoraPacketRepository;
 import com.sensocon.core.service.LoraPacketService;
-import com.sensocon.core.service.dto.LoraPacketDTO;
-import com.sensocon.core.service.mapper.LoraPacketMapper;
 import com.sensocon.core.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -71,9 +69,6 @@ public class LoraPacketResourceIntTest {
     @Autowired
     private LoraPacketRepository loraPacketRepository;
 
-
-    @Autowired
-    private LoraPacketMapper loraPacketMapper;
     
 
     @Autowired
@@ -136,10 +131,9 @@ public class LoraPacketResourceIntTest {
         int databaseSizeBeforeCreate = loraPacketRepository.findAll().size();
 
         // Create the LoraPacket
-        LoraPacketDTO loraPacketDTO = loraPacketMapper.toDto(loraPacket);
         restLoraPacketMockMvc.perform(post("/api/lora-packets")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(loraPacketDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(loraPacket)))
             .andExpect(status().isCreated());
 
         // Validate the LoraPacket in the database
@@ -163,12 +157,11 @@ public class LoraPacketResourceIntTest {
 
         // Create the LoraPacket with an existing ID
         loraPacket.setId(1L);
-        LoraPacketDTO loraPacketDTO = loraPacketMapper.toDto(loraPacket);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restLoraPacketMockMvc.perform(post("/api/lora-packets")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(loraPacketDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(loraPacket)))
             .andExpect(status().isBadRequest());
 
         // Validate the LoraPacket in the database
@@ -230,7 +223,7 @@ public class LoraPacketResourceIntTest {
     @Transactional
     public void updateLoraPacket() throws Exception {
         // Initialize the database
-        loraPacketRepository.saveAndFlush(loraPacket);
+        loraPacketService.save(loraPacket);
 
         int databaseSizeBeforeUpdate = loraPacketRepository.findAll().size();
 
@@ -247,11 +240,10 @@ public class LoraPacketResourceIntTest {
             .pressurePsi(UPDATED_PRESSURE_PSI)
             .frequency(UPDATED_FREQUENCY)
             .dataRate(UPDATED_DATA_RATE);
-        LoraPacketDTO loraPacketDTO = loraPacketMapper.toDto(updatedLoraPacket);
 
         restLoraPacketMockMvc.perform(put("/api/lora-packets")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(loraPacketDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(updatedLoraPacket)))
             .andExpect(status().isOk());
 
         // Validate the LoraPacket in the database
@@ -274,12 +266,11 @@ public class LoraPacketResourceIntTest {
         int databaseSizeBeforeUpdate = loraPacketRepository.findAll().size();
 
         // Create the LoraPacket
-        LoraPacketDTO loraPacketDTO = loraPacketMapper.toDto(loraPacket);
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException 
         restLoraPacketMockMvc.perform(put("/api/lora-packets")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(loraPacketDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(loraPacket)))
             .andExpect(status().isBadRequest());
 
         // Validate the LoraPacket in the database
@@ -291,7 +282,7 @@ public class LoraPacketResourceIntTest {
     @Transactional
     public void deleteLoraPacket() throws Exception {
         // Initialize the database
-        loraPacketRepository.saveAndFlush(loraPacket);
+        loraPacketService.save(loraPacket);
 
         int databaseSizeBeforeDelete = loraPacketRepository.findAll().size();
 
@@ -318,28 +309,5 @@ public class LoraPacketResourceIntTest {
         assertThat(loraPacket1).isNotEqualTo(loraPacket2);
         loraPacket1.setId(null);
         assertThat(loraPacket1).isNotEqualTo(loraPacket2);
-    }
-
-    @Test
-    @Transactional
-    public void dtoEqualsVerifier() throws Exception {
-        TestUtil.equalsVerifier(LoraPacketDTO.class);
-        LoraPacketDTO loraPacketDTO1 = new LoraPacketDTO();
-        loraPacketDTO1.setId(1L);
-        LoraPacketDTO loraPacketDTO2 = new LoraPacketDTO();
-        assertThat(loraPacketDTO1).isNotEqualTo(loraPacketDTO2);
-        loraPacketDTO2.setId(loraPacketDTO1.getId());
-        assertThat(loraPacketDTO1).isEqualTo(loraPacketDTO2);
-        loraPacketDTO2.setId(2L);
-        assertThat(loraPacketDTO1).isNotEqualTo(loraPacketDTO2);
-        loraPacketDTO1.setId(null);
-        assertThat(loraPacketDTO1).isNotEqualTo(loraPacketDTO2);
-    }
-
-    @Test
-    @Transactional
-    public void testEntityFromId() {
-        assertThat(loraPacketMapper.fromId(42L).getId()).isEqualTo(42);
-        assertThat(loraPacketMapper.fromId(null)).isNull();
     }
 }

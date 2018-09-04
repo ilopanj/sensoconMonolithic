@@ -25,11 +25,13 @@
                 <dd>
                     <span>{{company.stateProvince}}</span>
                 </dd>
-                <dt><span>Company Settings</span></dt>
+                <dt><span>Default Timeout Seconds</span></dt>
                 <dd>
-                    <div *ngIf="company.companySettingsId">
-                        <a [routerLink]="['/company-settings', company.companySettingsId, 'view']">{{company.companySettingsId}}</a>
-                    </div>
+                    <span>{{company.defaultTimeoutSeconds}}</span>
+                </dd>
+                <dt><span>Default Suppression Seconds</span></dt>
+                <dd>
+                    <span>{{company.defaultSuppressionSeconds}}</span>
                 </dd>
             </dl>
 

@@ -3,8 +3,6 @@ package com.sensocon.core.service.impl;
 import com.sensocon.core.service.NotificationGroupService;
 import com.sensocon.core.domain.NotificationGroup;
 import com.sensocon.core.repository.NotificationGroupRepository;
-import com.sensocon.core.service.dto.NotificationGroupDTO;
-import com.sensocon.core.service.mapper.NotificationGroupMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,10 +11,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.LinkedList;
+
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 /**
  * Service Implementation for managing NotificationGroup.
  */
@@ -28,25 +25,19 @@ public class NotificationGroupServiceImpl implements NotificationGroupService {
 
     private final NotificationGroupRepository notificationGroupRepository;
 
-    private final NotificationGroupMapper notificationGroupMapper;
-
-    public NotificationGroupServiceImpl(NotificationGroupRepository notificationGroupRepository, NotificationGroupMapper notificationGroupMapper) {
+    public NotificationGroupServiceImpl(NotificationGroupRepository notificationGroupRepository) {
         this.notificationGroupRepository = notificationGroupRepository;
-        this.notificationGroupMapper = notificationGroupMapper;
     }
 
     /**
      * Save a notificationGroup.
      *
-     * @param notificationGroupDTO the entity to save
+     * @param notificationGroup the entity to save
      * @return the persisted entity
      */
     @Override
-    public NotificationGroupDTO save(NotificationGroupDTO notificationGroupDTO) {
-        log.debug("Request to save NotificationGroup : {}", notificationGroupDTO);
-        NotificationGroup notificationGroup = notificationGroupMapper.toEntity(notificationGroupDTO);
-        notificationGroup = notificationGroupRepository.save(notificationGroup);
-        return notificationGroupMapper.toDto(notificationGroup);
+    public NotificationGroup save(NotificationGroup notificationGroup) {
+        log.debug("Request to save NotificationGroup : {}", notificationGroup);        return notificationGroupRepository.save(notificationGroup);
     }
 
     /**
@@ -56,11 +47,9 @@ public class NotificationGroupServiceImpl implements NotificationGroupService {
      */
     @Override
     @Transactional(readOnly = true)
-    public List<NotificationGroupDTO> findAll() {
+    public List<NotificationGroup> findAll() {
         log.debug("Request to get all NotificationGroups");
-        return notificationGroupRepository.findAllWithEagerRelationships().stream()
-            .map(notificationGroupMapper::toDto)
-            .collect(Collectors.toCollection(LinkedList::new));
+        return notificationGroupRepository.findAllWithEagerRelationships();
     }
 
     /**
@@ -68,8 +57,8 @@ public class NotificationGroupServiceImpl implements NotificationGroupService {
      *
      * @return the list of entities
      */
-    public Page<NotificationGroupDTO> findAllWithEagerRelationships(Pageable pageable) {
-        return notificationGroupRepository.findAllWithEagerRelationships(pageable).map(notificationGroupMapper::toDto);
+    public Page<NotificationGroup> findAllWithEagerRelationships(Pageable pageable) {
+        return notificationGroupRepository.findAllWithEagerRelationships(pageable);
     }
     
 
@@ -81,10 +70,9 @@ public class NotificationGroupServiceImpl implements NotificationGroupService {
      */
     @Override
     @Transactional(readOnly = true)
-    public Optional<NotificationGroupDTO> findOne(Long id) {
+    public Optional<NotificationGroup> findOne(Long id) {
         log.debug("Request to get NotificationGroup : {}", id);
-        return notificationGroupRepository.findOneWithEagerRelationships(id)
-            .map(notificationGroupMapper::toDto);
+        return notificationGroupRepository.findOneWithEagerRelationships(id);
     }
 
     /**

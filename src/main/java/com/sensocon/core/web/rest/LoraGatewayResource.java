@@ -1,10 +1,10 @@
 package com.sensocon.core.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.sensocon.core.domain.LoraGateway;
 import com.sensocon.core.service.LoraGatewayService;
 import com.sensocon.core.web.rest.errors.BadRequestAlertException;
 import com.sensocon.core.web.rest.util.HeaderUtil;
-import com.sensocon.core.service.dto.LoraGatewayDTO;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,18 +37,18 @@ public class LoraGatewayResource {
     /**
      * POST  /lora-gateways : Create a new loraGateway.
      *
-     * @param loraGatewayDTO the loraGatewayDTO to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new loraGatewayDTO, or with status 400 (Bad Request) if the loraGateway has already an ID
+     * @param loraGateway the loraGateway to create
+     * @return the ResponseEntity with status 201 (Created) and with body the new loraGateway, or with status 400 (Bad Request) if the loraGateway has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/lora-gateways")
     @Timed
-    public ResponseEntity<LoraGatewayDTO> createLoraGateway(@RequestBody LoraGatewayDTO loraGatewayDTO) throws URISyntaxException {
-        log.debug("REST request to save LoraGateway : {}", loraGatewayDTO);
-        if (loraGatewayDTO.getId() != null) {
+    public ResponseEntity<LoraGateway> createLoraGateway(@RequestBody LoraGateway loraGateway) throws URISyntaxException {
+        log.debug("REST request to save LoraGateway : {}", loraGateway);
+        if (loraGateway.getId() != null) {
             throw new BadRequestAlertException("A new loraGateway cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        LoraGatewayDTO result = loraGatewayService.save(loraGatewayDTO);
+        LoraGateway result = loraGatewayService.save(loraGateway);
         return ResponseEntity.created(new URI("/api/lora-gateways/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -57,22 +57,22 @@ public class LoraGatewayResource {
     /**
      * PUT  /lora-gateways : Updates an existing loraGateway.
      *
-     * @param loraGatewayDTO the loraGatewayDTO to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated loraGatewayDTO,
-     * or with status 400 (Bad Request) if the loraGatewayDTO is not valid,
-     * or with status 500 (Internal Server Error) if the loraGatewayDTO couldn't be updated
+     * @param loraGateway the loraGateway to update
+     * @return the ResponseEntity with status 200 (OK) and with body the updated loraGateway,
+     * or with status 400 (Bad Request) if the loraGateway is not valid,
+     * or with status 500 (Internal Server Error) if the loraGateway couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/lora-gateways")
     @Timed
-    public ResponseEntity<LoraGatewayDTO> updateLoraGateway(@RequestBody LoraGatewayDTO loraGatewayDTO) throws URISyntaxException {
-        log.debug("REST request to update LoraGateway : {}", loraGatewayDTO);
-        if (loraGatewayDTO.getId() == null) {
+    public ResponseEntity<LoraGateway> updateLoraGateway(@RequestBody LoraGateway loraGateway) throws URISyntaxException {
+        log.debug("REST request to update LoraGateway : {}", loraGateway);
+        if (loraGateway.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        LoraGatewayDTO result = loraGatewayService.save(loraGatewayDTO);
+        LoraGateway result = loraGatewayService.save(loraGateway);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, loraGatewayDTO.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, loraGateway.getId().toString()))
             .body(result);
     }
 
@@ -83,7 +83,7 @@ public class LoraGatewayResource {
      */
     @GetMapping("/lora-gateways")
     @Timed
-    public List<LoraGatewayDTO> getAllLoraGateways() {
+    public List<LoraGateway> getAllLoraGateways() {
         log.debug("REST request to get all LoraGateways");
         return loraGatewayService.findAll();
     }
@@ -91,21 +91,21 @@ public class LoraGatewayResource {
     /**
      * GET  /lora-gateways/:id : get the "id" loraGateway.
      *
-     * @param id the id of the loraGatewayDTO to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the loraGatewayDTO, or with status 404 (Not Found)
+     * @param id the id of the loraGateway to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the loraGateway, or with status 404 (Not Found)
      */
     @GetMapping("/lora-gateways/{id}")
     @Timed
-    public ResponseEntity<LoraGatewayDTO> getLoraGateway(@PathVariable Long id) {
+    public ResponseEntity<LoraGateway> getLoraGateway(@PathVariable Long id) {
         log.debug("REST request to get LoraGateway : {}", id);
-        Optional<LoraGatewayDTO> loraGatewayDTO = loraGatewayService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(loraGatewayDTO);
+        Optional<LoraGateway> loraGateway = loraGatewayService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(loraGateway);
     }
 
     /**
      * DELETE  /lora-gateways/:id : delete the "id" loraGateway.
      *
-     * @param id the id of the loraGatewayDTO to delete
+     * @param id the id of the loraGateway to delete
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/lora-gateways/{id}")

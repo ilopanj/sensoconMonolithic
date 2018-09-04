@@ -6,8 +6,6 @@ import { JhiAlertService } from 'ng-jhipster';
 
 import { ISensorGroup } from 'app/shared/model/sensor-group.model';
 import { SensorGroupService } from './sensor-group.service';
-import { ISensor } from 'app/shared/model/sensor.model';
-import { SensorService } from 'app/entities/sensor';
 import { ICompany } from 'app/shared/model/company.model';
 import { CompanyService } from 'app/entities/company';
 
@@ -19,14 +17,11 @@ export class SensorGroupUpdateComponent implements OnInit {
     private _sensorGroup: ISensorGroup;
     isSaving: boolean;
 
-    sensors: ISensor[];
-
     companies: ICompany[];
 
     constructor(
         private jhiAlertService: JhiAlertService,
         private sensorGroupService: SensorGroupService,
-        private sensorService: SensorService,
         private companyService: CompanyService,
         private activatedRoute: ActivatedRoute
     ) {}
@@ -36,12 +31,6 @@ export class SensorGroupUpdateComponent implements OnInit {
         this.activatedRoute.data.subscribe(({ sensorGroup }) => {
             this.sensorGroup = sensorGroup;
         });
-        this.sensorService.query().subscribe(
-            (res: HttpResponse<ISensor[]>) => {
-                this.sensors = res.body;
-            },
-            (res: HttpErrorResponse) => this.onError(res.message)
-        );
         this.companyService.query().subscribe(
             (res: HttpResponse<ICompany[]>) => {
                 this.companies = res.body;
@@ -78,10 +67,6 @@ export class SensorGroupUpdateComponent implements OnInit {
 
     private onError(errorMessage: string) {
         this.jhiAlertService.error(errorMessage, null, null);
-    }
-
-    trackSensorById(index: number, item: ISensor) {
-        return item.id;
     }
 
     trackCompanyById(index: number, item: ICompany) {

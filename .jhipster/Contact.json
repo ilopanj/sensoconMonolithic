@@ -2,6 +2,10 @@
     "name": "Contact",
     "fields": [
         {
+            "fieldName": "name",
+            "fieldType": "String"
+        },
+        {
             "fieldName": "alertPhoneNumber",
             "fieldType": "String"
         },
@@ -15,7 +19,7 @@
             "relationshipType": "many-to-one",
             "relationshipName": "company",
             "otherEntityName": "company",
-            "otherEntityField": "id"
+            "otherEntityField": "name"
         },
         {
             "relationshipType": "many-to-many",
@@ -27,7 +31,7 @@
     ],
     "changelogDate": "20180822202324",
     "entityTableName": "contact",
-    "dto": "mapstruct",
+    "dto": "no",
     "pagination": "no",
     "service": "serviceImpl",
     "jpaMetamodelFiltering": false,

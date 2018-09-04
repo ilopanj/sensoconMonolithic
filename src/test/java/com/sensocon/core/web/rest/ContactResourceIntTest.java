@@ -5,8 +5,6 @@ import com.sensocon.core.SensoconMonolithicApp;
 import com.sensocon.core.domain.Contact;
 import com.sensocon.core.repository.ContactRepository;
 import com.sensocon.core.service.ContactService;
-import com.sensocon.core.service.dto.ContactDTO;
-import com.sensocon.core.service.mapper.ContactMapper;
 import com.sensocon.core.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -42,6 +40,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = SensoconMonolithicApp.class)
 public class ContactResourceIntTest {
 
+    private static final String DEFAULT_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_NAME = "BBBBBBBBBB";
+
     private static final String DEFAULT_ALERT_PHONE_NUMBER = "AAAAAAAAAA";
     private static final String UPDATED_ALERT_PHONE_NUMBER = "BBBBBBBBBB";
 
@@ -51,9 +52,6 @@ public class ContactResourceIntTest {
     @Autowired
     private ContactRepository contactRepository;
 
-
-    @Autowired
-    private ContactMapper contactMapper;
     
 
     @Autowired
@@ -94,6 +92,7 @@ public class ContactResourceIntTest {
      */
     public static Contact createEntity(EntityManager em) {
         Contact contact = new Contact()
+            .name(DEFAULT_NAME)
             .alertPhoneNumber(DEFAULT_ALERT_PHONE_NUMBER)
             .alertEmail(DEFAULT_ALERT_EMAIL);
         return contact;
@@ -110,16 +109,16 @@ public class ContactResourceIntTest {
         int databaseSizeBeforeCreate = contactRepository.findAll().size();
 
         // Create the Contact
-        ContactDTO contactDTO = contactMapper.toDto(contact);
         restContactMockMvc.perform(post("/api/contacts")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(contactDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(contact)))
             .andExpect(status().isCreated());
 
         // Validate the Contact in the database
         List<Contact> contactList = contactRepository.findAll();
         assertThat(contactList).hasSize(databaseSizeBeforeCreate + 1);
         Contact testContact = contactList.get(contactList.size() - 1);
+        assertThat(testContact.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testContact.getAlertPhoneNumber()).isEqualTo(DEFAULT_ALERT_PHONE_NUMBER);
         assertThat(testContact.getAlertEmail()).isEqualTo(DEFAULT_ALERT_EMAIL);
     }
@@ -131,12 +130,11 @@ public class ContactResourceIntTest {
 
         // Create the Contact with an existing ID
         contact.setId(1L);
-        ContactDTO contactDTO = contactMapper.toDto(contact);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restContactMockMvc.perform(post("/api/contacts")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(contactDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(contact)))
             .andExpect(status().isBadRequest());
 
         // Validate the Contact in the database
@@ -155,6 +153,7 @@ public class ContactResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(contact.getId().intValue())))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
             .andExpect(jsonPath("$.[*].alertPhoneNumber").value(hasItem(DEFAULT_ALERT_PHONE_NUMBER.toString())))
             .andExpect(jsonPath("$.[*].alertEmail").value(hasItem(DEFAULT_ALERT_EMAIL.toString())));
     }
@@ -171,6 +170,7 @@ public class ContactResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(contact.getId().intValue()))
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
             .andExpect(jsonPath("$.alertPhoneNumber").value(DEFAULT_ALERT_PHONE_NUMBER.toString()))
             .andExpect(jsonPath("$.alertEmail").value(DEFAULT_ALERT_EMAIL.toString()));
     }
@@ -186,7 +186,7 @@ public class ContactResourceIntTest {
     @Transactional
     public void updateContact() throws Exception {
         // Initialize the database
-        contactRepository.saveAndFlush(contact);
+        contactService.save(contact);
 
         int databaseSizeBeforeUpdate = contactRepository.findAll().size();
 
@@ -195,19 +195,20 @@ public class ContactResourceIntTest {
         // Disconnect from session so that the updates on updatedContact are not directly saved in db
         em.detach(updatedContact);
         updatedContact
+            .name(UPDATED_NAME)
             .alertPhoneNumber(UPDATED_ALERT_PHONE_NUMBER)
             .alertEmail(UPDATED_ALERT_EMAIL);
-        ContactDTO contactDTO = contactMapper.toDto(updatedContact);
 
         restContactMockMvc.perform(put("/api/contacts")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(contactDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(updatedContact)))
             .andExpect(status().isOk());
 
         // Validate the Contact in the database
         List<Contact> contactList = contactRepository.findAll();
         assertThat(contactList).hasSize(databaseSizeBeforeUpdate);
         Contact testContact = contactList.get(contactList.size() - 1);
+        assertThat(testContact.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testContact.getAlertPhoneNumber()).isEqualTo(UPDATED_ALERT_PHONE_NUMBER);
         assertThat(testContact.getAlertEmail()).isEqualTo(UPDATED_ALERT_EMAIL);
     }
@@ -218,12 +219,11 @@ public class ContactResourceIntTest {
         int databaseSizeBeforeUpdate = contactRepository.findAll().size();
 
         // Create the Contact
-        ContactDTO contactDTO = contactMapper.toDto(contact);
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException 
         restContactMockMvc.perform(put("/api/contacts")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(contactDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(contact)))
             .andExpect(status().isBadRequest());
 
         // Validate the Contact in the database
@@ -235,7 +235,7 @@ public class ContactResourceIntTest {
     @Transactional
     public void deleteContact() throws Exception {
         // Initialize the database
-        contactRepository.saveAndFlush(contact);
+        contactService.save(contact);
 
         int databaseSizeBeforeDelete = contactRepository.findAll().size();
 
@@ -262,28 +262,5 @@ public class ContactResourceIntTest {
         assertThat(contact1).isNotEqualTo(contact2);
         contact1.setId(null);
         assertThat(contact1).isNotEqualTo(contact2);
-    }
-
-    @Test
-    @Transactional
-    public void dtoEqualsVerifier() throws Exception {
-        TestUtil.equalsVerifier(ContactDTO.class);
-        ContactDTO contactDTO1 = new ContactDTO();
-        contactDTO1.setId(1L);
-        ContactDTO contactDTO2 = new ContactDTO();
-        assertThat(contactDTO1).isNotEqualTo(contactDTO2);
-        contactDTO2.setId(contactDTO1.getId());
-        assertThat(contactDTO1).isEqualTo(contactDTO2);
-        contactDTO2.setId(2L);
-        assertThat(contactDTO1).isNotEqualTo(contactDTO2);
-        contactDTO1.setId(null);
-        assertThat(contactDTO1).isNotEqualTo(contactDTO2);
-    }
-
-    @Test
-    @Transactional
-    public void testEntityFromId() {
-        assertThat(contactMapper.fromId(42L).getId()).isEqualTo(42);
-        assertThat(contactMapper.fromId(null)).isNull();
     }
 }

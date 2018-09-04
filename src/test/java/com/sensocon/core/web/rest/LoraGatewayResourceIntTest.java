@@ -5,8 +5,6 @@ import com.sensocon.core.SensoconMonolithicApp;
 import com.sensocon.core.domain.LoraGateway;
 import com.sensocon.core.repository.LoraGatewayRepository;
 import com.sensocon.core.service.LoraGatewayService;
-import com.sensocon.core.service.dto.LoraGatewayDTO;
-import com.sensocon.core.service.mapper.LoraGatewayMapper;
 import com.sensocon.core.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -51,9 +49,6 @@ public class LoraGatewayResourceIntTest {
     @Autowired
     private LoraGatewayRepository loraGatewayRepository;
 
-
-    @Autowired
-    private LoraGatewayMapper loraGatewayMapper;
     
 
     @Autowired
@@ -110,10 +105,9 @@ public class LoraGatewayResourceIntTest {
         int databaseSizeBeforeCreate = loraGatewayRepository.findAll().size();
 
         // Create the LoraGateway
-        LoraGatewayDTO loraGatewayDTO = loraGatewayMapper.toDto(loraGateway);
         restLoraGatewayMockMvc.perform(post("/api/lora-gateways")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(loraGatewayDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(loraGateway)))
             .andExpect(status().isCreated());
 
         // Validate the LoraGateway in the database
@@ -131,12 +125,11 @@ public class LoraGatewayResourceIntTest {
 
         // Create the LoraGateway with an existing ID
         loraGateway.setId(1L);
-        LoraGatewayDTO loraGatewayDTO = loraGatewayMapper.toDto(loraGateway);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restLoraGatewayMockMvc.perform(post("/api/lora-gateways")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(loraGatewayDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(loraGateway)))
             .andExpect(status().isBadRequest());
 
         // Validate the LoraGateway in the database
@@ -186,7 +179,7 @@ public class LoraGatewayResourceIntTest {
     @Transactional
     public void updateLoraGateway() throws Exception {
         // Initialize the database
-        loraGatewayRepository.saveAndFlush(loraGateway);
+        loraGatewayService.save(loraGateway);
 
         int databaseSizeBeforeUpdate = loraGatewayRepository.findAll().size();
 
@@ -197,11 +190,10 @@ public class LoraGatewayResourceIntTest {
         updatedLoraGateway
             .gatewayId(UPDATED_GATEWAY_ID)
             .name(UPDATED_NAME);
-        LoraGatewayDTO loraGatewayDTO = loraGatewayMapper.toDto(updatedLoraGateway);
 
         restLoraGatewayMockMvc.perform(put("/api/lora-gateways")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(loraGatewayDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(updatedLoraGateway)))
             .andExpect(status().isOk());
 
         // Validate the LoraGateway in the database
@@ -218,12 +210,11 @@ public class LoraGatewayResourceIntTest {
         int databaseSizeBeforeUpdate = loraGatewayRepository.findAll().size();
 
         // Create the LoraGateway
-        LoraGatewayDTO loraGatewayDTO = loraGatewayMapper.toDto(loraGateway);
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException 
         restLoraGatewayMockMvc.perform(put("/api/lora-gateways")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(loraGatewayDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(loraGateway)))
             .andExpect(status().isBadRequest());
 
         // Validate the LoraGateway in the database
@@ -235,7 +226,7 @@ public class LoraGatewayResourceIntTest {
     @Transactional
     public void deleteLoraGateway() throws Exception {
         // Initialize the database
-        loraGatewayRepository.saveAndFlush(loraGateway);
+        loraGatewayService.save(loraGateway);
 
         int databaseSizeBeforeDelete = loraGatewayRepository.findAll().size();
 
@@ -262,28 +253,5 @@ public class LoraGatewayResourceIntTest {
         assertThat(loraGateway1).isNotEqualTo(loraGateway2);
         loraGateway1.setId(null);
         assertThat(loraGateway1).isNotEqualTo(loraGateway2);
-    }
-
-    @Test
-    @Transactional
-    public void dtoEqualsVerifier() throws Exception {
-        TestUtil.equalsVerifier(LoraGatewayDTO.class);
-        LoraGatewayDTO loraGatewayDTO1 = new LoraGatewayDTO();
-        loraGatewayDTO1.setId(1L);
-        LoraGatewayDTO loraGatewayDTO2 = new LoraGatewayDTO();
-        assertThat(loraGatewayDTO1).isNotEqualTo(loraGatewayDTO2);
-        loraGatewayDTO2.setId(loraGatewayDTO1.getId());
-        assertThat(loraGatewayDTO1).isEqualTo(loraGatewayDTO2);
-        loraGatewayDTO2.setId(2L);
-        assertThat(loraGatewayDTO1).isNotEqualTo(loraGatewayDTO2);
-        loraGatewayDTO1.setId(null);
-        assertThat(loraGatewayDTO1).isNotEqualTo(loraGatewayDTO2);
-    }
-
-    @Test
-    @Transactional
-    public void testEntityFromId() {
-        assertThat(loraGatewayMapper.fromId(42L).getId()).isEqualTo(42);
-        assertThat(loraGatewayMapper.fromId(null)).isNull();
     }
 }

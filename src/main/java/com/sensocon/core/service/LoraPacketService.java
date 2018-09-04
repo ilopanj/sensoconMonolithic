@@ -1,6 +1,6 @@
 package com.sensocon.core.service;
 
-import com.sensocon.core.service.dto.LoraPacketDTO;
+import com.sensocon.core.domain.LoraPacket;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,17 +13,17 @@ public interface LoraPacketService {
     /**
      * Save a loraPacket.
      *
-     * @param loraPacketDTO the entity to save
+     * @param loraPacket the entity to save
      * @return the persisted entity
      */
-    LoraPacketDTO save(LoraPacketDTO loraPacketDTO);
+    LoraPacket save(LoraPacket loraPacket);
 
     /**
      * Get all the loraPackets.
      *
      * @return the list of entities
      */
-    List<LoraPacketDTO> findAll();
+    List<LoraPacket> findAll();
 
 
     /**
@@ -32,7 +32,7 @@ public interface LoraPacketService {
      * @param id the id of the entity
      * @return the entity
      */
-    Optional<LoraPacketDTO> findOne(Long id);
+    Optional<LoraPacket> findOne(Long id);
 
     /**
      * Delete the "id" loraPacket.

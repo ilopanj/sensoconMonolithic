@@ -3,18 +3,15 @@ package com.sensocon.core.service.impl;
 import com.sensocon.core.service.LoraPacketService;
 import com.sensocon.core.domain.LoraPacket;
 import com.sensocon.core.repository.LoraPacketRepository;
-import com.sensocon.core.service.dto.LoraPacketDTO;
-import com.sensocon.core.service.mapper.LoraPacketMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.LinkedList;
+
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 /**
  * Service Implementation for managing LoraPacket.
  */
@@ -26,25 +23,19 @@ public class LoraPacketServiceImpl implements LoraPacketService {
 
     private final LoraPacketRepository loraPacketRepository;
 
-    private final LoraPacketMapper loraPacketMapper;
-
-    public LoraPacketServiceImpl(LoraPacketRepository loraPacketRepository, LoraPacketMapper loraPacketMapper) {
+    public LoraPacketServiceImpl(LoraPacketRepository loraPacketRepository) {
         this.loraPacketRepository = loraPacketRepository;
-        this.loraPacketMapper = loraPacketMapper;
     }
 
     /**
      * Save a loraPacket.
      *
-     * @param loraPacketDTO the entity to save
+     * @param loraPacket the entity to save
      * @return the persisted entity
      */
     @Override
-    public LoraPacketDTO save(LoraPacketDTO loraPacketDTO) {
-        log.debug("Request to save LoraPacket : {}", loraPacketDTO);
-        LoraPacket loraPacket = loraPacketMapper.toEntity(loraPacketDTO);
-        loraPacket = loraPacketRepository.save(loraPacket);
-        return loraPacketMapper.toDto(loraPacket);
+    public LoraPacket save(LoraPacket loraPacket) {
+        log.debug("Request to save LoraPacket : {}", loraPacket);        return loraPacketRepository.save(loraPacket);
     }
 
     /**
@@ -54,11 +45,9 @@ public class LoraPacketServiceImpl implements LoraPacketService {
      */
     @Override
     @Transactional(readOnly = true)
-    public List<LoraPacketDTO> findAll() {
+    public List<LoraPacket> findAll() {
         log.debug("Request to get all LoraPackets");
-        return loraPacketRepository.findAll().stream()
-            .map(loraPacketMapper::toDto)
-            .collect(Collectors.toCollection(LinkedList::new));
+        return loraPacketRepository.findAll();
     }
 
 
@@ -70,10 +59,9 @@ public class LoraPacketServiceImpl implements LoraPacketService {
      */
     @Override
     @Transactional(readOnly = true)
-    public Optional<LoraPacketDTO> findOne(Long id) {
+    public Optional<LoraPacket> findOne(Long id) {
         log.debug("Request to get LoraPacket : {}", id);
-        return loraPacketRepository.findById(id)
-            .map(loraPacketMapper::toDto);
+        return loraPacketRepository.findById(id);
     }
 
     /**

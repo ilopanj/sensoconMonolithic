@@ -25,6 +25,9 @@ public class SensorThreshold implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "name")
+    private String name;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "jhi_type")
     private ThresholdType type;
@@ -51,6 +54,19 @@ public class SensorThreshold implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public SensorThreshold name(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public ThresholdType getType() {
@@ -143,6 +159,7 @@ public class SensorThreshold implements Serializable {
     public String toString() {
         return "SensorThreshold{" +
             "id=" + getId() +
+            ", name='" + getName() + "'" +
             ", type='" + getType() + "'" +
             ", value=" + getValue() +
             "}";

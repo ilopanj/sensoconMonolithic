@@ -27,8 +27,8 @@
                 <td>{{sensorGroup.name}}</td>
                 <td>{{sensorGroup.sensorType}}</td>
                 <td>
-                    <div *ngIf="sensorGroup.companyId">
-                        <a [routerLink]="['../company', sensorGroup.companyId , 'view' ]" >{{sensorGroup.companyId}}</a>
+                    <div *ngIf="sensorGroup.company">
+                        <a [routerLink]="['../company', sensorGroup.company?.id, 'view' ]" >{{sensorGroup.company?.name}}</a>
                     </div>
                 </td>
                 <td class="text-right">

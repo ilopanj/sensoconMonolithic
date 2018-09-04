@@ -15,8 +15,8 @@
                 </dd>
                 <dt><span>Company</span></dt>
                 <dd>
-                    <div *ngIf="sensorGroup.companyId">
-                        <a [routerLink]="['/company', sensorGroup.companyId, 'view']">{{sensorGroup.companyId}}</a>
+                    <div *ngIf="sensorGroup.company">
+                        <a [routerLink]="['/company', sensorGroup.company?.id, 'view']">{{sensorGroup.company?.name}}</a>
                     </div>
                 </dd>
             </dl>

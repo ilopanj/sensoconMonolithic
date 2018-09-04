@@ -44,7 +44,7 @@
     ],
     "changelogDate": "20180822202331",
     "entityTableName": "lora_packet",
-    "dto": "mapstruct",
+    "dto": "no",
     "pagination": "no",
     "service": "serviceImpl",
     "jpaMetamodelFiltering": false,

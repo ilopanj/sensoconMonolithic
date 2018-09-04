@@ -1,6 +1,8 @@
 import { ISensor } from 'app/shared/model//sensor.model';
 import { ISensorThreshold } from 'app/shared/model//sensor-threshold.model';
 import { ILoraPacket } from 'app/shared/model//lora-packet.model';
+import { ILocation } from 'app/shared/model//location.model';
+import { INotificationGroup } from 'app/shared/model//notification-group.model';
 
 export interface ISensorDevice {
     id?: number;
@@ -9,8 +11,8 @@ export interface ISensorDevice {
     sensors?: ISensor[];
     thresholds?: ISensorThreshold[];
     packets?: ILoraPacket[];
-    notificationGroupId?: number;
-    locationId?: number;
+    location?: ILocation;
+    notificationGroup?: INotificationGroup;
 }
 
 export class SensorDevice implements ISensorDevice {
@@ -21,7 +23,7 @@ export class SensorDevice implements ISensorDevice {
         public sensors?: ISensor[],
         public thresholds?: ISensorThreshold[],
         public packets?: ILoraPacket[],
-        public notificationGroupId?: number,
-        public locationId?: number
+        public location?: ILocation,
+        public notificationGroup?: INotificationGroup
     ) {}
 }

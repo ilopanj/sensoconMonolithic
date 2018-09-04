@@ -23,14 +23,14 @@
                 </dd>
                 <dt><span>Sensor Group</span></dt>
                 <dd>
-                    <div *ngIf="sensor.sensorGroupId">
-                        <a [routerLink]="['/sensor-group', sensor.sensorGroupId, 'view']">{{sensor.sensorGroupId}}</a>
+                    <div *ngIf="sensor.sensorGroup">
+                        <a [routerLink]="['/sensor-group', sensor.sensorGroup?.id, 'view']">{{sensor.sensorGroup?.name}}</a>
                     </div>
                 </dd>
                 <dt><span>Sensor Device</span></dt>
                 <dd>
-                    <div *ngIf="sensor.sensorDeviceId">
-                        <a [routerLink]="['/sensor-device', sensor.sensorDeviceId, 'view']">{{sensor.sensorDeviceId}}</a>
+                    <div *ngIf="sensor.sensorDevice">
+                        <a [routerLink]="['/sensor-device', sensor.sensorDevice?.id, 'view']">{{sensor.sensorDevice?.deviceId}}</a>
                     </div>
                 </dd>
             </dl>

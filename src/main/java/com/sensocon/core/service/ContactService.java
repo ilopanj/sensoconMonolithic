@@ -1,6 +1,6 @@
 package com.sensocon.core.service;
 
-import com.sensocon.core.service.dto.ContactDTO;
+import com.sensocon.core.domain.Contact;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,17 +13,17 @@ public interface ContactService {
     /**
      * Save a contact.
      *
-     * @param contactDTO the entity to save
+     * @param contact the entity to save
      * @return the persisted entity
      */
-    ContactDTO save(ContactDTO contactDTO);
+    Contact save(Contact contact);
 
     /**
      * Get all the contacts.
      *
      * @return the list of entities
      */
-    List<ContactDTO> findAll();
+    List<Contact> findAll();
 
 
     /**
@@ -32,7 +32,7 @@ public interface ContactService {
      * @param id the id of the entity
      * @return the entity
      */
-    Optional<ContactDTO> findOne(Long id);
+    Optional<Contact> findOne(Long id);
 
     /**
      * Delete the "id" contact.

@@ -1,6 +1,6 @@
 package com.sensocon.core.service;
 
-import com.sensocon.core.service.dto.NotificationGroupDTO;
+import com.sensocon.core.domain.NotificationGroup;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,24 +16,24 @@ public interface NotificationGroupService {
     /**
      * Save a notificationGroup.
      *
-     * @param notificationGroupDTO the entity to save
+     * @param notificationGroup the entity to save
      * @return the persisted entity
      */
-    NotificationGroupDTO save(NotificationGroupDTO notificationGroupDTO);
+    NotificationGroup save(NotificationGroup notificationGroup);
 
     /**
      * Get all the notificationGroups.
      *
      * @return the list of entities
      */
-    List<NotificationGroupDTO> findAll();
+    List<NotificationGroup> findAll();
 
     /**
      * Get all the NotificationGroup with eager load of many-to-many relationships.
      *
      * @return the list of entities
      */
-    Page<NotificationGroupDTO> findAllWithEagerRelationships(Pageable pageable);
+    Page<NotificationGroup> findAllWithEagerRelationships(Pageable pageable);
     
     /**
      * Get the "id" notificationGroup.
@@ -41,7 +41,7 @@ public interface NotificationGroupService {
      * @param id the id of the entity
      * @return the entity
      */
-    Optional<NotificationGroupDTO> findOne(Long id);
+    Optional<NotificationGroup> findOne(Long id);
 
     /**
      * Delete the "id" notificationGroup.

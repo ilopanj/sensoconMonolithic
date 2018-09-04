@@ -41,9 +41,15 @@
             <column name="state_province" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="company_settings_id" type="bigint">
-                <constraints unique="true" nullable="true" uniqueConstraintName="ux_company_company_settings_id" />
+
+            <column name="default_timeout_seconds" type="bigint">
+                <constraints nullable="true" />
             </column>
+
+            <column name="default_suppression_seconds" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
         
