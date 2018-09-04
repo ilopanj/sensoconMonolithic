@@ -84,11 +84,14 @@ entity LoraGateway
 }
 
 entity LoraPacket {
+	messageId String
 	gatewayId	String
 	rssi	Double
 	timestamp	Instant
 	temperatureFarenheit	Double
 	pressurePsi	Double
+	frequency Double
+	dataRate String
 }
 
 // an ignored comment
@@ -112,12 +115,9 @@ relationship OneToMany {
     SensorDevice{sensors} to Sensor{sensorDevice},
     NotificationGroup{sensorDevice} to SensorDevice{notificationGroup},
     SensorDevice{thresholds} to SensorThreshold,
+	SensorDevice{packets} to LoraPacket,
     Sensor{thresholds} to SensorThreshold,
     SensorGroup{defaultThresholds} to SensorThreshold
-}
-
-relationship ManyToOne {
-	LoraPacket to SensorDevice
 }
 
 relationship OneToOne {

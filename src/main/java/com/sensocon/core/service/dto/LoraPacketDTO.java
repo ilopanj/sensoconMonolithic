@@ -11,6 +11,8 @@ public class LoraPacketDTO implements Serializable {
 
     private Long id;
 
+    private String messageId;
+
     private String gatewayId;
 
     private Double rssi;
@@ -21,6 +23,10 @@ public class LoraPacketDTO implements Serializable {
 
     private Double pressurePsi;
 
+    private Double frequency;
+
+    private String dataRate;
+
     private Long sensorDeviceId;
 
     public Long getId() {
@@ -29,6 +35,14 @@ public class LoraPacketDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getMessageId() {
+        return messageId;
+    }
+
+    public void setMessageId(String messageId) {
+        this.messageId = messageId;
     }
 
     public String getGatewayId() {
@@ -71,6 +85,22 @@ public class LoraPacketDTO implements Serializable {
         this.pressurePsi = pressurePsi;
     }
 
+    public Double getFrequency() {
+        return frequency;
+    }
+
+    public void setFrequency(Double frequency) {
+        this.frequency = frequency;
+    }
+
+    public String getDataRate() {
+        return dataRate;
+    }
+
+    public void setDataRate(String dataRate) {
+        this.dataRate = dataRate;
+    }
+
     public Long getSensorDeviceId() {
         return sensorDeviceId;
     }
@@ -104,11 +134,14 @@ public class LoraPacketDTO implements Serializable {
     public String toString() {
         return "LoraPacketDTO{" +
             "id=" + getId() +
+            ", messageId='" + getMessageId() + "'" +
             ", gatewayId='" + getGatewayId() + "'" +
             ", rssi=" + getRssi() +
             ", timestamp='" + getTimestamp() + "'" +
             ", temperatureFarenheit=" + getTemperatureFarenheit() +
             ", pressurePsi=" + getPressurePsi() +
+            ", frequency=" + getFrequency() +
+            ", dataRate='" + getDataRate() + "'" +
             ", sensorDevice=" + getSensorDeviceId() +
             "}";
     }

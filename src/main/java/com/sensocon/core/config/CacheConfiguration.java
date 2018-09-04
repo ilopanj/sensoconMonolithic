@@ -63,6 +63,7 @@ public class CacheConfiguration {
             cm.createCache(com.sensocon.core.domain.Sensor.class.getName() + ".thresholds", jcacheConfiguration);
             cm.createCache(com.sensocon.core.domain.SensorGroup.class.getName() + ".defaultThresholds", jcacheConfiguration);
             cm.createCache(com.sensocon.core.domain.Location.class.getName() + ".gateways", jcacheConfiguration);
+            cm.createCache(com.sensocon.core.domain.SensorDevice.class.getName() + ".packets", jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

@@ -24,6 +24,9 @@ public class LoraPacket implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "message_id")
+    private String messageId;
+
     @Column(name = "gateway_id")
     private String gatewayId;
 
@@ -39,8 +42,14 @@ public class LoraPacket implements Serializable {
     @Column(name = "pressure_psi")
     private Double pressurePsi;
 
+    @Column(name = "frequency")
+    private Double frequency;
+
+    @Column(name = "data_rate")
+    private String dataRate;
+
     @ManyToOne
-    @JsonIgnoreProperties("loraPackets")
+    @JsonIgnoreProperties("packets")
     private SensorDevice sensorDevice;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -50,6 +59,19 @@ public class LoraPacket implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getMessageId() {
+        return messageId;
+    }
+
+    public LoraPacket messageId(String messageId) {
+        this.messageId = messageId;
+        return this;
+    }
+
+    public void setMessageId(String messageId) {
+        this.messageId = messageId;
     }
 
     public String getGatewayId() {
@@ -117,6 +139,32 @@ public class LoraPacket implements Serializable {
         this.pressurePsi = pressurePsi;
     }
 
+    public Double getFrequency() {
+        return frequency;
+    }
+
+    public LoraPacket frequency(Double frequency) {
+        this.frequency = frequency;
+        return this;
+    }
+
+    public void setFrequency(Double frequency) {
+        this.frequency = frequency;
+    }
+
+    public String getDataRate() {
+        return dataRate;
+    }
+
+    public LoraPacket dataRate(String dataRate) {
+        this.dataRate = dataRate;
+        return this;
+    }
+
+    public void setDataRate(String dataRate) {
+        this.dataRate = dataRate;
+    }
+
     public SensorDevice getSensorDevice() {
         return sensorDevice;
     }
@@ -155,11 +203,14 @@ public class LoraPacket implements Serializable {
     public String toString() {
         return "LoraPacket{" +
             "id=" + getId() +
+            ", messageId='" + getMessageId() + "'" +
             ", gatewayId='" + getGatewayId() + "'" +
             ", rssi=" + getRssi() +
             ", timestamp='" + getTimestamp() + "'" +
             ", temperatureFarenheit=" + getTemperatureFarenheit() +
             ", pressurePsi=" + getPressurePsi() +
+            ", frequency=" + getFrequency() +
+            ", dataRate='" + getDataRate() + "'" +
             "}";
     }
 }

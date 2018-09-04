@@ -27,16 +27,16 @@
             "otherEntityRelationshipName": "sensorDevice"
         },
         {
+            "relationshipType": "one-to-many",
+            "relationshipName": "packets",
+            "otherEntityName": "loraPacket",
+            "otherEntityRelationshipName": "sensorDevice"
+        },
+        {
             "relationshipType": "many-to-one",
             "relationshipName": "notificationGroup",
             "otherEntityName": "notificationGroup",
             "otherEntityField": "id"
-        },
-        {
-            "relationshipType": "one-to-many",
-            "relationshipName": "loraPacket",
-            "otherEntityName": "loraPacket",
-            "otherEntityRelationshipName": "sensorDevice"
         },
         {
             "relationshipName": "location",

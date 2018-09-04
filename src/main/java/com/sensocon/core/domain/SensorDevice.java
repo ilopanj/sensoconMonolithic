@@ -42,13 +42,13 @@ public class SensorDevice implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<SensorThreshold> thresholds = new HashSet<>();
 
+    @OneToMany(mappedBy = "sensorDevice")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<LoraPacket> packets = new HashSet<>();
+
     @ManyToOne
     @JsonIgnoreProperties("sensorDevices")
     private NotificationGroup notificationGroup;
-
-    @OneToMany(mappedBy = "sensorDevice")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<LoraPacket> loraPackets = new HashSet<>();
 
     @ManyToOne
     @JsonIgnoreProperties("sensorDevices")
@@ -139,6 +139,31 @@ public class SensorDevice implements Serializable {
         this.thresholds = sensorThresholds;
     }
 
+    public Set<LoraPacket> getPackets() {
+        return packets;
+    }
+
+    public SensorDevice packets(Set<LoraPacket> loraPackets) {
+        this.packets = loraPackets;
+        return this;
+    }
+
+    public SensorDevice addPackets(LoraPacket loraPacket) {
+        this.packets.add(loraPacket);
+        loraPacket.setSensorDevice(this);
+        return this;
+    }
+
+    public SensorDevice removePackets(LoraPacket loraPacket) {
+        this.packets.remove(loraPacket);
+        loraPacket.setSensorDevice(null);
+        return this;
+    }
+
+    public void setPackets(Set<LoraPacket> loraPackets) {
+        this.packets = loraPackets;
+    }
+
     public NotificationGroup getNotificationGroup() {
         return notificationGroup;
     }
@@ -150,31 +175,6 @@ public class SensorDevice implements Serializable {
 
     public void setNotificationGroup(NotificationGroup notificationGroup) {
         this.notificationGroup = notificationGroup;
-    }
-
-    public Set<LoraPacket> getLoraPackets() {
-        return loraPackets;
-    }
-
-    public SensorDevice loraPackets(Set<LoraPacket> loraPackets) {
-        this.loraPackets = loraPackets;
-        return this;
-    }
-
-    public SensorDevice addLoraPacket(LoraPacket loraPacket) {
-        this.loraPackets.add(loraPacket);
-        loraPacket.setSensorDevice(this);
-        return this;
-    }
-
-    public SensorDevice removeLoraPacket(LoraPacket loraPacket) {
-        this.loraPackets.remove(loraPacket);
-        loraPacket.setSensorDevice(null);
-        return this;
-    }
-
-    public void setLoraPackets(Set<LoraPacket> loraPackets) {
-        this.loraPackets = loraPackets;
     }
 
     public Location getLocation() {

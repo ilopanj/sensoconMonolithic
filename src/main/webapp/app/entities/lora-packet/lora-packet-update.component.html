@@ -10,6 +10,11 @@
                         [(ngModel)]="loraPacket.id" readonly />
                 </div>
                 <div class="form-group">
+                    <label class="form-control-label" for="field_messageId">Message Id</label>
+                    <input type="text" class="form-control" name="messageId" id="field_messageId"
+                        [(ngModel)]="loraPacket.messageId" />
+                </div>
+                <div class="form-group">
                     <label class="form-control-label" for="field_gatewayId">Gateway Id</label>
                     <input type="text" class="form-control" name="gatewayId" id="field_gatewayId"
                         [(ngModel)]="loraPacket.gatewayId" />
@@ -35,6 +40,16 @@
                     <label class="form-control-label" for="field_pressurePsi">Pressure Psi</label>
                     <input type="number" class="form-control" name="pressurePsi" id="field_pressurePsi"
                         [(ngModel)]="loraPacket.pressurePsi" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_frequency">Frequency</label>
+                    <input type="number" class="form-control" name="frequency" id="field_frequency"
+                        [(ngModel)]="loraPacket.frequency" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_dataRate">Data Rate</label>
+                    <input type="text" class="form-control" name="dataRate" id="field_dataRate"
+                        [(ngModel)]="loraPacket.dataRate" />
                 </div>
 
                 <div class="form-group">

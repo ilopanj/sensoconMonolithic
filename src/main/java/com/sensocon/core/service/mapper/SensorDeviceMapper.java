@@ -17,8 +17,8 @@ public interface SensorDeviceMapper extends EntityMapper<SensorDeviceDTO, Sensor
 
     @Mapping(target = "sensors", ignore = true)
     @Mapping(target = "thresholds", ignore = true)
+    @Mapping(target = "packets", ignore = true)
     @Mapping(source = "notificationGroupId", target = "notificationGroup")
-    @Mapping(target = "loraPackets", ignore = true)
     @Mapping(source = "locationId", target = "location")
     SensorDevice toEntity(SensorDeviceDTO sensorDeviceDTO);
 

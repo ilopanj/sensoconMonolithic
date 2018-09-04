@@ -8,8 +8,8 @@ export interface ISensorDevice {
     name?: string;
     sensors?: ISensor[];
     thresholds?: ISensorThreshold[];
+    packets?: ILoraPacket[];
     notificationGroupId?: number;
-    loraPackets?: ILoraPacket[];
     locationId?: number;
 }
 
@@ -20,8 +20,8 @@ export class SensorDevice implements ISensorDevice {
         public name?: string,
         public sensors?: ISensor[],
         public thresholds?: ISensorThreshold[],
+        public packets?: ILoraPacket[],
         public notificationGroupId?: number,
-        public loraPackets?: ILoraPacket[],
         public locationId?: number
     ) {}
 }

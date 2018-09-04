@@ -22,6 +22,10 @@
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
+            <column name="message_id" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
             <column name="gateway_id" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
@@ -39,6 +43,14 @@
             </column>
 
             <column name="pressure_psi" type="double">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="frequency" type="double">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="data_rate" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
 

@@ -44,6 +44,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = SensoconMonolithicApp.class)
 public class LoraPacketResourceIntTest {
 
+    private static final String DEFAULT_MESSAGE_ID = "AAAAAAAAAA";
+    private static final String UPDATED_MESSAGE_ID = "BBBBBBBBBB";
+
     private static final String DEFAULT_GATEWAY_ID = "AAAAAAAAAA";
     private static final String UPDATED_GATEWAY_ID = "BBBBBBBBBB";
 
@@ -58,6 +61,12 @@ public class LoraPacketResourceIntTest {
 
     private static final Double DEFAULT_PRESSURE_PSI = 1D;
     private static final Double UPDATED_PRESSURE_PSI = 2D;
+
+    private static final Double DEFAULT_FREQUENCY = 1D;
+    private static final Double UPDATED_FREQUENCY = 2D;
+
+    private static final String DEFAULT_DATA_RATE = "AAAAAAAAAA";
+    private static final String UPDATED_DATA_RATE = "BBBBBBBBBB";
 
     @Autowired
     private LoraPacketRepository loraPacketRepository;
@@ -105,11 +114,14 @@ public class LoraPacketResourceIntTest {
      */
     public static LoraPacket createEntity(EntityManager em) {
         LoraPacket loraPacket = new LoraPacket()
+            .messageId(DEFAULT_MESSAGE_ID)
             .gatewayId(DEFAULT_GATEWAY_ID)
             .rssi(DEFAULT_RSSI)
             .timestamp(DEFAULT_TIMESTAMP)
             .temperatureFarenheit(DEFAULT_TEMPERATURE_FARENHEIT)
-            .pressurePsi(DEFAULT_PRESSURE_PSI);
+            .pressurePsi(DEFAULT_PRESSURE_PSI)
+            .frequency(DEFAULT_FREQUENCY)
+            .dataRate(DEFAULT_DATA_RATE);
         return loraPacket;
     }
 
@@ -134,11 +146,14 @@ public class LoraPacketResourceIntTest {
         List<LoraPacket> loraPacketList = loraPacketRepository.findAll();
         assertThat(loraPacketList).hasSize(databaseSizeBeforeCreate + 1);
         LoraPacket testLoraPacket = loraPacketList.get(loraPacketList.size() - 1);
+        assertThat(testLoraPacket.getMessageId()).isEqualTo(DEFAULT_MESSAGE_ID);
         assertThat(testLoraPacket.getGatewayId()).isEqualTo(DEFAULT_GATEWAY_ID);
         assertThat(testLoraPacket.getRssi()).isEqualTo(DEFAULT_RSSI);
         assertThat(testLoraPacket.getTimestamp()).isEqualTo(DEFAULT_TIMESTAMP);
         assertThat(testLoraPacket.getTemperatureFarenheit()).isEqualTo(DEFAULT_TEMPERATURE_FARENHEIT);
         assertThat(testLoraPacket.getPressurePsi()).isEqualTo(DEFAULT_PRESSURE_PSI);
+        assertThat(testLoraPacket.getFrequency()).isEqualTo(DEFAULT_FREQUENCY);
+        assertThat(testLoraPacket.getDataRate()).isEqualTo(DEFAULT_DATA_RATE);
     }
 
     @Test
@@ -172,11 +187,14 @@ public class LoraPacketResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(loraPacket.getId().intValue())))
+            .andExpect(jsonPath("$.[*].messageId").value(hasItem(DEFAULT_MESSAGE_ID.toString())))
             .andExpect(jsonPath("$.[*].gatewayId").value(hasItem(DEFAULT_GATEWAY_ID.toString())))
             .andExpect(jsonPath("$.[*].rssi").value(hasItem(DEFAULT_RSSI.doubleValue())))
             .andExpect(jsonPath("$.[*].timestamp").value(hasItem(DEFAULT_TIMESTAMP.toString())))
             .andExpect(jsonPath("$.[*].temperatureFarenheit").value(hasItem(DEFAULT_TEMPERATURE_FARENHEIT.doubleValue())))
-            .andExpect(jsonPath("$.[*].pressurePsi").value(hasItem(DEFAULT_PRESSURE_PSI.doubleValue())));
+            .andExpect(jsonPath("$.[*].pressurePsi").value(hasItem(DEFAULT_PRESSURE_PSI.doubleValue())))
+            .andExpect(jsonPath("$.[*].frequency").value(hasItem(DEFAULT_FREQUENCY.doubleValue())))
+            .andExpect(jsonPath("$.[*].dataRate").value(hasItem(DEFAULT_DATA_RATE.toString())));
     }
     
 
@@ -191,11 +209,14 @@ public class LoraPacketResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(loraPacket.getId().intValue()))
+            .andExpect(jsonPath("$.messageId").value(DEFAULT_MESSAGE_ID.toString()))
             .andExpect(jsonPath("$.gatewayId").value(DEFAULT_GATEWAY_ID.toString()))
             .andExpect(jsonPath("$.rssi").value(DEFAULT_RSSI.doubleValue()))
             .andExpect(jsonPath("$.timestamp").value(DEFAULT_TIMESTAMP.toString()))
             .andExpect(jsonPath("$.temperatureFarenheit").value(DEFAULT_TEMPERATURE_FARENHEIT.doubleValue()))
-            .andExpect(jsonPath("$.pressurePsi").value(DEFAULT_PRESSURE_PSI.doubleValue()));
+            .andExpect(jsonPath("$.pressurePsi").value(DEFAULT_PRESSURE_PSI.doubleValue()))
+            .andExpect(jsonPath("$.frequency").value(DEFAULT_FREQUENCY.doubleValue()))
+            .andExpect(jsonPath("$.dataRate").value(DEFAULT_DATA_RATE.toString()));
     }
     @Test
     @Transactional
@@ -218,11 +239,14 @@ public class LoraPacketResourceIntTest {
         // Disconnect from session so that the updates on updatedLoraPacket are not directly saved in db
         em.detach(updatedLoraPacket);
         updatedLoraPacket
+            .messageId(UPDATED_MESSAGE_ID)
             .gatewayId(UPDATED_GATEWAY_ID)
             .rssi(UPDATED_RSSI)
             .timestamp(UPDATED_TIMESTAMP)
             .temperatureFarenheit(UPDATED_TEMPERATURE_FARENHEIT)
-            .pressurePsi(UPDATED_PRESSURE_PSI);
+            .pressurePsi(UPDATED_PRESSURE_PSI)
+            .frequency(UPDATED_FREQUENCY)
+            .dataRate(UPDATED_DATA_RATE);
         LoraPacketDTO loraPacketDTO = loraPacketMapper.toDto(updatedLoraPacket);
 
         restLoraPacketMockMvc.perform(put("/api/lora-packets")
@@ -234,11 +258,14 @@ public class LoraPacketResourceIntTest {
         List<LoraPacket> loraPacketList = loraPacketRepository.findAll();
         assertThat(loraPacketList).hasSize(databaseSizeBeforeUpdate);
         LoraPacket testLoraPacket = loraPacketList.get(loraPacketList.size() - 1);
+        assertThat(testLoraPacket.getMessageId()).isEqualTo(UPDATED_MESSAGE_ID);
         assertThat(testLoraPacket.getGatewayId()).isEqualTo(UPDATED_GATEWAY_ID);
         assertThat(testLoraPacket.getRssi()).isEqualTo(UPDATED_RSSI);
         assertThat(testLoraPacket.getTimestamp()).isEqualTo(UPDATED_TIMESTAMP);
         assertThat(testLoraPacket.getTemperatureFarenheit()).isEqualTo(UPDATED_TEMPERATURE_FARENHEIT);
         assertThat(testLoraPacket.getPressurePsi()).isEqualTo(UPDATED_PRESSURE_PSI);
+        assertThat(testLoraPacket.getFrequency()).isEqualTo(UPDATED_FREQUENCY);
+        assertThat(testLoraPacket.getDataRate()).isEqualTo(UPDATED_DATA_RATE);
     }
 
     @Test

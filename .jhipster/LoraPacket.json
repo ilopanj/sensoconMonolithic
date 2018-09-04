@@ -2,6 +2,10 @@
     "name": "LoraPacket",
     "fields": [
         {
+            "fieldName": "messageId",
+            "fieldType": "String"
+        },
+        {
             "fieldName": "gatewayId",
             "fieldType": "String"
         },
@@ -20,13 +24,21 @@
         {
             "fieldName": "pressurePsi",
             "fieldType": "Double"
+        },
+        {
+            "fieldName": "frequency",
+            "fieldType": "Double"
+        },
+        {
+            "fieldName": "dataRate",
+            "fieldType": "String"
         }
     ],
     "relationships": [
         {
-            "relationshipType": "many-to-one",
             "relationshipName": "sensorDevice",
             "otherEntityName": "sensorDevice",
+            "relationshipType": "many-to-one",
             "otherEntityField": "id"
         }
     ],
