@@ -1,19 +1,87 @@
 
 <div>
-
-    <h2 id="page-heading">
-        <span>Sensor Locations</span>
-    </h2>
+    <h3 id="page-heading">
+        <span>Sensors by Locations</span>
+    </h3>
 
     <div class="row">
         <div class="col-md-12">
+
             <div [ngSwitch]="isAuthenticated()">
+
+                <!--
+                    Unauthorized:   :-(
+                -->
                 <div class="alert alert-warning" *ngSwitchCase="false">
                     <span>Warning, Unauthorized. Please </span>
                     <a class="alert-link" (click)="login()">sign in</a><span>, to access your account<br/></span>
                 </div>
                 <div class="alert alert-warning" *ngSwitchCase="false">
                     <span>If you don't have an account, please contact your administrator.</span>&nbsp;
+                </div>
+
+                <!--
+                    Authorized:     :-)
+                -->
+                <div *ngSwitchCase="true">
+                    <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+                    <ngb-panel>
+                        <ng-template ngbPanelTitle>
+                            <h2>Tampa</h2>
+                        </ng-template>
+                        <ng-template ngbPanelContent>
+                            <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                               <div class="btn-group mr-2" role="group" aria-label="First group">
+                                <button type="button" class="btn btn-success btn-lg" 
+													  data-toggle="tooltip" data-placement="top" title="No Fluxuations in 2 hrs.">
+                                    Stress
+                                </button>
+                                <button type="button" class="btn btn-success btn-lg">
+                                    Vibration
+                                </button>
+                                <button type="button" class="btn btn-success btn-lg">
+                                    Radiation
+                                </button>
+                                <button type="button" class="btn btn-warning btn-lg">
+                                    Chiller <span class="badge badge-light">4</span>
+                                </button>
+                               </div>
+                            </div>
+                        </ng-template>
+                    </ngb-panel>
+
+                    <ngb-panel>
+                        <ng-template ngbPanelTitle>
+                            <h2>Orlando</h2>
+                        </ng-template>
+                        <ng-template ngbPanelContent>
+                            <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                                <div class="btn-group mr-2" role="group" aria-label="First group">
+                                    <button type="button" class="btn btn-info btn-lg">
+                                        Flow <span class="badge badge-light">7</span>
+									</button>
+                                    <button type="button" class="btn btn-secondary btn-lg">
+                                        Oxygen
+                                    </button>
+                                    <button type="button" class="btn btn-danger btn-lg">
+                                        Pad Tmp
+                                    </button>
+                                    <button type="button" class="btn btn-warning btn-lg">
+                                        Fuel Level
+                                    </button>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </ngb-panel>
+
+                    <ngb-panel [disabled]="true">
+                        <ng-template ngbPanelTitle>
+                            <h2>Miami (Inactive)</h2>
+                        </ng-template>
+                        <ng-template ngbPanelContent>
+                        </ng-template>
+                    </ngb-panel>
+                </ngb-accordion>
                 </div>
             </div>
         </div>
@@ -22,7 +90,14 @@
     <jhi-alert></jhi-alert>
 
     <br/>
-    <div class="table-responsive" *ngIf="locations">
+
+    <div class="row">
+        <div class="col-md-12">
+        </div>
+    </div>
+
+    <!--
+        <div class="table-responsive" *ngIf="locations">
         <table class="table table-striped">
             <thead>
             <tr>
@@ -71,6 +146,7 @@
             </tbody>
         </table>
     </div>
+    -->
 </div>
 
 <div class="row">

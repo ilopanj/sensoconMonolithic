@@ -2,9 +2,12 @@ import './vendor.ts';
 
 import { CdkTableModule } from '@angular/cdk/table';
 import { CdkTreeModule } from '@angular/cdk/tree';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { NgModule, Injector } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Ng2Webstorage, LocalStorageService, SessionStorageService } from 'ngx-webstorage';
 import { JhiEventManager } from 'ng-jhipster';
 import {
@@ -71,7 +74,10 @@ import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent
         BrowserAnimationsModule,
         MatButtonModule,
         MatIconModule,
-        MatTreeModule
+        MatTreeModule,
+        FormsModule,
+        HttpClientModule,
+        ReactiveFormsModule
     ],
     exports: [
         CdkTableModule,
@@ -110,7 +116,10 @@ import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent
         MatTabsModule,
         MatToolbarModule,
         MatTooltipModule,
-        MatTreeModule
+        MatTreeModule,
+        FormsModule,
+        HttpClientModule,
+        ReactiveFormsModule
     ],
     declarations: [JhiMainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, FooterComponent],
     providers: [

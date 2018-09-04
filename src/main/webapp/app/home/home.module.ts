@@ -3,12 +3,11 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { SensoconMonolithicSharedModule } from 'app/shared';
-import { HOME_ROUTE, HomeComponent } from './';
+import { HOME_ROUTE, HomeComponent, LocationSensorDialog } from './';
 
 @NgModule({
-    // imports: [SensoconMonolithicSharedModule, RouterModule.forChild([HOME_ROUTE])],
     imports: [SensoconMonolithicSharedModule, RouterModule.forChild(HOME_ROUTE)],
-    declarations: [HomeComponent],
+    declarations: [HomeComponent, LocationSensorDialog],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class SensoconMonolithicHomeModule {}
