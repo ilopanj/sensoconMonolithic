@@ -7,7 +7,17 @@
       "root": "",
       "sourceRoot": "src/main/webapp",
       "projectType": "application",
-      "architect": {}
+	  "architect": {
+		"build": {
+			"options": {
+				"styles": [
+					"src/main/webapp/style.css"
+				],
+				"scripts": [
+				]
+			}
+		}
+	  }
     }
   },
   "defaultProject": "sensocon-monolithic",

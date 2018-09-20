@@ -1,6 +1,6 @@
-import { ISensorDevice } from 'app/shared/model//sensor-device.model';
-import { ILoraGateway } from 'app/shared/model//lora-gateway.model';
-import { ICompany } from 'app/shared/model//company.model';
+import { ISensorDevice } from 'app/shared/model/sensor-device.model';
+import { ILoraGateway } from 'app/shared/model/lora-gateway.model';
+import { ICompany } from 'app/shared/model/company.model';
 
 export interface ILocation {
     id?: number;

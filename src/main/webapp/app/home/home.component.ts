@@ -7,7 +7,6 @@ import { ILocation } from 'app/shared/model/location.model';
 import { LocationService } from 'app/entities/location/location.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { MatDialogModule } from '@angular/material';
-
 /**
  * Dialog
  */
@@ -68,7 +67,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         return item.id;
     }
     openDialog(): void {
-        const dialogRef = this.dialog.open(LocationSensorDialog, {
+        const dialogRef = this.dialog.open(LocationSensorDialogComponent, {
             width: '650px',
             data: { name: this.name, location: this.location }
         });
@@ -95,20 +94,20 @@ export class HomeComponent implements OnInit, OnDestroy {
 }
 
 /**
- * LocationSensorDialog
+ * LocationSensorDialogComponent
  */
 @Component({
-    selector: 'location-sensor.dialog',
+    selector: 'jhi-location-sensor-dialog',
     templateUrl: './location-sensor.dialog.html'
 })
-export class LocationSensorDialog {
+export class LocationSensorDialogComponent {
     /**
      * Constructor
      *
-     * @param {MatDialogRef<ExpansionOverviewExampleDialog>} dialogRef
+     * @param {MatDialogRef<ExpansionOverviewExampleDialogComponent>} dialogRef
      * @param {DialogData} data
      */
-    constructor(public dialogRef: MatDialogRef<LocationSensorDialog>, @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    constructor(public dialogRef: MatDialogRef<LocationSensorDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
     onNoClick(): void {
         this.dialogRef.close();
     }

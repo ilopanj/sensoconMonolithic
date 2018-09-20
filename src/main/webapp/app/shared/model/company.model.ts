@@ -1,7 +1,7 @@
-import { ILocation } from 'app/shared/model//location.model';
-import { ISensorGroup } from 'app/shared/model//sensor-group.model';
-import { IContact } from 'app/shared/model//contact.model';
-import { INotificationGroup } from 'app/shared/model//notification-group.model';
+import { ILocation } from 'app/shared/model/location.model';
+import { ISensorGroup } from 'app/shared/model/sensor-group.model';
+import { IContact } from 'app/shared/model/contact.model';
+import { INotificationGroup } from 'app/shared/model/notification-group.model';
 
 export interface ICompany {
     id?: number;

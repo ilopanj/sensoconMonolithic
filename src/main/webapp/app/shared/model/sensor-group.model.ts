@@ -1,5 +1,5 @@
-import { ISensorThreshold } from 'app/shared/model//sensor-threshold.model';
-import { ICompany } from 'app/shared/model//company.model';
+import { ISensorThreshold } from 'app/shared/model/sensor-threshold.model';
+import { ICompany } from 'app/shared/model/company.model';
 
 export const enum SensorType {
     PRESSURE = 'PRESSURE',

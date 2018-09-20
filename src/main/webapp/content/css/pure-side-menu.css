@@ -1,0 +1,231 @@
+body {
+    color: #777;
+}
+
+.pure-img-responsive {
+    max-width: 100%;
+    height: auto;
+}
+
+/*
+Add transition to containers so they can push in and out.
+*/
+#smb-layout,
+#smb-menu,
+.smb-menu-link {
+    -webkit-transition: all 0.2s ease-out;
+    -moz-transition: all 0.2s ease-out;
+    -ms-transition: all 0.2s ease-out;
+    -o-transition: all 0.2s ease-out;
+    transition: all 0.2s ease-out;
+}
+
+/*
+This is the parent `<div>` that contains the menu and the content area.
+*/
+#smb-layout {
+    position: relative;
+    left: 0;
+    padding-left: 0;
+}
+
+/*
+The content `<div>` is where all your content goes.
+*/
+.smb-content {
+    margin: 0 auto;
+    padding: 0 2em;
+    margin-bottom: 50px;
+    line-height: 1.6em;
+}
+
+.smb-header {
+    margin: 0;
+    color: #333;
+    text-align: center;
+    padding: 2.5em 2em 0;
+    border-bottom: 1px solid #eee;
+}
+.smb-header h1 {
+    margin: 0.2em 0;
+    font-size: 3em;
+    font-weight: 300;
+}
+.smb-header h2 {
+    font-weight: 300;
+    color: #ccc;
+    padding: 0;
+    margin-top: 0;
+}
+
+.smb-content-subhead {
+    margin: 50px 0 20px 0;
+    font-weight: 300;
+    color: #888;
+}
+
+/*
+The `#smb-menu` `<div>` is the parent `<div>` that contains the `.pure-menu` that
+appears on the left side of the page.
+*/
+
+#smb-menu {
+    float: left;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000; /* so the menu or its navicon stays above all content */
+    background: #191818;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+/*
+All anchors inside the menu should be styled like this.
+*/
+#smb-menu a {
+    color: #999;
+    border: none;
+    padding: 0.6em 0 0.6em 0.6em;
+}
+
+/*
+Remove all background/borders, since we are applying them to #smb-menu.
+*/
+#smb-menu .pure-menu,
+#smb-menu .pure-menu ul {
+    border: none;
+    background: transparent;
+}
+
+/*
+Add that light border to separate items into groups.
+*/
+#smb-menu .pure-menu ul,
+#smb-menu .pure-menu .smb-menu-item-divided {
+    border-top: 1px solid #333;
+}
+/*
+        Change color of the anchor links on hover/focus.
+        */
+#smb-menu .pure-menu li a:hover,
+#smb-menu .pure-menu li a:focus {
+    background: #333;
+}
+
+/*
+    This styles the selected menu item `<li>`.
+    */
+#smb-menu .pure-menu-selected,
+#smb-menu .pure-menu-heading {
+    background: #1f8dd6;
+}
+/*
+        This styles a link within a selected menu item `<li>`.
+        */
+#smb-menu .pure-menu-selected a {
+    color: #fff;
+}
+
+/*
+    This styles the menu heading.
+    */
+#smb-menu .pure-menu-heading {
+    font-size: 110%;
+    color: #fff;
+    margin: 0;
+}
+
+/* -- Dynamic Button For Responsive Menu -------------------------------------*/
+
+/*
+The button to open/close the Menu is custom-made and not part of Pure. Here's
+how it works:
+*/
+
+/*
+`.menu-link` represents the responsive menu toggle that shows/hides on
+small screens.
+*/
+.smb-menu-link {
+    position: fixed;
+    display: block; /* show this only on small screens */
+    top: 0;
+    left: 0; /* "#smb-menu width" */
+    background: #000;
+    background: rgba(0, 0, 0, 0.7);
+    font-size: 10px; /* change this value to increase/decrease button size */
+    z-index: 10;
+    width: 2em;
+    height: auto;
+    padding: 2.1em 1.6em;
+}
+
+.smb-menu-link:hover,
+.smb-menu-link:focus {
+    background: #000;
+}
+
+.smb-menu-link span {
+    position: relative;
+    display: block;
+}
+
+.smb-menu-link span,
+.smb-menu-link span:before,
+.smb-menu-link span:after {
+    background-color: #fff;
+    width: 100%;
+    height: 0.2em;
+}
+
+.smb-menu-link span:before,
+.smb-menu-link span:after {
+    margin-top: -0.6em;
+    content: ' ';
+}
+
+.smb-menu-link span:after {
+    margin-top: 0.6em;
+}
+
+/* -- Responsive Styles (Media Queries) ------------------------------------- */
+
+/*
+Hides the menu at `48em`, but modify this based on your app's needs.
+*/
+@media (min-width: 48em) {
+    .smb-header,
+    .smb-content {
+        padding-left: 2em;
+        padding-right: 2em;
+    }
+
+    #smb-layout {
+        /*padding-left: 150px; */
+        left: 0;
+    }
+    #smb-menu {
+        height: 100%;
+    }
+
+    .smb-menu-link {
+        position: fixed;
+        display: none;
+    }
+
+    #smb-layout.active .smb-menu-link {
+    }
+}
+
+@media (max-width: 48em) {
+    /* Only apply this when the window is small. Otherwise, the following
+    case results in extra padding on the left:
+        * Make the window small.
+        * Tap the menu to trigger the active state.
+        * Make the window large again.
+    */
+    #smb-layout.active {
+        position: relative;
+    }
+}

@@ -1,8 +1,8 @@
-import { ISensor } from 'app/shared/model//sensor.model';
-import { ISensorThreshold } from 'app/shared/model//sensor-threshold.model';
-import { ILoraPacket } from 'app/shared/model//lora-packet.model';
-import { ILocation } from 'app/shared/model//location.model';
-import { INotificationGroup } from 'app/shared/model//notification-group.model';
+import { ISensor } from 'app/shared/model/sensor.model';
+import { ISensorThreshold } from 'app/shared/model/sensor-threshold.model';
+import { ILoraPacket } from 'app/shared/model/lora-packet.model';
+import { ILocation } from 'app/shared/model/location.model';
+import { INotificationGroup } from 'app/shared/model/notification-group.model';
 
 export interface ISensorDevice {
     id?: number;

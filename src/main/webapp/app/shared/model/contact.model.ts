@@ -1,5 +1,5 @@
-import { ICompany } from 'app/shared/model//company.model';
-import { INotificationGroup } from 'app/shared/model//notification-group.model';
+import { ICompany } from 'app/shared/model/company.model';
+import { INotificationGroup } from 'app/shared/model/notification-group.model';
 
 export interface IContact {
     id?: number;

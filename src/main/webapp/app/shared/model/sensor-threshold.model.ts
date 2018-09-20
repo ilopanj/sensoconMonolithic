@@ -1,6 +1,6 @@
-import { ISensorDevice } from 'app/shared/model//sensor-device.model';
-import { ISensor } from 'app/shared/model//sensor.model';
-import { ISensorGroup } from 'app/shared/model//sensor-group.model';
+import { ISensorDevice } from 'app/shared/model/sensor-device.model';
+import { ISensor } from 'app/shared/model/sensor.model';
+import { ISensorGroup } from 'app/shared/model/sensor-group.model';
 
 export const enum ThresholdType {
     THRESHOLD_GE = 'THRESHOLD_GE',

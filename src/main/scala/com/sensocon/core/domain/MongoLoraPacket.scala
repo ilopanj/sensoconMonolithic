@@ -1,4 +1,5 @@
-package com.sensocon.core.domain
+package com.sensocon.core
+package domain
 import scalaz._
 import Scalaz._
 import scala.beans.BeanProperty
@@ -35,13 +36,23 @@ class MongoLoraPacket
   @BeanProperty
   var temperature: java.util.List[Int] = new java.util.ArrayList[Int] 
   @BeanProperty
+  var humidity: java.util.List[Int] = new java.util.ArrayList[Int] 
+  @BeanProperty
+  var battery: java.util.List[Int] = new java.util.ArrayList[Int] 
+  @BeanProperty
   var timestamp: Instant  = Instant.now 
   
   @JsonGetter
-  def temperatureFarenheit = toFloat(temperature)
+  def temperatureFarenheit = toDouble(temperature)
   
   @JsonGetter
-  def pressurePsi = toFloat(pressure)
+  def humidityPercent = toDouble(humidity)
+  
+  @JsonGetter
+  def batteryPercent = toDouble(battery)
+  
+  @JsonGetter
+  def pressurePsi = toDouble(pressure)
 }
 
 object MongoLoraPacket
@@ -55,7 +66,12 @@ object MongoLoraPacket
     ((buf(1) & 0xff) << 8) +
      (buf(0) & 0xff)
      
-  def toFloat(buf: java.util.List[Int]) = 
-    java.lang.Float.intBitsToFloat(getInt(buf.asScala.toList))
+  def toDouble(buf: java.util.List[Int]) = {
+   
+    if (buf.size() == 4 ) 
+      Some(java.lang.Float.intBitsToFloat(getInt(buf.asScala.toList)).toDouble) 
+    else 
+      None
+  }
   
 }

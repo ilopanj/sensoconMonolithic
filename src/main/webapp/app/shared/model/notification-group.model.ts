@@ -1,6 +1,6 @@
-import { ISensorDevice } from 'app/shared/model//sensor-device.model';
-import { IContact } from 'app/shared/model//contact.model';
-import { ICompany } from 'app/shared/model//company.model';
+import { ISensorDevice } from 'app/shared/model/sensor-device.model';
+import { IContact } from 'app/shared/model/contact.model';
+import { ICompany } from 'app/shared/model/company.model';
 
 export interface INotificationGroup {
     id?: number;

@@ -1,5 +1,5 @@
 import { Moment } from 'moment';
-import { ISensorDevice } from 'app/shared/model//sensor-device.model';
+import { ISensorDevice } from 'app/shared/model/sensor-device.model';
 
 export interface ILoraPacket {
     id?: number;

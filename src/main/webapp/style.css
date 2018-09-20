@@ -1,0 +1,11 @@
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+
+.smb-body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.smb-content-area {
+    flex-grow: 1;
+}

@@ -23,9 +23,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.mongodb.MongoClient;
-import com.sensocon.core.repository.MongoLoraPacketRepository;
 import com.sensocon.core.config.LoraHelper;
 import com.sensocon.core.domain.MongoLoraPacket;
+import com.sensocon.core.repository.MongoLoraPacketRepository;
+import com.sensocon.core.service.MetricsService;
 
 /**
  */
@@ -43,6 +44,9 @@ public class CamelRouter extends RouteBuilder {
   
     @Autowired 
     private LoraHelper helper;
+    
+    @Autowired
+    private MetricsService metricsService;
     
     @Override
     public void configure() throws Exception {
@@ -75,15 +79,19 @@ public class CamelRouter extends RouteBuilder {
         from("direct:loraPacket")
         		.unmarshal().json(JsonLibrary.Jackson, MongoLoraPacket.class)
         		.multicast().parallelProcessing()
-        			.to("direct:loraPacket_persistence")
+        			.to("direct:loraPacket_persistenceMongo")
+        			.to("direct:loraPacket_persistenceGraphite")
         			.to("direct:loraPacket_websocket");
        
         from("direct:loraPacket_websocket")
         		.marshal().json(JsonLibrary.Jackson)
         		.to("websocket://lora?sendToAll=true");
         
-        from("direct:loraPacket_persistence")
+        from("direct:loraPacket_persistenceMongo")
         		.bean(loraRepo, "save");
+        
+        from("direct:loraPacket_persistenceGraphite")
+        		.bean(metricsService, "save");
        
         from("direct:loraPacket_find").bean(loraRepo, "findByDeviceId(${header.id})")
         		.marshal().json(JsonLibrary.Jackson);

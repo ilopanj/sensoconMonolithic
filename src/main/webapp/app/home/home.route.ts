@@ -38,7 +38,7 @@ export const HOME_ROUTE: Routes = [
         component: HomeComponent,
         data: {
             authorities: [],
-            pageTitle: 'Sensicon'
+            pageTitle: 'Sensocon'
         },
         canActivate: [UserRouteAccessService]
     },
@@ -47,7 +47,7 @@ export const HOME_ROUTE: Routes = [
         component: HomeComponent,
         data: {
             authorities: [],
-            pageTitle: 'Sensicon Details'
+            pageTitle: 'Sensocon Details'
         },
         canActivate: [UserRouteAccessService]
     }

@@ -1,7 +1,7 @@
 import { Moment } from 'moment';
-import { ISensorGroup } from 'app/shared/model//sensor-group.model';
-import { ISensorThreshold } from 'app/shared/model//sensor-threshold.model';
-import { ISensorDevice } from 'app/shared/model//sensor-device.model';
+import { ISensorGroup } from 'app/shared/model/sensor-group.model';
+import { ISensorThreshold } from 'app/shared/model/sensor-threshold.model';
+import { ISensorDevice } from 'app/shared/model/sensor-device.model';
 
 export const enum SensorStatus {
     STATE_NORMAL = 'STATE_NORMAL',
